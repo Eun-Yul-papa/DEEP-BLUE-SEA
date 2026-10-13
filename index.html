@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Blue Sea - Pi DApp Prototype</title>
+    <style>
+        :root {
+            --bg-deep: #020916;
+            --bg-card: rgba(13, 33, 66, 0.75);
+            --primary-cyan: #38bdf8;
+            --accent-glow: #0284c7;
+            --text-bright: #f1f5f9;
+            --text-sub: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-bright);
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: rgba(2, 9, 22, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whale-icon {
+            width: 36px;
+            height: 36px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 0 12px var(--primary-cyan);
+        }
+
+        .brand-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-select {
+            background: rgba(13, 33, 66, 0.9);
+            border: 1px solid var(--border-glow);
+            color: var(--primary-cyan);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .pi-badge {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 24px 0 14px 0;
+            color: var(--primary-cyan);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .tag-relay { background: rgba(56, 189, 248, 0.2); color: var(--primary-cyan); }
+        .tag-serial { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-cyan);
+            color: #020916;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+        }
+
+        .chapter-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .chapter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .status-writing {
+            background: rgba(234, 179, 8, 0.15);
+            color: #fde047;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-logo">
+            <div class="whale-icon">🐋</div>
+            <div class="brand-title">Deep Blue Sea</div>
+        </div>
+        <div class="header-controls">
+            <!-- 언어 선택 드롭다운 -->
+            <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="cn">🇨🇳 中文</option>
+                <option value="jp">🇯🇵 日本語</option>
+            </select>
+            <div class="pi-badge">
+                <span>π</span> <span id="balance">100.0</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 1. 창작 잇기 섹션 -->
+        <div class="section-title" id="title-relay">🔗 1. 창작 잇기</div>
+        <div class="card">
+            <span class="tag tag-relay" id="tag-relay-status">진행 중 · 3/5명 완료</span>
+            <h3 style="margin-bottom: 8px;" id="relay-book-title">심해 4,000m의 하얀 고래</h3>
+            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;" id="relay-desc">
+                "잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."
+            </p>
+            <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;" id="relay-pool">
+                💰 상금 풀: 5.0 Test Pi (승자독식)
+            </div>
+            <button class="btn btn-primary" id="btn-relay-join" onclick="alert('1.0 Test Pi가 사용되었습니다.')">
+                ✍️ 이어쓰기 참여하기 (1.0 Test Pi)
+            </button>
+        </div>
+
+        <!-- 2. 창작자 연재 섹션 -->
+        <div class="section-title" id="title-serial">📚 2. 창작자 연재</div>
+        <div class="card">
+            <span class="tag tag-serial" id="tag-serial-type">독점 연재</span>
+            <h3 style="margin-bottom: 4px;" id="serial-book-title">심해의 파수꾼</h3>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 14px;" id="serial-author">작가: BlueWhale99</p>
+
+            <div class="chapter-list">
+                <!-- 1화: 무료 공개 -->
+                <div class="chapter-item">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch1-title">1화. 검은 바다의 서막</div>
+                        <div style="font-size: 0.75rem; color: #4ade80;" id="ch1-status">무료 공개</div>
+                    </div>
+                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" id="ch1-btn" onclick="alert('1화 열람!')">
+                        읽기
+                    </button>
+                </div>
+
+                <!-- 2화: 0.5 Test Pi 유료 -->
+                <div class="chapter-item">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch2-title">2화. 심해 속으로</div>
+                        <div style="font-size: 0.75rem; color: var(--primary-cyan);">0.5 Test Pi</div>
+                    </div>
+                    <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" id="ch2-btn" onclick="unlockChapter(this, 0.5)">
+                        지불 & 보기
+                    </button>
+                </div>
+
+                <!-- 3화: 작가가 작성 중 -->
+                <div class="chapter-item">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;" id="ch3-title">3화. 마주친 미지의 생명체</div>
+                        <div style="font-size: 0.75rem; color: #fde047;" id="ch3-status">작가가 원고 집필 중입니다</div>
+                    </div>
+                    <span class="status-badge status-writing" id="ch3-badge">✍️ 작성 중</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 번역 데이터 셋 (i18n)
+        const translations = {
+            ko: {
+                titleRelay: "🔗 1. 창작 잇기",
+                relayStatus: "진행 중 · 3/5명 완료",
+                relayBookTitle: "심해 4,000m의 하얀 고래",
+                relayDesc: '"잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."',
+                relayPool: "💰 상금 풀: 5.0 Test Pi (승자독식)",
+                btnRelayJoin: "✍️ 이어쓰기 참여하기 (1.0 Test Pi)",
+                titleSerial: "📚 2. 창작자 연재",
+                serialType: "독점 연재",
+                serialBookTitle: "심해의 파수꾼",
+                serialAuthor: "작가: BlueWhale99",
+                ch1Title: "1화. 검은 바다의 서막",
+                ch1Status: "무료 공개",
+                ch1Btn: "읽기",
+                ch2Title: "2화. 심해 속으로",
+                ch2Btn: "지불 & 보기",
+                ch3Title: "3화. 마주친 미지의 생명체",
+                ch3Status: "작가가 원고 집필 중입니다",
+                ch3Badge: "✍️ 작성 중",
+                unlockedText: "열람 완료"
+            },
+            en: {
+                titleRelay: "🔗 1. Relay Storywriting",
+                relayStatus: "In Progress · 3/5 Joined",
+                relayBookTitle: "The White Whale at 4,000m Depth",
+                relayDesc: '"When the submarine sank into silence, a massive white vortex began to wriggle outside the window..."',
+                relayPool: "💰 Prize Pool: 5.0 Test Pi (Winner Takes All)",
+                btnRelayJoin: "✍️ Join Relay (1.0 Test Pi)",
+                titleSerial: "📚 2. Author Series",
+                serialType: "Exclusive",
+                serialBookTitle: "Guardian of the Deep Sea",
+                serialAuthor: "Author: BlueWhale99",
+                ch1Title: "Ep 1. Prelude of the Black Sea",
+                ch1Status: "Free Chapter",
+                ch1Btn: "Read",
+                ch2Title: "Ep 2. Into the Abyss",
+                ch2Btn: "Pay & Read",
+                ch3Title: "Ep 3. Meeting Unknown Creatures",
+                ch3Status: "Author is writing...",
+                ch3Badge: "✍️ Writing",
+                unlockedText: "Unlocked"
+            },
+            cn: {
+                titleRelay: "🔗 1. 接龙创作",
+                relayStatus: "进行中 · 3/5人已完成",
+                relayBookTitle: "深海4000米的白鲸",
+                relayDesc: "“当潜水器陷入沉寂时，窗外开始蠕动起巨大的白色漩涡……”",
+                relayPool: "💰 奖金池: 5.0 Test Pi (胜者独得)",
+                btnRelayJoin: "✍️ 参与续写 (1.0 Test Pi)",
+                titleSerial: "📚 2. 创作者连载",
+                serialType: "独家连载",
+                serialBookTitle: "深海守卫者",
+                serialAuthor: "作者: BlueWhale99",
+                ch1Title: "第1话. 黑海的前奏",
+                ch1Status: "免费公开",
+                ch1Btn: "阅读",
+                ch2Title: "第2话. 深入深海",
+                ch2Btn: "支付并阅读",
+                ch3Title: "第3话. 遭遇未知生物",
+                ch3Status: "作者正在撰写中",
+                ch3Badge: "✍️ 撰写中",
+                unlockedText: "已解锁"
+            },
+            jp: {
+                titleRelay: "🔗 1. リレー創作",
+                relayStatus: "進行中 · 3/5人完了",
+                relayBookTitle: "深海4,000mの白いクジラ",
+                relayDesc: "「潜水艇が静寂に包まれた時、窓の外で巨大な白い渦がうごめき始めた…」",
+                relayPool: "💰 賞金プール: 5.0 Test Pi (勝者独占)",
+                btnRelayJoin: "✍️ リレーに参加 (1.0 Test Pi)",
+                titleSerial: "📚 2. クリエイター連載",
+                serialType: "独占連載",
+                serialBookTitle: "深海の守護者",
+                serialAuthor: "作者: BlueWhale99",
+                ch1Title: "第1話. 黒い海の序幕",
+                ch1Status: "無料公開",
+                ch1Btn: "読む",
+                ch2Title: "第2話. 深海の中へ",
+                ch2Btn: "支払って読む",
+                ch3Title: "第3話. 遭遇した未知の生物",
+                ch3Status: "執筆中の原稿です",
+                ch3Badge: "✍️ 執筆中",
+                unlockedText: "閲覧可能"
+            }
+        };
+
+        let currentLang = 'ko';
+        let currentBalance = 100.0;
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.getElementById('title-relay').innerText = t.titleRelay;
+            document.getElementById('tag-relay-status').innerText = t.relayStatus;
+            document.getElementById('relay-book-title').innerText = t.relayBookTitle;
+            document.getElementById('relay-desc').innerText = t.relayDesc;
+            document.getElementById('relay-pool').innerText = t.relayPool;
+            document.getElementById('btn-relay-join').innerText = t.btnRelayJoin;
+
+            document.getElementById('title-serial').innerText = t.titleSerial;
+            document.getElementById('tag-serial-type').innerText = t.serialType;
+            document.getElementById('serial-book-title').innerText = t.serialBookTitle;
+            document.getElementById('serial-author').innerText = t.serialAuthor;
+
+            document.getElementById('ch1-title').innerText = t.ch1Title;
+            document.getElementById('ch1-status').innerText = t.ch1Status;
+            document.getElementById('ch1-btn').innerText = t.ch1Btn;
+
+            document.getElementById('ch2-title').innerText = t.ch2Title;
+            const ch2Btn = document.getElementById('ch2-btn');
+            if (!ch2Btn.disabled) {
+                ch2Btn.innerText = t.ch2Btn;
+            }
+
+            document.getElementById('ch3-title').innerText = t.ch3Title;
+            document.getElementById('ch3-status').innerText = t.ch3Status;
+            document.getElementById('ch3-badge').innerText = t.ch3Badge;
+        }
+
+        function unlockChapter(btn, cost) {
+            if (currentBalance >= cost) {
+                currentBalance -= cost;
+                document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                btn.className = 'btn btn-outline';
+                btn.innerText = translations[currentLang].unlockedText;
+                btn.onclick = null;
+                btn.disabled = true;
+                alert(cost + ' Test Pi Paid!');
+            }
+        }
+    </script>
+</body>
+</html>
