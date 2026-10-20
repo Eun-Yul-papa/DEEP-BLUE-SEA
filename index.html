@@ -649,3 +649,36 @@
             document.getElementById('ch1-btn').innerText = t.ch1Btn;
 
             document.getElementById('ch2-title').innerText = t.ch2Title;
+            const ch2Btn = document.getElementById('ch2-btn');
+            if (!ch2Btn.disabled) {
+                ch2Btn.innerText = t.ch2Btn;
+            }
+
+            document.getElementById('ch3-title').innerText = t.ch3Title;
+            document.getElementById('ch3-status').innerText = t.ch3Status;
+            document.getElementById('ch3-badge').innerText = t.ch3Badge;
+            document.getElementById('modal-heading').innerText = t.modalHeading;
+        }
+
+        function openModal() {
+            document.getElementById('createModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('createModal').style.display = 'none';
+        }
+
+        function unlockChapter(btn, cost) {
+            if (currentBalance >= cost) {
+                currentBalance -= cost;
+                document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                btn.className = 'btn btn-outline';
+                btn.innerText = translations[currentLang].unlockedText;
+                btn.onclick = null;
+                btn.disabled = true;
+                alert(cost + ' Test Pi Paid!');
+            }
+        }
+    </script>
+</body>
+</html>
