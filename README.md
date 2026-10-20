@@ -1,2 +1,2 @@
 # DEEP-BLUE-SEA
-web3 novel relay in pinetwork
+web3 Story relay in pinetwork
