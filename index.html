@@ -17,7 +17,6 @@
             --border-glow: rgba(56, 189, 248, 0.3);
             --danger-red: #f87171;
             --success-green: #4ade80;
-            --purple-badge: #c084fc;
         }
 
         * {
@@ -175,7 +174,6 @@
             margin-bottom: 8px;
         }
 
-        /* 더욱 직관적이고 세련된 글로벌 인증 뱃지 스타일 국기 디자인 */
         .flag-badge {
             font-size: 1.25rem;
             background: rgba(255, 255, 255, 0.12);
@@ -215,12 +213,6 @@
             background: transparent;
             border: 1px solid var(--primary-cyan);
             color: var(--primary-cyan);
-        }
-
-        .btn-purple {
-            background: rgba(168, 85, 247, 0.2);
-            border: 1px solid #c084fc;
-            color: #c084fc;
         }
 
         .button-group {
@@ -401,7 +393,7 @@
                 </div>
                 <div class="title-with-flag">
                     <span class="flag-badge">🇰🇷</span>
-                    <h3 id="relay-book-title">심해 4,000m의 하얀 고래</h3>
+                    <h3>심해 4,000m의 하얀 고래</h3>
                 </div>
                 <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;">
                     "잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."
@@ -410,9 +402,8 @@
                     💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
                 
-                <!-- 읽기와 이어쓰기 버튼 분리 영역 -->
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래', 'card-default-relay')">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래')">
                         📖 읽기 (후보 투표)
                     </button>
                     <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-default-relay', '심해 4,000m의 하얀 고래', sampleNovelKo)">
@@ -470,10 +461,10 @@
 
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
-                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this)" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
+                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
                 
                 <div class="byte-counter-info">
-                    <span class="guide-text">500자~2,000자 사이로 작성해주세요.</span>
+                    <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
                     <span class="byte-status" id="byte-status-count">0 / 6000 Bytes</span>
                 </div>
             </div>
@@ -484,7 +475,7 @@
         </div>
     </div>
 
-    <!-- Reader / Vote Modal (읽기 및 후보작 투표 뷰어) -->
+    <!-- Reader / Vote Modal -->
     <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -496,19 +487,16 @@
             </div>
 
             <p style="font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px;">
-                💡 독자님은 현재 가장 마음에 드는 후보작에 투표하실 수 있습니다. (개발자 수익 모델 적용 예정 구간)
+                💡 독자님은 현재 가장 마음에 드는 후보작에 투표하실 수 있습니다.
             </p>
 
-            <!-- 후보작 목록 (최대 5개) -->
-            <div id="candidateListContainer">
-                <!-- 동적으로 채워짐 -->
-            </div>
+            <div id="candidateListContainer"></div>
 
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('readVoteModal')">닫기</button>
         </div>
     </div>
 
-    <!-- Writer Modal (이어쓰기 창작 전용 뷰어) -->
+    <!-- Writer Modal (이어쓰기 작업실 - 번역 및 Byte 검증 완벽 탑재) -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -523,16 +511,19 @@
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
 
-            <div class="reader-body notranslate" id="writerBody">
-                <!-- 소설 본문 -->
-            </div>
+            <div class="reader-body notranslate" id="writerBody"></div>
 
             <div class="form-group" style="margin-top: 14px;">
                 <label class="form-label">내 이어쓰기 작성 (다음 챕터)</label>
-                <textarea class="form-control" placeholder="이어질 이야기를 작성하세요..."></textarea>
+                <textarea class="form-control" id="writerInputContent" oninput="handleByteCheck(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요 (1,500 ~ 6,000 바이트)..."></textarea>
+                
+                <div class="byte-counter-info">
+                    <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
+                    <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
+                </div>
             </div>
 
-            <button class="btn btn-primary" onclick="alert('💾 이어쓰기 임시저장 완료!'); closeModal('writerModal');">
+            <button class="btn btn-primary" id="btn-submit-write" disabled onclick="submitWriterContent()">
                 이어쓰기 제출하기
             </button>
         </div>
@@ -587,10 +578,10 @@
             return bytes;
         }
 
-        function handleByteCheck(textareaElem) {
+        function handleByteCheck(textareaElem, statusId, btnId) {
             const currentBytes = getByteLength(textareaElem.value);
-            const statusElem = document.getElementById('byte-status-count');
-            const submitBtn = document.getElementById('btn-submit-relay');
+            const statusElem = document.getElementById(statusId);
+            const submitBtn = document.getElementById(btnId);
 
             statusElem.innerText = currentBytes + ' / ' + MAX_BYTES + ' Bytes';
             if (currentBytes >= MIN_BYTES && currentBytes <= MAX_BYTES) {
@@ -605,10 +596,8 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // [읽기 버튼] 5개 후보작 목록 및 투표 창 오픈
-        function openReadVoteModal(title, cardId) {
+        function openReadVoteModal(title) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록 & 투표`;
-            
             const container = document.getElementById('candidateListContainer');
             container.innerHTML = `
                 <div class="candidate-item">
@@ -629,35 +618,45 @@
             openModal('readVoteModal');
         }
 
-        // [이어쓰기 버튼] 최초 1회만 1.0 Test Pi 지불, 이후 재지불 없이 영구 입장 (LocalStorage 연동)
-        function handleJoinOrWrite(cardId, title, content) {
+        function handleJoinOrWrite(cardId, title, content, flag) {
             const authKey = `joined_room_${cardId}`;
             const hasJoinedBefore = localStorage.getItem(authKey);
 
             if (hasJoinedBefore) {
-                // 이미 지불한 이력이 있는 경우 재지불 없이 바로 입장
                 alert("✨ 환영합니다 형님! 이미 참여 중인 방이므로 보증금 재지불 없이 입장합니다.");
-                openWriterModal(title, content);
+                openWriterModal(title, content, flag);
             } else {
-                // 최초 참여 시 1.0 Test Pi 차감
                 if (currentBalance >= 1.0) {
                     currentBalance -= 1.0;
                     document.getElementById('balance').innerText = currentBalance.toFixed(1);
-                    localStorage.setItem(authKey, "true"); // 지불 권한 저장
+                    localStorage.setItem(authKey, "true");
                     alert("✍️ 1.0 Test Pi 참여비가 지불되었습니다. 이어쓰기 작업실로 입장합니다!");
-                    openWriterModal(title, content);
+                    openWriterModal(title, content, flag);
                 } else {
                     alert("❌ Test Pi 잔액이 부족합니다.");
                 }
             }
         }
 
-        function openWriterModal(title, content) {
+        function openWriterModal(title, content, flag) {
+            document.getElementById('writerFlag').innerText = flag || '🇰🇷';
             document.getElementById('writerTitle').innerText = title + ' - 이어쓰기';
             const writerBody = document.getElementById('writerBody');
             writerBody.innerText = content;
             writerBody.classList.add('notranslate');
+            
+            // 입력창 초기화
+            document.getElementById('writerInputContent').value = "";
+            document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
+            document.getElementById('writer-byte-count').className = "byte-status";
+            document.getElementById('btn-submit-write').disabled = true;
+
             openModal('writerModal');
+        }
+
+        function submitWriterContent() {
+            alert('🎉 이어쓰기가 성공적으로 제출되었습니다!');
+            closeModal('writerModal');
         }
 
         function createNewRelayCard() {
@@ -691,7 +690,7 @@
                 </div>
                 <div class="title-with-flag">
                     <span class="flag-badge">${autoFlag}</span>
-                    <h3 style="margin-bottom: 0;">${title}</h3>
+                    <h3>${title}</h3>
                 </div>
                 <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;">
                     "${content.substring(0, 80)}..."
@@ -700,10 +699,10 @@
                     💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}')">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}')">
                         📖 읽기 (후보 투표)
                     </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}')">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}', '${autoFlag}')">
                         ✍️ 이어쓰기 참여
                     </button>
                 </div>
