@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,6 +12,8 @@
             --text-bright: #f1f5f9;
             --text-sub: #94a3b8;
             --border-glow: rgba(56, 189, 248, 0.3);
+            --danger-red: #f87171;
+            --success-green: #4ade80;
         }
 
         * {
@@ -176,6 +177,12 @@
             color: #020916;
         }
 
+        .btn-primary:disabled {
+            background: #334155;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+
         .btn-outline {
             background: transparent;
             border: 1px solid var(--primary-cyan);
@@ -283,8 +290,19 @@
 
         textarea.form-control {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
+
+        .byte-counter-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-top: 6px;
+        }
+
+        .guide-text { color: var(--text-sub); }
+        .byte-status { font-weight: 700; color: var(--danger-red); }
+        .byte-status.valid { color: var(--success-green); }
     </style>
 </head>
 <body>
@@ -295,7 +313,6 @@
             <div class="brand-title">Deep Blue Sea</div>
         </div>
         <div class="header-controls">
-            <!-- 8개 국어로 확장된 언어 선택 -->
             <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
                 <option value="en">🇺🇸 English</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -347,7 +364,6 @@
             <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 14px;" id="serial-author">Author: BlueWhale99</p>
 
             <div class="chapter-list">
-                <!-- 1화: 무료 -->
                 <div class="chapter-item">
                     <div>
                         <div style="font-size: 0.85rem; font-weight: 600;" id="ch1-title">Ep 1. Prelude of the Black Sea</div>
@@ -358,7 +374,6 @@
                     </button>
                 </div>
 
-                <!-- 2화: 0.5 Test Pi -->
                 <div class="chapter-item">
                     <div>
                         <div style="font-size: 0.85rem; font-weight: 600;" id="ch2-title">Ep 2. Into the Abyss</div>
@@ -369,7 +384,6 @@
                     </button>
                 </div>
 
-                <!-- 3화: 작성 중 -->
                 <div class="chapter-item">
                     <div>
                         <div style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;" id="ch3-title">Ep 3. Meeting Unknown Creatures</div>
@@ -391,12 +405,12 @@
             </div>
             
             <div class="form-group">
-                <label class="form-label" id="lbl-title">Title</label>
+                <label class="form-label">Title</label>
                 <input type="text" class="form-control" placeholder="Enter story title...">
             </div>
 
             <div class="form-group">
-                <label class="form-label" id="lbl-format">Format (글 종류)</label>
+                <label class="form-label">Format (글 종류)</label>
                 <select class="form-control">
                     <option value="novel">Novel (소설)</option>
                     <option value="script">Scenario / Script (시나리오/대본)</option>
@@ -406,7 +420,7 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label" id="lbl-genre">Sub-Genre (하위 장르)</label>
+                <label class="form-label">Sub-Genre (하위 장르)</label>
                 <select class="form-control">
                     <option value="scifi">Sci-Fi (공상과학)</option>
                     <option value="fantasy">Fantasy (판타지)</option>
@@ -418,7 +432,7 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label" id="lbl-length">Length (분량 구분)</label>
+                <label class="form-label">Length (분량 구분)</label>
                 <select class="form-control">
                     <option value="short">Short Story (단편: 5~10 Chapters)</option>
                     <option value="long">Long Serial (장편: 10+ Chapters)</option>
@@ -426,17 +440,58 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label" id="lbl-first-ch">Chapter 1 Content (첫 화 작성)</label>
-                <textarea class="form-control" placeholder="Write the opening chapter to invite 4 other authors..."></textarea>
+                <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
+                <!-- 실시간 키보드 입력 시 Byte 실시간 계산 (oninput) -->
+                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this)" placeholder="Write the opening chapter..."></textarea>
+                
+                <div class="byte-counter-info">
+                    <span class="guide-text" id="ui-guide-msg">500자~2,000자 사이로 작성해주세요.</span>
+                    <span class="byte-status" id="byte-status-count">0 / 6000 Bytes</span>
+                </div>
             </div>
 
-            <button class="btn btn-primary" id="btn-submit-relay" onclick="alert('Story Relay Created!'); closeModal();">
+            <button class="btn btn-primary" id="btn-submit-relay" disabled onclick="alert('Story Relay Created!'); closeModal();">
                 Publish First Chapter (1.0 Test Pi Deposit)
             </button>
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- 3. JavaScript (실시간 용량 및 인터랙션) -->
+    <!-- ========================================== -->
     <script>
+        const MIN_BYTES = 1500; // 한글 약 500자
+        const MAX_BYTES = 6000; // 한글 약 2,000자
+
+        // 1. 문자열의 Byte 용량을 정확히 계산하는 자바스크립트 함수
+        function getByteLength(str) {
+            let bytes = 0;
+            for (let i = 0; i < str.length; i++) {
+                const code = str.charCodeAt(i);
+                bytes += (code >> 11) ? 3 : ((code >> 7) ? 2 : 1);
+            }
+            return bytes;
+        }
+
+        // 2. 모든 페이지/모달에서 공통으로 쓰이는 실시간 Byte 검증 함수
+        function handleByteCheck(textareaElem) {
+            const currentBytes = getByteLength(textareaElem.value);
+            const statusElem = document.getElementById('byte-status-count');
+            const submitBtn = document.getElementById('btn-submit-relay');
+
+            statusElem.innerText = currentBytes + ' / ' + MAX_BYTES + ' Bytes';
+
+            // 최소~최대 범위 내에 있을 때만 버튼 활성화
+            if (currentBytes >= MIN_BYTES && currentBytes <= MAX_BYTES) {
+                statusElem.className = 'byte-status valid';
+                submitBtn.disabled = false;
+            } else {
+                statusElem.className = 'byte-status';
+                submitBtn.disabled = true;
+            }
+        }
+
+        // 다국어 번역 데이터
         const translations = {
             en: {
                 titleRelay: "🔗 1. Story Relay",
@@ -459,7 +514,8 @@
                 ch3Status: "Author is writing...",
                 ch3Badge: "✍️ Writing",
                 unlockedText: "Unlocked",
-                modalHeading: "Create New Story Relay"
+                modalHeading: "Create New Story Relay",
+                uiGuideMsg: "Please write between 1,500 Bytes and 6,000 Bytes."
             },
             ko: {
                 titleRelay: "🔗 1. 스토리 릴레이 (Story Relay)",
@@ -482,145 +538,8 @@
                 ch3Status: "작가가 원고 집필 중입니다",
                 ch3Badge: "✍️ 작성 중",
                 unlockedText: "열람 완료",
-                modalHeading: "새 스토리 릴레이 개설"
-            },
-            cn: {
-                titleRelay: "🔗 1. 接龙故事 (Story Relay)",
-                btnCreate: "+ 发起接龙",
-                relayStatus: "进行中 · 3/5人已完成",
-                relayBookTitle: "深海4000米的白鲸",
-                relayDesc: "“当潜水器陷入沉寂时，窗外开始蠕动起巨大的白色漩涡……”",
-                relayPool: "💰 奖金池: 5.0 Test Pi (胜者独得)",
-                btnRelayJoin: "✍️ 参与续写 (1.0 Test Pi)",
-                titleSerial: "📚 2. 创作者连载",
-                serialType: "独家连载",
-                serialBookTitle: "深海守卫者",
-                serialAuthor: "作者: BlueWhale99",
-                ch1Title: "第1话. 黑海的前奏",
-                ch1Status: "免费公开",
-                ch1Btn: "阅读",
-                ch2Title: "第2话. 深入深海",
-                ch2Btn: "支付并阅读",
-                ch3Title: "第3话. 遭遇未知生物",
-                ch3Status: "作者正在撰写中",
-                ch3Badge: "✍️ 撰写中",
-                unlockedText: "已解锁",
-                modalHeading: "发起新接龙故事"
-            },
-            jp: {
-                titleRelay: "🔗 1. ストーリーリレー (Story Relay)",
-                btnCreate: "+ リレー作成",
-                relayStatus: "進行中 · 3/5人完了",
-                relayBookTitle: "深海4,000mの白いクジラ",
-                relayDesc: "「潜水艇가 静寂に包まれた時、窓の外で巨大な白い渦がうごめき始めた…」",
-                relayPool: "💰 賞金プール: 5.0 Test Pi (勝者独占)",
-                btnRelayJoin: "✍️ リレーに参加 (1.0 Test Pi)",
-                titleSerial: "📚 2. クリエイター連載",
-                serialType: "独占連載",
-                serialBookTitle: "深海の守護者",
-                serialAuthor: "作者: BlueWhale99",
-                ch1Title: "第1話. 黒い海の序幕",
-                ch1Status: "無料公開",
-                ch1Btn: "読む",
-                ch2Title: "第2話. 深海の中へ",
-                ch2Btn: "支払って読む",
-                ch3Title: "第3話. 遭遇した未知の生物",
-                ch3Status: "執筆中の原稿です",
-                ch3Badge: "✍️ 執筆中",
-                unlockedText: "閲覧可能",
-                modalHeading: "新規リレー作成"
-            },
-            es: {
-                titleRelay: "🔗 1. Relevo de Historias",
-                btnCreate: "+ Crear Relevo",
-                relayStatus: "En progreso · 3/5",
-                relayBookTitle: "La Ballena Blanca a 4,000m",
-                relayDesc: '"Cuando el submarino se hundió en el silencio..."',
-                relayPool: "💰 Fondo: 5.0 Test Pi",
-                btnRelayJoin: "✍️ Unirse (1.0 Test Pi)",
-                titleSerial: "📚 2. Serie del Autor",
-                serialType: "Exclusivo",
-                serialBookTitle: "Guardián del Mar Profundo",
-                serialAuthor: "Autor: BlueWhale99",
-                ch1Title: "Ep 1. Preludio del Mar Negro",
-                ch1Status: "Capítulo Gratis",
-                ch1Btn: "Leer",
-                ch2Title: "Ep 2. En el Abismo",
-                ch2Btn: "Pagar y Leer",
-                ch3Title: "Ep 3. Criaturas Desconocidas",
-                ch3Status: "Escribiendo...",
-                ch3Badge: "✍️ Escribiendo",
-                unlockedText: "Desbloqueado",
-                modalHeading: "Crear Nuevo Relevo"
-            },
-            vi: {
-                titleRelay: "🔗 1. Truyện Tiếp Sức",
-                btnCreate: "+ Tạo Tiếp Sức",
-                relayStatus: "Đang tiến hành · 3/5",
-                relayBookTitle: "Cá Voi Trắng ở Độ Sâu 4.000m",
-                relayDesc: '"Khi tàu ngầm chìm vào tĩnh lặng..."',
-                relayPool: "💰 Giải thưởng: 5.0 Test Pi",
-                btnRelayJoin: "✍️ Tham gia (1.0 Test Pi)",
-                titleSerial: "📚 2. Sáng Tác Dài Táp",
-                serialType: "Độc quyền",
-                serialBookTitle: "Vệ Binh Biển Sâu",
-                serialAuthor: "Tác giả: BlueWhale99",
-                ch1Title: "Tập 1. Khởi đầu Biển Đen",
-                ch1Status: "Miễn phí",
-                ch1Btn: "Đọc",
-                ch2Title: "Tập 2. Vào Vực Thẫm",
-                ch2Btn: "Trả phí & Đọc",
-                ch3Title: "Tập 3. Sinh vật lạ",
-                ch3Status: "Đang viết...",
-                ch3Badge: "✍️ Đang viết",
-                unlockedText: "Đã mở",
-                modalHeading: "Tạo Truyện Tiếp Sức Mới"
-            },
-            id: {
-                titleRelay: "🔗 1. Estafet Cerita",
-                btnCreate: "+ Buat Estafet",
-                relayStatus: "Berlangsung · 3/5",
-                relayBookTitle: "Paus Putih di Kedalaman 4.000m",
-                relayDesc: '"Saat kapal selam tenggelam dalam keheningan..."',
-                relayPool: "💰 Hadiah: 5.0 Test Pi",
-                btnRelayJoin: "✍️ Bergabung (1.0 Test Pi)",
-                titleSerial: "📚 2. Seri Penulis",
-                serialType: "Eksklusif",
-                serialBookTitle: "Penjaga Laut Dalam",
-                serialAuthor: "Penulis: BlueWhale99",
-                ch1Title: "Ep 1. Awal Laut Hitam",
-                ch1Status: "Gratis",
-                ch1Btn: "Baca",
-                ch2Title: "Ep 2. Ke Dalam Jurang",
-                ch2Btn: "Bayar & Baca",
-                ch3Title: "Ep 3. Makhluk Tak Dikenal",
-                ch3Status: "Sedang ditulis...",
-                ch3Badge: "✍️ Menulis",
-                unlockedText: "Terbuka",
-                modalHeading: "Buat Estafet Cerita Baru"
-            },
-            hi: {
-                titleRelay: "🔗 1. स्टोरी रिले (Story Relay)",
-                btnCreate: "+ रिले बनाएं",
-                relayStatus: "प्रगति पर · 3/5 शामिल",
-                relayBookTitle: "4,000m गहराई पर सफेद व्हेल",
-                relayDesc: '"जब पनडुब्बी सन्नाटे में डूब गई..."',
-                relayPool: "💰 पुरस्कार: 5.0 Test Pi",
-                btnRelayJoin: "✍️ शामिल हों (1.0 Test Pi)",
-                titleSerial: "📚 2. लेखक श्रृंखला",
-                serialType: "विशेष",
-                serialBookTitle: "गहरे समुद्र का रक्षक",
-                serialAuthor: "लेखक: BlueWhale99",
-                ch1Title: "भाग 1. काले समुद्र की शुरुआत",
-                ch1Status: "मुफ्त",
-                ch1Btn: "पढ़ें",
-                ch2Title: "भाग 2. अथाह गहराई में",
-                ch2Btn: "भुगतान करें और पढ़ें",
-                ch3Title: "भाग 3. अज्ञात जीव",
-                ch3Status: "लिखा जा रहा है...",
-                ch3Badge: "✍️ लेखन",
-                unlockedText: "अनलॉक",
-                modalHeading: "नया स्टोरी रिले बनाएं"
+                modalHeading: "새 스토리 릴레이 개설",
+                uiGuideMsg: "500자~2,000자 사이로 작성해주세요."
             }
         };
 
@@ -658,6 +577,7 @@
             document.getElementById('ch3-status').innerText = t.ch3Status;
             document.getElementById('ch3-badge').innerText = t.ch3Badge;
             document.getElementById('modal-heading').innerText = t.modalHeading;
+            document.getElementById('ui-guide-msg').innerText = t.uiGuideMsg;
         }
 
         function openModal() {
