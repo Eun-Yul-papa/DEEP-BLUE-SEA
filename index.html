@@ -17,6 +17,7 @@
             --border-glow: rgba(56, 189, 248, 0.3);
             --danger-red: #f87171;
             --success-green: #4ade80;
+            --purple-badge: #c084fc;
         }
 
         * {
@@ -166,21 +167,25 @@
 
         .tag-relay { background: rgba(56, 189, 248, 0.2); color: var(--primary-cyan); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
-        .tag-serial { background: rgba(168, 85, 247, 0.2); color: #c084fc; }
 
         .title-with-flag {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 8px;
         }
 
+        /* 더욱 직관적이고 세련된 글로벌 인증 뱃지 스타일 국기 디자인 */
         .flag-badge {
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.25rem;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 4px 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn {
@@ -191,7 +196,7 @@
             font-weight: 700;
             font-size: 0.9rem;
             cursor: pointer;
-            margin-top: 12px;
+            margin-top: 10px;
             transition: all 0.2s;
         }
 
@@ -212,33 +217,15 @@
             color: var(--primary-cyan);
         }
 
-        .chapter-list {
+        .btn-purple {
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid #c084fc;
+            color: #c084fc;
+        }
+
+        .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .chapter-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .status-badge {
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-
-        .status-writing {
-            background: rgba(234, 179, 8, 0.15);
-            color: #fde047;
-            border: 1px solid rgba(234, 179, 8, 0.3);
+            gap: 8px;
         }
 
         .modal-overlay {
@@ -358,6 +345,17 @@
             background: var(--primary-cyan);
             color: #020916;
         }
+
+        .candidate-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -370,7 +368,6 @@
             <div class="brand-title">Deep Blue Sea</div>
         </div>
         <div class="header-controls">
-            <!-- 독자 및 작성자의 선택 언어 -->
             <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                 <option value="ko" selected>🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
@@ -395,7 +392,7 @@
         </div>
 
         <div id="relay-card-container">
-            <div class="card">
+            <div class="card" id="card-default-relay">
                 <div class="tag-group">
                     <span class="tag tag-relay">진행 중 · 3/5명 완료</span>
                     <span class="tag tag-meta">소설</span>
@@ -412,48 +409,15 @@
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
                     💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
-                <button class="btn btn-primary" onclick="joinRelayWithFee('심해 4,000m의 하얀 고래', sampleNovelKo, 1.0, '🇰🇷')">
-                    📖 읽기 / 이어쓰기 (1.0 Test Pi)
-                </button>
-            </div>
-        </div>
-
-        <div class="section-title" style="margin-top: 24px;">📚 2. 창작자 연재</div>
-        <div class="card" style="margin-top: 14px;">
-            <span class="tag tag-serial">독점 연재</span>
-            <div class="title-with-flag" style="margin-top: 6px;">
-                <span class="flag-badge">🇰🇷</span>
-                <h3>심해의 파수꾼</h3>
-            </div>
-            <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 14px;">작가: BlueWhale99</p>
-
-            <div class="chapter-list">
-                <div class="chapter-item">
-                    <div>
-                        <div style="font-size: 0.85rem; font-weight: 600;">1화. 검은 바다의 서막</div>
-                        <div style="font-size: 0.75rem; color: #4ade80;">무료 공개</div>
-                    </div>
-                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="openReader('심해의 파수꾼 - 1화', sampleNovelKo, '🇰🇷')">
-                        읽기
+                
+                <!-- 읽기와 이어쓰기 버튼 분리 영역 -->
+                <div class="button-group">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래', 'card-default-relay')">
+                        📖 읽기 (후보 투표)
                     </button>
-                </div>
-
-                <div class="chapter-item">
-                    <div>
-                        <div style="font-size: 0.85rem; font-weight: 600;">2화. 심해 속으로</div>
-                        <div style="font-size: 0.75rem; color: var(--primary-cyan);">0.5 Test Pi</div>
-                    </div>
-                    <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="unlockChapter(this, 0.5)">
-                        지불 & 보기
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-default-relay', '심해 4,000m의 하얀 고래', sampleNovelKo)">
+                        ✍️ 이어쓰기 참여
                     </button>
-                </div>
-
-                <div class="chapter-item">
-                    <div>
-                        <div style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;">3화. 마주친 미지의 생명체</div>
-                        <div style="font-size: 0.75rem; color: #fde047;">작가가 원고 집필 중입니다</div>
-                    </div>
-                    <span class="status-badge status-writing">✍️ 작성 중</span>
                 </div>
             </div>
         </div>
@@ -468,8 +432,6 @@
                 <button class="close-btn" onclick="closeModal('createModal')">✕</button>
             </div>
             
-            <!-- 작성 언어 선택란 삭제됨 (상단 언어 자동 감지) -->
-
             <div class="form-group">
                 <label class="form-label">Title (제목)</label>
                 <input type="text" class="form-control" id="inputTitle" placeholder="제목을 입력하세요...">
@@ -522,26 +484,57 @@
         </div>
     </div>
 
-    <!-- Reader Modal -->
-    <div class="modal-overlay" id="readerModal">
+    <!-- Reader / Vote Modal (읽기 및 후보작 투표 뷰어) -->
+    <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="title-with-flag" style="margin: 0;">
-                    <span class="flag-badge" id="readerFlag">🇰🇷</span>
-                    <div class="modal-title" id="readerTitle">스토리 뷰어</div>
+                    <span class="flag-badge" id="voteModalFlag">🇰🇷</span>
+                    <div class="modal-title" id="voteModalTitle">스토리 읽기 및 후보 투표</div>
                 </div>
-                <button class="close-btn" onclick="closeModal('readerModal')">✕</button>
+                <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
+            </div>
+
+            <p style="font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px;">
+                💡 독자님은 현재 가장 마음에 드는 후보작에 투표하실 수 있습니다. (개발자 수익 모델 적용 예정 구간)
+            </p>
+
+            <!-- 후보작 목록 (최대 5개) -->
+            <div id="candidateListContainer">
+                <!-- 동적으로 채워짐 -->
+            </div>
+
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('readVoteModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- Writer Modal (이어쓰기 창작 전용 뷰어) -->
+    <div class="modal-overlay" id="writerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="title-with-flag" style="margin: 0;">
+                    <span class="flag-badge" id="writerFlag">🇰🇷</span>
+                    <div class="modal-title" id="writerTitle">이어쓰기 작업실</div>
+                </div>
+                <button class="close-btn" onclick="closeModal('writerModal')">✕</button>
             </div>
 
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
 
-            <div class="reader-body notranslate" id="readerBody">
+            <div class="reader-body notranslate" id="writerBody">
                 <!-- 소설 본문 -->
             </div>
 
-            <button class="btn btn-outline" onclick="closeModal('readerModal')">뷰어 닫기</button>
+            <div class="form-group" style="margin-top: 14px;">
+                <label class="form-label">내 이어쓰기 작성 (다음 챕터)</label>
+                <textarea class="form-control" placeholder="이어질 이야기를 작성하세요..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" onclick="alert('💾 이어쓰기 임시저장 완료!'); closeModal('writerModal');">
+                이어쓰기 제출하기
+            </button>
         </div>
     </div>
 
@@ -551,16 +544,9 @@
         let currentBalance = 100.0;
         let selectedUserLang = 'en';
 
-        // 언어 코드별 국기 매핑
         const flagMap = {
-            'ko': '🇰🇷',
-            'en': '🇺🇸',
-            'zh-CN': '🇨🇳',
-            'ja': '🇯🇵',
-            'es': '🇪🇸',
-            'vi': '🇻🇳',
-            'id': '🇮🇩',
-            'hi': '🇮🇳'
+            'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
+            'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳'
         };
 
         const sampleNovelKo = `잠수정이 수심 4,000미터의 침묵 속으로 빠져들었을 때, 칠흑 같은 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다.
@@ -569,10 +555,7 @@
 승조원 리암은 떨리는 손으로 조명 스위치를 켰다. 빛이 닿은 곳에는 전설로만 전해지던 '하얀 고래'의 빛나는 신경망 패턴이 수백 미터에 걸쳐 펼쳐져 있었다...`;
 
         function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'auto',
-                autoDisplay: false
-            }, 'google_translate_element');
+            new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
         }
 
         function setUserLanguage(langCode) {
@@ -585,11 +568,9 @@
         }
 
         function translateCurrentReaderContent() {
-            const readerBody = document.getElementById('readerBody');
+            const readerBody = document.getElementById('writerBody');
             readerBody.classList.remove('notranslate');
-
             if (selectedUserLang === 'ko') return;
-
             const googleSelect = document.querySelector('.goog-te-combo');
             if (googleSelect) {
                 googleSelect.value = selectedUserLang;
@@ -612,7 +593,6 @@
             const submitBtn = document.getElementById('btn-submit-relay');
 
             statusElem.innerText = currentBytes + ' / ' + MAX_BYTES + ' Bytes';
-
             if (currentBytes >= MIN_BYTES && currentBytes <= MAX_BYTES) {
                 statusElem.className = 'byte-status valid';
                 submitBtn.disabled = false;
@@ -625,31 +605,64 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function openReader(title, content, flag) {
-            document.getElementById('readerFlag').innerText = flag || '🇰🇷';
-            document.getElementById('readerTitle').innerText = title;
-            const readerBody = document.getElementById('readerBody');
-            readerBody.innerText = content;
-            readerBody.classList.add('notranslate');
-            openModal('readerModal');
+        // [읽기 버튼] 5개 후보작 목록 및 투표 창 오픈
+        function openReadVoteModal(title, cardId) {
+            document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록 & 투표`;
+            
+            const container = document.getElementById('candidateListContainer');
+            container.innerHTML = `
+                <div class="candidate-item">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리</div>
+                        <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
+                    </div>
+                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="alert('🌟 이 후보작에 투표 완료!')">투표하기</button>
+                </div>
+                <div class="candidate-item">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 B. 백색 소용돌이의 비밀</div>
+                        <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: OceanDeep (득표수: 8)</div>
+                    </div>
+                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="alert('🌟 이 후보작에 투표 완료!')">투표하기</button>
+                </div>
+            `;
+            openModal('readVoteModal');
         }
 
-        function joinRelayWithFee(title, content, fee, flag) {
-            if (currentBalance >= fee) {
-                currentBalance -= fee;
-                document.getElementById('balance').innerText = currentBalance.toFixed(1);
-                alert(`✍️ ${fee.toFixed(1)} Test Pi 보증금이 차감되었습니다!`);
-                openReader(title, content, flag);
+        // [이어쓰기 버튼] 최초 1회만 1.0 Test Pi 지불, 이후 재지불 없이 영구 입장 (LocalStorage 연동)
+        function handleJoinOrWrite(cardId, title, content) {
+            const authKey = `joined_room_${cardId}`;
+            const hasJoinedBefore = localStorage.getItem(authKey);
+
+            if (hasJoinedBefore) {
+                // 이미 지불한 이력이 있는 경우 재지불 없이 바로 입장
+                alert("✨ 환영합니다 형님! 이미 참여 중인 방이므로 보증금 재지불 없이 입장합니다.");
+                openWriterModal(title, content);
             } else {
-                alert("❌ Test Pi 잔액이 부족합니다.");
+                // 최초 참여 시 1.0 Test Pi 차감
+                if (currentBalance >= 1.0) {
+                    currentBalance -= 1.0;
+                    document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                    localStorage.setItem(authKey, "true"); // 지불 권한 저장
+                    alert("✍️ 1.0 Test Pi 참여비가 지불되었습니다. 이어쓰기 작업실로 입장합니다!");
+                    openWriterModal(title, content);
+                } else {
+                    alert("❌ Test Pi 잔액이 부족합니다.");
+                }
             }
         }
 
-        // 개설 시 현재 선택된 상단 언어 기반 국기 자동 할당
+        function openWriterModal(title, content) {
+            document.getElementById('writerTitle').innerText = title + ' - 이어쓰기';
+            const writerBody = document.getElementById('writerBody');
+            writerBody.innerText = content;
+            writerBody.classList.add('notranslate');
+            openModal('writerModal');
+        }
+
         function createNewRelayCard() {
             const currentLangCode = document.getElementById('userLangSelect').value;
-            const autoFlag = flagMap[currentLangCode] || '🇰🇷'; // 국기 자동 감지
-
+            const autoFlag = flagMap[currentLangCode] || '🇰🇷';
             const title = document.getElementById('inputTitle').value || "무제 스토리";
             const format = document.getElementById('selectFormat').value;
             const genre = document.getElementById('selectGenre').value;
@@ -664,9 +677,11 @@
             currentBalance -= 1.0;
             document.getElementById('balance').innerText = currentBalance.toFixed(1);
 
+            const uniqueCardId = 'card_' + Date.now();
             const container = document.getElementById('relay-card-container');
             const newCard = document.createElement('div');
             newCard.className = 'card';
+            newCard.id = uniqueCardId;
             newCard.innerHTML = `
                 <div class="tag-group">
                     <span class="tag tag-relay">진행 중 · 1/5명 완료</span>
@@ -684,9 +699,14 @@
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
                     💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
-                <button class="btn btn-primary" onclick="joinRelayWithFee('${title}', '${content.replace(/'/g, "\\'")}', 1.0, '${autoFlag}')">
-                    📖 읽기 / 이어쓰기 (1.0 Test Pi)
-                </button>
+                <div class="button-group">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}')">
+                        📖 읽기 (후보 투표)
+                    </button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}')">
+                        ✍️ 이어쓰기 참여
+                    </button>
+                </div>
             `;
 
             container.prepend(newCard);
@@ -696,20 +716,6 @@
             document.getElementById('inputTitle').value = "";
             document.getElementById('storyContent').value = "";
             document.getElementById('btn-submit-relay').disabled = true;
-        }
-
-        function unlockChapter(btn, cost) {
-            if (currentBalance >= cost) {
-                currentBalance -= cost;
-                document.getElementById('balance').innerText = currentBalance.toFixed(1);
-                btn.className = 'btn btn-outline';
-                btn.innerText = '열람 완료';
-                btn.onclick = null;
-                btn.disabled = true;
-                alert(cost + ' Test Pi 차감 완료!');
-            } else {
-                alert("❌ Test Pi 잔액이 부족합니다.");
-            }
         }
     </script>
 </body>
