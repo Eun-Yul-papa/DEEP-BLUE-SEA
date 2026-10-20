@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -342,9 +342,10 @@
             <div class="brand-title">Deep Blue Sea</div>
         </div>
         <div class="header-controls">
+            <!-- 기본 선택 언어를 한국어로 설정 (selected) -->
             <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ko" selected>🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
-                <option value="ko">🇰🇷 한국어</option>
                 <option value="cn">🇨🇳 中文</option>
                 <option value="jp">🇯🇵 日本語</option>
                 <option value="es">🇪🇸 Español</option>
@@ -362,66 +363,67 @@
         
         <!-- 1. Story Relay 섹션 -->
         <div class="section-header">
-            <div class="section-title" id="title-relay">🔗 1. Story Relay</div>
-            <button class="btn-create-relay" id="btn-open-modal" onclick="openModal()">+ Create Relay</button>
+            <div class="section-title" id="title-relay">🔗 1. 스토리 릴레이 (Story Relay)</div>
+            <button class="btn-create-relay" id="btn-open-modal" onclick="openModal('createModal')">+ 릴레이 개설</button>
         </div>
 
         <!-- 카드들이 동적으로 추가되는 영역 -->
         <div id="relay-card-container">
             <div class="card">
                 <div class="tag-group">
-                    <span class="tag tag-relay" id="tag-relay-status">In Progress · 3/5 Joined</span>
-                    <span class="tag tag-meta">Novel</span>
+                    <span class="tag tag-relay" id="tag-relay-status">진행 중 · 3/5명 완료</span>
+                    <span class="tag tag-meta">소설</span>
                     <span class="tag tag-meta">Sci-Fi</span>
-                    <span class="tag tag-meta">Short (5-10 Chs)</span>
+                    <span class="tag tag-meta">단편 (5-10 Chs)</span>
                 </div>
-                <h3 style="margin-bottom: 8px;" id="relay-book-title">The White Whale at 4,000m Depth</h3>
+                <h3 style="margin-bottom: 8px;" id="relay-book-title">심해 4,000m의 하얀 고래</h3>
                 <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;" id="relay-desc">
-                    "When the submarine sank into silence, a massive white vortex began to wriggle outside the window..."
+                    "잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."
                 </p>
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;" id="relay-pool">
-                    💰 Prize Pool: 5.0 Test Pi (Winner Takes All)
+                    💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
-                <button class="btn btn-primary" id="btn-relay-join" onclick="openReader('The White Whale at 4,000m Depth', sampleNovelKo)">
-                    📖 Read / Join Relay (1.0 Test Pi)
+                <!-- 릴레이 도전 시 1.0 Test Pi 차감 연동 -->
+                <button class="btn btn-primary" id="btn-relay-join" onclick="joinRelayWithFee('심해 4,000m의 하얀 고래', sampleNovelKo, 1.0)">
+                    📖 읽기 / 이어쓰기 (1.0 Test Pi)
                 </button>
             </div>
         </div>
 
         <!-- 2. Author Series 섹션 -->
-        <div class="section-title" style="margin-top: 24px;" id="title-serial">📚 2. Author Series</div>
+        <div class="section-title" style="margin-top: 24px;" id="title-serial">📚 2. 창작자 연재</div>
         <div class="card" style="margin-top: 14px;">
-            <span class="tag tag-serial" id="tag-serial-type">Exclusive</span>
-            <h3 style="margin-bottom: 4px;" id="serial-book-title">Guardian of the Deep Sea</h3>
-            <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 14px;" id="serial-author">Author: BlueWhale99</p>
+            <span class="tag tag-serial" id="tag-serial-type">독점 연재</span>
+            <h3 style="margin-bottom: 4px;" id="serial-book-title">심해의 파수꾼</h3>
+            <p style="font-size: 0.8rem; color: var(--text-sub); margin-bottom: 14px;" id="serial-author">작가: BlueWhale99</p>
 
             <div class="chapter-list">
                 <div class="chapter-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch1-title">Ep 1. Prelude of the Black Sea</div>
-                        <div style="font-size: 0.75rem; color: #4ade80;" id="ch1-status">Free Chapter</div>
+                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch1-title">1화. 검은 바다의 서막</div>
+                        <div style="font-size: 0.75rem; color: #4ade80;" id="ch1-status">무료 공개</div>
                     </div>
-                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" id="ch1-btn" onclick="openReader('Guardian of the Deep Sea - Ep 1', sampleNovelKo)">
-                        Read
+                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" id="ch1-btn" onclick="openReader('심해의 파수꾼 - 1화', sampleNovelKo)">
+                        읽기
                     </button>
                 </div>
 
                 <div class="chapter-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch2-title">Ep 2. Into the Abyss</div>
+                        <div style="font-size: 0.85rem; font-weight: 600;" id="ch2-title">2화. 심해 속으로</div>
                         <div style="font-size: 0.75rem; color: var(--primary-cyan);">0.5 Test Pi</div>
                     </div>
                     <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" id="ch2-btn" onclick="unlockChapter(this, 0.5)">
-                        Pay & Read
+                        지불 & 보기
                     </button>
                 </div>
 
                 <div class="chapter-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;" id="ch3-title">Ep 3. Meeting Unknown Creatures</div>
-                        <div style="font-size: 0.75rem; color: #fde047;" id="ch3-status">Author is writing...</div>
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #94a3b8;" id="ch3-title">3화. 마주친 미지의 생명체</div>
+                        <div style="font-size: 0.75rem; color: #fde047;" id="ch3-status">작가가 원고 집필 중입니다</div>
                     </div>
-                    <span class="status-badge status-writing" id="ch3-badge">✍️ Writing</span>
+                    <span class="status-badge status-writing" id="ch3-badge">✍️ 작성 중</span>
                 </div>
             </div>
         </div>
@@ -432,48 +434,49 @@
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title" id="modal-heading">Create New Story Relay</div>
+                <div class="modal-title" id="modal-heading">새 스토리 릴레이 개설</div>
                 <button class="close-btn" onclick="closeModal('createModal')">✕</button>
             </div>
             
             <div class="form-group">
-                <label class="form-label">Title</label>
-                <input type="text" class="form-control" id="inputTitle" placeholder="Enter story title...">
+                <label class="form-label">Title (제목)</label>
+                <input type="text" class="form-control" id="inputTitle" placeholder="제목을 입력하세요...">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Format (글 종류)</label>
                 <select class="form-control" id="selectFormat">
-                    <option value="Novel">Novel (소설)</option>
-                    <option value="Script">Scenario / Script (시나리오/대본)</option>
-                    <option value="Poem">Poem (시)</option>
-                    <option value="Essay">Essay (에세이)</option>
+                    <option value="소설">소설 (Novel)</option>
+                    <option value="시나리오">시나리오/대본 (Scenario)</option>
+                    <option value="시">시 (Poem)</option>
+                    <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Sub-Genre (하위 장르)</label>
                 <select class="form-control" id="selectGenre">
-                    <option value="Sci-Fi">Sci-Fi (공상과학)</option>
-                    <option value="Fantasy">Fantasy (판타지)</option>
-                    <option value="Mystery">Mystery / Thriller (추리/스릴러)</option>
-                    <option value="Wuxia">Wuxia (무협)</option>
-                    <option value="Romance">Romance (연애)</option>
-                    <option value="Horror">Horror (공포)</option>
+                    <option value="일상">일상 (Slice of Life)</option> <!-- 일상 주제 추가 -->
+                    <option value="Sci-Fi">공상과학 (Sci-Fi)</option>
+                    <option value="판타지">판타지 (Fantasy)</option>
+                    <option value="추리">추리/스릴러 (Mystery)</option>
+                    <option value="무협">무협 (Wuxia)</option>
+                    <option value="연애">연애/로맨스 (Romance)</option>
+                    <option value="공포">공포 (Horror)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Length (분량 구분)</label>
                 <select class="form-control" id="selectLength">
-                    <option value="Short (5-10 Chs)">Short Story (단편: 5~10 Chapters)</option>
-                    <option value="Long (10+ Chs)">Long Serial (장편: 10+ Chapters)</option>
+                    <option value="단편 (5-10 Chs)">단편 (5~10 Chapters)</option>
+                    <option value="장편 (10+ Chs)">장편 (10+ Chapters)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
-                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this)" placeholder="Write the opening chapter..."></textarea>
+                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this)" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
                 
                 <div class="byte-counter-info">
                     <span class="guide-text" id="ui-guide-msg">500자~2,000자 사이로 작성해주세요.</span>
@@ -482,36 +485,35 @@
             </div>
 
             <button class="btn btn-primary" id="btn-submit-relay" disabled onclick="createNewRelayCard()">
-                Publish First Chapter (1.0 Test Pi Deposit)
+                첫 화 등록하기 (1.0 Test Pi 보증금 차감)
             </button>
         </div>
     </div>
 
-    <!-- Reader Modal (소설 읽기 & Translate 시뮬레이션 UI) -->
+    <!-- Reader Modal -->
     <div class="modal-overlay" id="readerModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title" id="readerTitle">Story Reader</div>
+                <div class="modal-title" id="readerTitle">스토리 뷰어</div>
                 <button class="close-btn" onclick="closeModal('readerModal')">✕</button>
             </div>
 
-            <!-- 번역 버튼 -->
             <button class="translate-btn" onclick="translateNovelContent()">
-                🌐 <span id="translateBtnText">Translate to my language</span>
+                🌐 <span id="translateBtnText">내 언어로 실시간 AI 번역</span>
             </button>
 
             <div class="reader-body" id="readerBody">
-                <!-- 소설 본문이 표시됩니다 -->
+                <!-- 본문 텍스트 -->
             </div>
 
-            <button class="btn btn-outline" onclick="closeModal('readerModal')">Close Viewer</button>
+            <button class="btn btn-outline" onclick="closeModal('readerModal')">뷰어 닫기</button>
         </div>
     </div>
 
     <script>
         const MIN_BYTES = 1500;
         const MAX_BYTES = 6000;
-        let currentLang = 'en';
+        let currentLang = 'ko'; // 기본 언어: 한국어
         let currentBalance = 100.0;
         let isTranslated = false;
 
@@ -523,9 +525,12 @@
 
         const sampleNovelTranslations = {
             en: `[AI Translated to English]\nWhen the submarine sank into the silence at a depth of 4,000 meters, a massive white vortex began to wriggle outside the pitch-black window.\n\n"What on earth is happening in the quiet deep sea?"\nCrew member Liam turned on the light switch with trembling hands. Spread over hundreds of meters where the light touched was the glowing neural network pattern of the legendary 'White Whale'...`,
-            vi: `[AI Được dịch sang tiếng Việt]\nKhi tàu ngầm chìm vào tĩnh lặng ở độ sâu 4.000m, một xoáy nước màu trắng khổng lồ bắt đầu xoáy bên ngoài cửa sổ tối đen.\n\n"Chuyện gì đang xảy ra dưới biển sâu yên tĩnh vậy?"\nThủy thủ Liam bật công tắc đèn với bàn tay run rẩy. Trải dài hàng trăm mét nơi ánh sáng chiếu tới là mạng lưới thần kinh phát sáng của 'Cá Voi Trắng' huyền thoại...`,
             cn: `[AI 翻译为中文]\n当潜水器陷入水下4000米的沉寂时，漆黑的窗外开始蠕动起巨大的白色漩涡。\n\n“这片平静的深海到底发生了什么？”\n船员利亚姆用颤抖的手打开了灯光开关。在灯光照亮的前方，延伸着数百米传说中“白鲸”的发光神经网络图案……`,
-            es: `[AI Traducido al Español]\nCuando el submarino se hundió en el silencio a una profundidad de 4,000 metros, un enorme vórtice blanco comenzó a moverse fuera de la ventana oscura.\n\n"¿Qué está pasando en el mar profundo?"\nEl tripulante Liam encendió la luz con manos temblorosas...`
+            jp: `[AI 翻訳 日本語]\n潜水艇が水深4,000メートルの静寂に包まれた時、漆黒の窓の外で巨大な白い渦がうごめき始めた。\n\n「静かな深海で一体何が起きているんだ？」\n乗組員のリアムは tremぶる手で照明のスイッチを入れた。光が届いた場所には、伝説とされてきた「白いクジラ」の光る神経網パターンが広がっていた...`,
+            es: `[AI Traducido al Español]\nCuando el submarino se hundió en el silencio a una profundidad de 4,000 metros, un enorme vórtice blanco comenzó a moverse fuera de la ventana oscura.\n\n"¿Qué está pasando en el mar profundo?"\nEl tripulante Liam encendió la luz con manos temblorosas...`,
+            vi: `[AI Được dịch sang tiếng Việt]\nKhi tàu ngầm chìm vào tĩnh lặng ở độ sâu 4.000m, một xoáy nước màu trắng khổng lồ bắt đầu xoáy bên ngoài cửa sổ tối đen.\n\n"Chuyện gì đang xảy ra dưới biển sâu yên tĩnh vậy?"\nThủy thủ Liam bật công tắc đèn với bàn tay run rẩy...`,
+            id: `[AI Diterjemahkan ke Bahasa Indonesia]\nSaat kapal selam tenggelam dalam keheningan di kedalaman 4.000 meter, pusaran putih besar mulai bergerak di luar jendela yang gelap gulita.\n\n"Apa yang terjadi di laut dalam yang tenang ini?"\nAwak kapal Liam menyalakan sakelar lampu dengan tangan gemetar...`,
+            hi: `[AI हिंदी अनुवाद]\nजब पनडुब्बी 4,000 मीटर की गहराई पर सन्नाटे में डूब गई, तो खिड़की के बाहर एक बड़ा भंवर हिलने लगा।\n\n"शांत गहरे समुद्र में क्या हो रहा है?"\nक्रू सदस्य लियाम ने कांपते हाथों से लाइट का स्विच ऑन किया...`
         };
 
         function getByteLength(str) {
@@ -568,6 +573,18 @@
             openModal('readerModal');
         }
 
+        // 릴레이 도전 버튼 클릭 시 1.0 Test Pi 차감 후 읽기 창 오픈
+        function joinRelayWithFee(title, content, fee) {
+            if (currentBalance >= fee) {
+                currentBalance -= fee;
+                document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                alert(`✍️ ${fee.toFixed(1)} Test Pi 보증금이 차감되었습니다! 스토리 릴레이에 참여합니다.`);
+                openReader(title, content);
+            } else {
+                alert("❌ Test Pi 잔액이 부족합니다.");
+            }
+        }
+
         function translateNovelContent() {
             const readerBody = document.getElementById('readerBody');
             if (!isTranslated) {
@@ -579,30 +596,27 @@
             }
         }
 
-        // 실제 Create 동작: 사용자가 모달에서 입력한 정보로 카드 추가
         function createNewRelayCard() {
-            const title = document.getElementById('inputTitle').value || "Untitled Story";
+            const title = document.getElementById('inputTitle').value || "무제 스토리";
             const format = document.getElementById('selectFormat').value;
             const genre = document.getElementById('selectGenre').value;
             const length = document.getElementById('selectLength').value;
             const content = document.getElementById('storyContent').value;
 
             if (currentBalance < 1.0) {
-                alert("Not enough Test Pi balance!");
+                alert("❌ Test Pi 잔액이 부족합니다!");
                 return;
             }
 
-            // 잔액 1.0 Test Pi 차감
             currentBalance -= 1.0;
             document.getElementById('balance').innerText = currentBalance.toFixed(1);
 
-            // 새 카드 생성 HTML
             const container = document.getElementById('relay-card-container');
             const newCard = document.createElement('div');
             newCard.className = 'card';
             newCard.innerHTML = `
                 <div class="tag-group">
-                    <span class="tag tag-relay">In Progress · 1/5 Joined</span>
+                    <span class="tag tag-relay">진행 중 · 1/5명 완료</span>
                     <span class="tag tag-meta">${format}</span>
                     <span class="tag tag-meta">${genre}</span>
                     <span class="tag tag-meta">${length}</span>
@@ -612,24 +626,49 @@
                     "${content.substring(0, 80)}..."
                 </p>
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 Prize Pool: 5.0 Test Pi (Winner Takes All)
+                    💰 상금 풀: 5.0 Test Pi (승자독식)
                 </div>
-                <button class="btn btn-primary" onclick="openReader('${title}', '${content.replace(/'/g, "\\'")}')">
-                    📖 Read / Join Relay (1.0 Test Pi)
+                <button class="btn btn-primary" onclick="joinRelayWithFee('${title}', '${content.replace(/'/g, "\\'")}', 1.0)">
+                    📖 읽기 / 이어쓰기 (1.0 Test Pi)
                 </button>
             `;
 
-            container.prepend(newCard); // 맨 위에 카드 추가
+            container.prepend(newCard);
             closeModal('createModal');
-            alert("🎉 New Story Relay Published! 1.0 Test Pi Deposited.");
+            alert("🎉 새 스토리 릴레이가 개설되었습니다! 1.0 Test Pi 보증금이 제출되었습니다.");
 
-            // 입력 폼 초기화
             document.getElementById('inputTitle').value = "";
             document.getElementById('storyContent').value = "";
             document.getElementById('btn-submit-relay').disabled = true;
         }
 
+        // 8개 국어 오류 없는 완성 번역 객체
         const translations = {
+            ko: {
+                titleRelay: "🔗 1. 스토리 릴레이 (Story Relay)",
+                btnCreate: "+ 릴레이 개설",
+                relayStatus: "진행 중 · 3/5명 완료",
+                relayBookTitle: "심해 4,000m의 하얀 고래",
+                relayDesc: '"잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."',
+                relayPool: "💰 상금 풀: 5.0 Test Pi (승자독식)",
+                btnRelayJoin: "📖 읽기 / 이어쓰기 (1.0 Test Pi)",
+                titleSerial: "📚 2. 창작자 연재",
+                serialType: "독점 연재",
+                serialBookTitle: "심해의 파수꾼",
+                serialAuthor: "작가: BlueWhale99",
+                ch1Title: "1화. 검은 바다의 서막",
+                ch1Status: "무료 공개",
+                ch1Btn: "읽기",
+                ch2Title: "2화. 심해 속으로",
+                ch2Btn: "지불 & 보기",
+                ch3Title: "3화. 마주친 미지의 생명체",
+                ch3Status: "작가가 원고 집필 중입니다",
+                ch3Badge: "✍️ 작성 중",
+                unlockedText: "열람 완료",
+                modalHeading: "새 스토리 릴레이 개설",
+                uiGuideMsg: "500자~2,000자 사이로 작성해주세요.",
+                translateBtnText: "내 언어로 실시간 AI 번역"
+            },
             en: {
                 titleRelay: "🔗 1. Story Relay",
                 btnCreate: "+ Create Relay",
@@ -655,36 +694,161 @@
                 uiGuideMsg: "Please write between 1,500 Bytes and 6,000 Bytes.",
                 translateBtnText: "Translate to my language"
             },
-            ko: {
-                titleRelay: "🔗 1. 스토리 릴레이 (Story Relay)",
-                btnCreate: "+ 릴레이 개설",
-                relayStatus: "진행 중 · 3/5명 완료",
-                relayBookTitle: "심해 4,000m의 하얀 고래",
-                relayDesc: '"잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."',
-                relayPool: "💰 상금 풀: 5.0 Test Pi (승자독식)",
-                btnRelayJoin: "📖 읽기 / 이어쓰기 (1.0 Test Pi)",
-                titleSerial: "📚 2. 창작자 연재",
-                serialType: "독점 연재",
-                serialBookTitle: "심해의 파수꾼",
-                serialAuthor: "작가: BlueWhale99",
-                ch1Title: "1화. 검은 바다의 서막",
-                ch1Status: "무료 공개",
-                ch1Btn: "읽기",
-                ch2Title: "2화. 심해 속으로",
-                ch2Btn: "지불 & 보기",
-                ch3Title: "3화. 마주친 미지의 생명체",
-                ch3Status: "작가가 원고 집필 중입니다",
-                ch3Badge: "✍️ 작성 중",
-                unlockedText: "열람 완료",
-                modalHeading: "새 스토리 릴레이 개설",
-                uiGuideMsg: "500자~2,000자 사이로 작성해주세요.",
-                translateBtnText: "내 언어로 실시간 AI 번역"
+            cn: {
+                titleRelay: "🔗 1. 接龙故事 (Story Relay)",
+                btnCreate: "+ 发起接龙",
+                relayStatus: "进行中 · 3/5人已完成",
+                relayBookTitle: "深海4000米的白鲸",
+                relayDesc: "“当潜水器陷入沉寂时，窗外开始蠕动起巨大的白色漩涡……”",
+                relayPool: "💰 奖金池: 5.0 Test Pi (胜者独得)",
+                btnRelayJoin: "📖 阅读 / 参与续写 (1.0 Test Pi)",
+                titleSerial: "📚 2. 创作者连载",
+                serialType: "独家连载",
+                serialBookTitle: "深海守卫者",
+                serialAuthor: "作者: BlueWhale99",
+                ch1Title: "第1话. 黑海的前奏",
+                ch1Status: "免费公开",
+                ch1Btn: "阅读",
+                ch2Title: "第2话. 深入深海",
+                ch2Btn: "支付并阅读",
+                ch3Title: "第3话. 遭遇未知生物",
+                ch3Status: "作者正在撰写中",
+                ch3Badge: "✍️ 撰写中",
+                unlockedText: "已解锁",
+                modalHeading: "发起新接龙故事",
+                uiGuideMsg: "请填写 500 字至 2,000 字的内容 (1,500~6,000 Bytes)",
+                translateBtnText: "实时 AI 翻译为我的语言"
+            },
+            jp: {
+                titleRelay: "🔗 1. ストーリーリレー (Story Relay)",
+                btnCreate: "+ リレー作成",
+                relayStatus: "進行中 · 3/5人完了",
+                relayBookTitle: "深海4,000mの白いクジラ",
+                relayDesc: "「潜水艇が静寂に包まれた時、窓の外で巨大な白い渦がうごめき始めた…」",
+                relayPool: "💰 賞金プール: 5.0 Test Pi (勝者独占)",
+                btnRelayJoin: "📖 読む / リレー参加 (1.0 Test Pi)",
+                titleSerial: "📚 2. クリエイター連載",
+                serialType: "独占連載",
+                serialBookTitle: "深海の守護者",
+                serialAuthor: "作者: BlueWhale99",
+                ch1Title: "第1話. 黒い海の序幕",
+                ch1Status: "無料公開",
+                ch1Btn: "読む",
+                ch2Title: "第2話. 深海の中へ",
+                ch2Btn: "支払って読む",
+                ch3Title: "第3話. 遭遇した未知の生物",
+                ch3Status: "執筆中の原稿です",
+                ch3Badge: "✍️ 執筆中",
+                unlockedText: "閲覧可能",
+                modalHeading: "新規リレー作成",
+                uiGuideMsg: "500文字〜2,000文字の間で入力してください (1,500~6,000 Bytes)",
+                translateBtnText: "自分の言語にAIリアルタイム翻訳"
+            },
+            es: {
+                titleRelay: "🔗 1. Relevo de Historias",
+                btnCreate: "+ Crear Relevo",
+                relayStatus: "En progreso · 3/5",
+                relayBookTitle: "La Ballena Blanca a 4,000m",
+                relayDesc: '"Cuando el submarino se hundió en el silencio, un gran vórtice comenzó a moverse..."',
+                relayPool: "💰 Fondo: 5.0 Test Pi",
+                btnRelayJoin: "📖 Leer / Unirse (1.0 Test Pi)",
+                titleSerial: "📚 2. Serie del Autor",
+                serialType: "Exclusivo",
+                serialBookTitle: "Guardián del Mar Profundo",
+                serialAuthor: "Autor: BlueWhale99",
+                ch1Title: "Ep 1. Preludio del Mar Negro",
+                ch1Status: "Capítulo Gratis",
+                ch1Btn: "Leer",
+                ch2Title: "Ep 2. En el Abismo",
+                ch2Btn: "Pagar y Leer",
+                ch3Title: "Ep 3. Criaturas Desconocidas",
+                ch3Status: "El autor está escribiendo...",
+                ch3Badge: "✍️ Escribiendo",
+                unlockedText: "Desbloqueado",
+                modalHeading: "Crear Nuevo Relevo de Historias",
+                uiGuideMsg: "Por favor escriba entre 1,500 Bytes y 6,000 Bytes.",
+                translateBtnText: "Traducción IA a mi idioma"
+            },
+            vi: {
+                titleRelay: "🔗 1. Truyện Tiếp Sức",
+                btnCreate: "+ Tạo Tiếp Sức",
+                relayStatus: "Đang tiến hành · 3/5",
+                relayBookTitle: "Cá Voi Trắng ở Độ Sâu 4.000m",
+                relayDesc: '"Khi tàu ngầm chìm vào tĩnh lặng..."',
+                relayPool: "💰 Giải thưởng: 5.0 Test Pi",
+                btnRelayJoin: "📖 Đọc / Tham gia (1.0 Test Pi)",
+                titleSerial: "📚 2. Sáng Tác Dài Tập",
+                serialType: "Độc quyền",
+                serialBookTitle: "Vệ Binh Biển Sâu",
+                serialAuthor: "Tác giả: BlueWhale99",
+                ch1Title: "Tập 1. Khởi đầu Biển Đen",
+                ch1Status: "Miễn phí",
+                ch1Btn: "Đọc",
+                ch2Title: "Tập 2. Vào Vực Thẳm",
+                ch2Btn: "Trả phí & Đọc",
+                ch3Title: "Tập 3. Sinh vật lạ",
+                ch3Status: "Tác giả đang viết...",
+                ch3Badge: "✍️ Đang viết",
+                unlockedText: "Đã mở",
+                modalHeading: "Tạo Truyện Tiếp Sức Mới",
+                uiGuideMsg: "Vui lòng viết từ 1.500 Bytes đến 6.000 Bytes.",
+                translateBtnText: "Dịch AI sang ngôn ngữ của tôi"
+            },
+            id: {
+                titleRelay: "🔗 1. Estafet Cerita",
+                btnCreate: "+ Buat Estafet",
+                relayStatus: "Berlangsung · 3/5",
+                relayBookTitle: "Paus Putih di Kedalaman 4.000m",
+                relayDesc: '"Saat kapal selam tenggelam dalam keheningan..."',
+                relayPool: "💰 Hadiah: 5.0 Test Pi",
+                btnRelayJoin: "📖 Baca / Bergabung (1.0 Test Pi)",
+                titleSerial: "📚 2. Seri Penulis",
+                serialType: "Eksklusif",
+                serialBookTitle: "Penjaga Laut Dalam",
+                serialAuthor: "Penulis: BlueWhale99",
+                ch1Title: "Ep 1. Awal Laut Hitam",
+                ch1Status: "Gratis",
+                ch1Btn: "Baca",
+                ch2Title: "Ep 2. Ke Dalam Jurang",
+                ch2Btn: "Bayar & Baca",
+                ch3Title: "Ep 3. Makhluk Tak Dikenal",
+                ch3Status: "Penulis sedang menulis...",
+                ch3Badge: "✍️ Menulis",
+                unlockedText: "Terbuka",
+                modalHeading: "Buat Estafet Cerita Baru",
+                uiGuideMsg: "Silakan tulis antara 1.500 Bytes hingga 6.000 Bytes.",
+                translateBtnText: "Terjemahkan AI ke bahasa saya"
+            },
+            hi: {
+                titleRelay: "🔗 1. स्टोरी रिले",
+                btnCreate: "+ रिले बनाएं",
+                relayStatus: "प्रगति पर · 3/5 शामिल",
+                relayBookTitle: "4,000m गहराई पर सफेद व्हेल",
+                relayDesc: '"जब पनडुब्बी सन्नाटे में डूब गई..."',
+                relayPool: "💰 पुरस्कार: 5.0 Test Pi",
+                btnRelayJoin: "📖 पढ़ें / शामिल हों (1.0 Test Pi)",
+                titleSerial: "📚 2. लेखक श्रृंखला",
+                serialType: "विशेष",
+                serialBookTitle: "गहरे समुद्र का रक्षक",
+                serialAuthor: "लेखक: BlueWhale99",
+                ch1Title: "भाग 1. काले समुद्र की शुरुआत",
+                ch1Status: "मुफ्त",
+                ch1Btn: "पढ़ें",
+                ch2Title: "भाग 2. अथाह गहराई में",
+                ch2Btn: "भुगतान करें और पढ़ें",
+                ch3Title: "भाग 3. अज्ञात जीव",
+                ch3Status: "लेखक लिख रहा है...",
+                ch3Badge: "✍️ लेखन",
+                unlockedText: "अनलॉक",
+                modalHeading: "नया स्टोरी रिले बनाएं",
+                uiGuideMsg: "कृपया 1,500 Bytes से 6,000 Bytes के बीच लिखें।",
+                translateBtnText: "मेरी भाषा में एआई अनुवाद"
             }
         };
 
         function changeLanguage(lang) {
             currentLang = lang;
-            const t = translations[lang] || translations['en'];
+            const t = translations[lang] || translations['ko'];
 
             document.getElementById('title-relay').innerText = t.titleRelay;
             document.getElementById('btn-open-modal').innerText = t.btnCreate;
@@ -720,7 +884,7 @@
                 document.getElementById('ui-guide-msg').innerText = t.uiGuideMsg;
             }
             if (document.getElementById('translateBtnText')) {
-                document.getElementById('translateBtnText').innerText = t.translateBtnText || "Translate to my language";
+                document.getElementById('translateBtnText').innerText = t.translateBtnText || "내 언어로 실시간 AI 번역";
             }
         }
 
@@ -732,9 +896,16 @@
                 btn.innerText = translations[currentLang].unlockedText;
                 btn.onclick = null;
                 btn.disabled = true;
-                alert(cost + ' Test Pi Paid!');
+                alert(cost + ' Test Pi 차감 완료!');
+            } else {
+                alert("❌ Test Pi 잔액이 부족합니다.");
             }
         }
+
+        // 초기화 실행: 기본 언어 한국어 설정
+        window.onload = function() {
+            changeLanguage('ko');
+        };
     </script>
 </body>
 </html>
