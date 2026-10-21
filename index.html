@@ -424,7 +424,7 @@
             <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                 <option value="ko" selected>🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
-                <option value="zh-CN">🇨🇳 중文</option>
+                <option value="zh-CN">🇨🇳 中文</option>
                 <option value="ja">🇯🇵 日本語</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="vi">🇻🇳 Tiếng Việt</option>
@@ -445,34 +445,64 @@
         </div>
 
         <div id="relay-card-container">
-            <!-- 샘플 카드 1 (투표 진행 중) -->
-            <div class="card" id="card-default-relay">
+            <!-- [테스트용 카드 1] 단편 6화 완결제안 테스트 -->
+            <div class="card" id="card-test-ch6">
                 <div class="tag-group">
-                    <span class="tag tag-vote">🗳️ 투표 라운드 진행 중</span>
+                    <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
                     <span class="tag tag-meta">소설</span>
-                    <span class="tag tag-meta">공상 과학</span>
+                    <span class="tag tag-meta">추리</span>
                     <span class="tag tag-meta">단편 (5-10 Chs)</span>
                 </div>
                 <div class="title-with-flag">
                     <span class="flag-badge">🇰🇷</span>
-                    <h3>심해 4,000m의 하얀 고래</h3>
+                    <h3>[테스트] 6화 완결 제안 테스트용 소설</h3>
                 </div>
                 <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                    "잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."
+                    "6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"
                 </p>
                 <div class="timer-info">
-                    ⏳ 투표 마감까지: 03일 14시간 남음
+                    ⏳ 작성 마감까지: 04일 12시간 남음
                 </div>
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 5.0 Test Pi (우승자 100% 획득)
+                    💰 상금 풀: 3.0 Test Pi
                 </div>
-                
                 <div class="button-group">
-                    <button class="btn btn-primary" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래', 'card-default-relay', true)">
-                        🗳️ 후보작 읽기 및 투표
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
+                        📖 읽기 (작성 진행중)
                     </button>
-                    <button class="btn btn-outline" style="flex: 1;" disabled>
-                        ✍️ 작성 마감됨
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
+                        ✍️ 이어쓰기 (Ch.6 완결제안)
+                    </button>
+                </div>
+            </div>
+
+            <!-- [테스트용 카드 2] 단편 10화 최종 완결 라운드 테스트 -->
+            <div class="card" id="card-test-ch10">
+                <div class="tag-group">
+                    <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
+                    <span class="tag tag-meta">소설</span>
+                    <span class="tag tag-meta">판타지</span>
+                    <span class="tag tag-meta">단편 (5-10 Chs)</span>
+                </div>
+                <div class="title-with-flag">
+                    <span class="flag-badge">🇰🇷</span>
+                    <h3>[테스트] 10화 최종 완결 라운드 테스트용</h3>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                    "단편 10화는 무조건 이야기를 마무리 짓는 최종 결말 라운드로 작동합니다!"
+                </p>
+                <div class="timer-info">
+                    ⏳ 작성 마감까지: 02일 08시간 남음
+                </div>
+                <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                    💰 상금 풀: 8.0 Test Pi
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
+                        📖 읽기 (작성 진행중)
+                    </button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
+                        ✍️ 이어쓰기 (Ch.10 최종결말)
                     </button>
                 </div>
             </div>
@@ -556,7 +586,6 @@
                 <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
             </div>
 
-            <!-- 수정된 패스 및 선택 버튼 영역 -->
             <div class="access-box">
                 <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 6px;">
                     📖 릴레이글 전체열람 & 투표권 획득
@@ -720,20 +749,20 @@
             closeModal('readVoteModal');
         }
 
-        function handleJoinOrWrite(cardId, title, content, flag, chapterNum, isLong) {
+        function handleJoinOrWrite(cardId, title, encodedContent, flag, chapterNum, isLong) {
             const authKey = `joined_room_${cardId}`;
             const hasJoinedBefore = localStorage.getItem(authKey);
+            const decodedContent = decodeURIComponent(encodedContent);
 
             if (hasJoinedBefore) {
-                alert("✨ 이미 참여 승인된 스토리 방입니다. 이어쓰기 작업실로 들어갑니다!");
-                openWriterModal(title, content, flag, chapterNum, isLong);
+                openWriterModal(title, decodedContent, flag, chapterNum, isLong);
             } else {
                 if (currentBalance >= 1.0) {
                     currentBalance -= 1.0;
                     document.getElementById('balance').innerText = currentBalance.toFixed(1);
                     localStorage.setItem(authKey, "true");
                     alert("✍️ 1.0 Test Pi 보증금 지불 완료! (원작자 포함 누구나 이어쓰기 제출 가능)");
-                    openWriterModal(title, content, flag, chapterNum, isLong);
+                    openWriterModal(title, decodedContent, flag, chapterNum, isLong);
                 } else {
                     alert("❌ Test Pi 잔액이 부족합니다.");
                 }
@@ -754,22 +783,27 @@
 
             const finishBox = document.getElementById('finishProposalBox');
             const chkFinish = document.getElementById('chkFinishProposal');
+            const inputLabel = document.getElementById('writerInputLabel');
             chkFinish.checked = false;
 
             if (!isLong) {
                 if (chapterNum >= 6 && chapterNum <= 9) {
                     finishBox.style.display = 'flex';
+                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
                 } else if (chapterNum === 10) {
                     finishBox.style.display = 'none';
-                    document.getElementById('writerInputLabel').innerText = "🏁 최종 완결 라운드 - 이야기를 마무리하는 결말 원고를 제출해주세요!";
+                    inputLabel.innerText = "🏁 최종 완결 라운드 - 이야기를 마무리하는 결말 원고를 제출해주세요!";
                 } else {
                     finishBox.style.display = 'none';
+                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
                 }
             } else {
                 if (chapterNum >= 10) {
                     finishBox.style.display = 'flex';
+                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
                 } else {
                     finishBox.style.display = 'none';
+                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
                 }
             }
 
@@ -796,6 +830,7 @@
             const content = document.getElementById('storyContent').value;
             const isLong = length.includes('장편');
 
+            const safeContent = encodeURIComponent(content);
             const uniqueCardId = 'card_' + Date.now();
             const container = document.getElementById('relay-card-container');
             const newCard = document.createElement('div');
@@ -825,7 +860,7 @@
                     <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}', false)">
                         📖 읽기 (작성 진행중)
                     </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}', '${autoFlag}', 2, ${isLong})">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
                         ✍️ 이어쓰기 참여
                     </button>
                 </div>
