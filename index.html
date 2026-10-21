@@ -366,6 +366,25 @@
             margin-bottom: 14px;
             text-align: center;
         }
+
+        .finish-proposal-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--warning-orange);
+        }
+
+        .finish-proposal-box input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -374,7 +393,6 @@
 
     <header>
         <div class="brand-logo">
-            <!-- 고래 이모지 대신 로고 이미지 반영 -->
             <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
             <div class="brand-title">Deep Blue Sea</div>
         </div>
@@ -408,7 +426,7 @@
                 <div class="tag-group">
                     <span class="tag tag-vote">🗳️ 투표 라운드 진행 중</span>
                     <span class="tag tag-meta">소설</span>
-                    <span class="tag tag-meta">Sci-Fi</span>
+                    <span class="tag tag-meta">공상 과학</span>
                     <span class="tag tag-meta">단편 (5-10 Chs)</span>
                 </div>
                 <div class="title-with-flag">
@@ -455,8 +473,7 @@
                 <label class="form-label">Format (글 종류)</label>
                 <select class="form-control" id="selectFormat">
                     <option value="소설">소설 (Novel)</option>
-                    <option value="시나리오">시나리오/대본 (Scenario)</option>
-                    <option value="시">시 (Poem)</option>
+                    <option value="시나리오/대본">시나리오/대본 (Scenario)</option>
                     <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
@@ -464,13 +481,19 @@
             <div class="form-group">
                 <label class="form-label">Sub-Genre (하위 장르)</label>
                 <select class="form-control" id="selectGenre">
-                    <option value="일상">일상 (Slice of Life)</option>
-                    <option value="Sci-Fi">공상과학 (Sci-Fi)</option>
+                    <option value="역사">역사 (Historical)</option>
+                    <option value="추리">추리 (Mystery)</option>
+                    <option value="과학">과학 (Science)</option>
+                    <option value="공상 과학" selected>공상 과학 (Sci-Fi)</option>
+                    <option value="스릴러">스릴러 (Thriller)</option>
+                    <option value="심리">심리 (Psychological)</option>
+                    <option value="모험">모험 (Adventure)</option>
                     <option value="판타지">판타지 (Fantasy)</option>
-                    <option value="추리">추리/스릴러 (Mystery)</option>
                     <option value="무협">무협 (Wuxia)</option>
-                    <option value="연애">연애/로맨스 (Romance)</option>
-                    <option value="공포">공포 (Horror)</option>
+                    <option value="로맨스">로맨스 (Romance)</option>
+                    <option value="전쟁">전쟁 (War)</option>
+                    <option value="전기">전기 (Biography)</option>
+                    <option value="종교">종교 (Religion)</option>
                 </select>
             </div>
 
@@ -542,12 +565,20 @@
             <div class="reader-body notranslate" id="writerBody"></div>
 
             <div class="form-group" style="margin-top: 14px;">
-                <label class="form-label">내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)</label>
+                <label class="form-label" id="writerInputLabel">내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)</label>
                 <textarea class="form-control" id="writerInputContent" oninput="handleByteCheck(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요 (1,500 ~ 6,000 바이트)..."></textarea>
                 
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
                     <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
+                </div>
+
+                <!-- 완결 제안 체크박스 영역 (조건 충족 시 동적 노출) -->
+                <div class="finish-proposal-box" id="finishProposalBox" style="display: none;">
+                    <input type="checkbox" id="chkFinishProposal">
+                    <label for="chkFinishProposal" style="cursor: pointer; font-weight: 600;">
+                        ☑️ 이 원고를 끝으로 스토리 완결 제안 (독자 투표 최다 득표 시 조기 완결)
+                    </label>
                 </div>
             </div>
 
@@ -567,11 +598,6 @@
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
             'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳'
         };
-
-        const sampleNovelKo = `잠수정이 수심 4,000미터의 침묵 속으로 빠져들었을 때, 칠흑 같은 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다.
-
-"조용한 심해에 무슨 일이 일어난 거지?"
-승조원 리암은 떨리는 손으로 조명 스위치를 켰다. 빛이 닿은 곳에는 전설로만 전해지던 '하얀 고래'의 빛나는 신경망 패턴이 수백 미터에 걸쳐 펼쳐져 있었다...`;
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
@@ -631,7 +657,7 @@
             container.innerHTML = `
                 <div class="candidate-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리</div>
+                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리 [완결제안]</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
                     </div>
                     ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">작성 진행중</span>`}
@@ -652,29 +678,29 @@
             closeModal('readVoteModal');
         }
 
-        function handleJoinOrWrite(cardId, title, content, flag) {
+        function handleJoinOrWrite(cardId, title, content, flag, chapterNum, isLong) {
             const authKey = `joined_room_${cardId}`;
             const hasJoinedBefore = localStorage.getItem(authKey);
 
             if (hasJoinedBefore) {
                 alert("✨ 이미 참여 승인된 스토리 방입니다. 이어쓰기 작업실로 들어갑니다!");
-                openWriterModal(title, content, flag);
+                openWriterModal(title, content, flag, chapterNum, isLong);
             } else {
                 if (currentBalance >= 1.0) {
                     currentBalance -= 1.0;
                     document.getElementById('balance').innerText = currentBalance.toFixed(1);
                     localStorage.setItem(authKey, "true");
                     alert("✍️ 1.0 Test Pi 보증금 지불 완료! (원작자 포함 누구나 이어쓰기 제출 가능)");
-                    openWriterModal(title, content, flag);
+                    openWriterModal(title, content, flag, chapterNum, isLong);
                 } else {
                     alert("❌ Test Pi 잔액이 부족합니다.");
                 }
             }
         }
 
-        function openWriterModal(title, content, flag) {
+        function openWriterModal(title, content, flag, chapterNum = 2, isLong = false) {
             document.getElementById('writerFlag').innerText = flag || '🇰🇷';
-            document.getElementById('writerTitle').innerText = title + ' - 이어쓰기';
+            document.getElementById('writerTitle').innerText = title + ' - 이어쓰기 (Ch. ' + chapterNum + ')';
             const writerBody = document.getElementById('writerBody');
             writerBody.innerText = content;
             writerBody.classList.add('notranslate');
@@ -684,11 +710,40 @@
             document.getElementById('writer-byte-count').className = "byte-status";
             document.getElementById('btn-submit-write').disabled = true;
 
+            const finishBox = document.getElementById('finishProposalBox');
+            const chkFinish = document.getElementById('chkFinishProposal');
+            chkFinish.checked = false;
+
+            // 완결 처리 제안 로직 조건 체크
+            // 단편: 6~9화 완결제안 체크 가능 / 10화 최종 완결 라운드
+            // 장편: 10화부터 완결제안 체크 가능
+            if (!isLong) { // 단편
+                if (chapterNum >= 6 && chapterNum <= 9) {
+                    finishBox.style.display = 'flex';
+                } else if (chapterNum === 10) {
+                    finishBox.style.display = 'none';
+                    document.getElementById('writerInputLabel').innerText = "🏁 최종 완결 라운드 - 이야기를 마무리하는 결말 원고를 제출해주세요!";
+                } else {
+                    finishBox.style.display = 'none';
+                }
+            } else { // 장편
+                if (chapterNum >= 10) {
+                    finishBox.style.display = 'flex';
+                } else {
+                    finishBox.style.display = 'none';
+                }
+            }
+
             openModal('writerModal');
         }
 
         function submitWriterContent() {
-            alert('🎉 이어쓰기 원고가 성공적으로 제출되었습니다!');
+            const isFinishProposed = document.getElementById('chkFinishProposal').checked;
+            if (isFinishProposed) {
+                alert('🏁 [스토리 완결 제안]이 포함된 이어쓰기 원고가 제출되었습니다!\n\n투표에서 최다 득표를 얻으면 스토리가 완성됩니다.');
+            } else {
+                alert('🎉 이어쓰기 원고가 성공적으로 제출되었습니다!');
+            }
             closeModal('writerModal');
         }
 
@@ -700,6 +755,7 @@
             const genre = document.getElementById('selectGenre').value;
             const length = document.getElementById('selectLength').value;
             const content = document.getElementById('storyContent').value;
+            const isLong = length.includes('장편');
 
             const uniqueCardId = 'card_' + Date.now();
             const container = document.getElementById('relay-card-container');
@@ -708,7 +764,7 @@
             newCard.id = uniqueCardId;
             newCard.innerHTML = `
                 <div class="tag-group">
-                    <span class="tag tag-relay">✍️ 작성 기간 (1/5명 완료)</span>
+                    <span class="tag tag-relay">✍️ 작성 기간 (1화 완료)</span>
                     <span class="tag tag-meta">${format}</span>
                     <span class="tag tag-meta">${genre}</span>
                     <span class="tag tag-meta">${length}</span>
@@ -730,7 +786,7 @@
                     <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}', false)">
                         📖 읽기 (작성 진행중)
                     </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}', '${autoFlag}')">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}', '${autoFlag}', 2, ${isLong})">
                         ✍️ 이어쓰기 참여
                     </button>
                 </div>
