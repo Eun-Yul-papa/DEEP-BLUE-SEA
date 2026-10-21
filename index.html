@@ -361,10 +361,34 @@
         .access-box {
             background: rgba(56, 189, 248, 0.1);
             border: 1px dashed var(--primary-cyan);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 14px;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
             text-align: center;
+        }
+
+        .access-btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .access-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-cyan);
+            background: rgba(56, 189, 248, 0.15);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .access-btn:hover {
+            background: var(--primary-cyan);
+            color: #020916;
         }
 
         .finish-proposal-box {
@@ -400,7 +424,7 @@
             <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                 <option value="ko" selected>🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
-                <option value="zh-CN">🇨🇳 中文</option>
+                <option value="zh-CN">🇨🇳 중文</option>
                 <option value="ja">🇯🇵 日本語</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="vi">🇻🇳 Tiếng Việt</option>
@@ -532,12 +556,17 @@
                 <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
             </div>
 
+            <!-- 수정된 패스 및 선택 버튼 영역 -->
             <div class="access-box">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
-                    📖 독자 전체열람 & 투표 패스
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 6px;">
+                    📖 릴레이글 전체열람 & 투표권 획득
                 </div>
                 <div style="font-size: 0.78rem; color: var(--text-sub);">
-                    0.5 Test Pi 결제 또는 📺 광고 시청을 통해 전체 후보작 열람 및 1표 투표권이 부여됩니다.
+                    아래 방법 중 하나를 선택하면 전체 후보작 열람 및 1표 투표권이 부여됩니다.
+                </div>
+                <div class="access-btn-group">
+                    <button class="access-btn" onclick="handlePayAccess()">💰 0.5 Test Pi 결제</button>
+                    <button class="access-btn" onclick="handleAdAccess()">📺 광고 시청</button>
                 </div>
             </div>
 
@@ -573,7 +602,6 @@
                     <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
                 </div>
 
-                <!-- 완결 제안 체크박스 영역 (조건 충족 시 동적 노출) -->
                 <div class="finish-proposal-box" id="finishProposalBox" style="display: none;">
                     <input type="checkbox" id="chkFinishProposal">
                     <label for="chkFinishProposal" style="cursor: pointer; font-weight: 600;">
@@ -650,6 +678,20 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
+        function handlePayAccess() {
+            if (currentBalance >= 0.5) {
+                currentBalance -= 0.5;
+                document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                alert('🎉 0.5 Test Pi 결제 완료!\n\n전체 후보작 열람 및 투표권이 활성화되었습니다.');
+            } else {
+                alert('❌ Test Pi 잔액이 부족합니다.');
+            }
+        }
+
+        function handleAdAccess() {
+            alert('📺 보상형 광고 재생 중...\n\n(시청 완료 후 전체 열람 및 투표권이 부여됩니다!)');
+        }
+
         function openReadVoteModal(title, cardId, isVotePhase) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
 
@@ -714,10 +756,7 @@
             const chkFinish = document.getElementById('chkFinishProposal');
             chkFinish.checked = false;
 
-            // 완결 처리 제안 로직 조건 체크
-            // 단편: 6~9화 완결제안 체크 가능 / 10화 최종 완결 라운드
-            // 장편: 10화부터 완결제안 체크 가능
-            if (!isLong) { // 단편
+            if (!isLong) {
                 if (chapterNum >= 6 && chapterNum <= 9) {
                     finishBox.style.display = 'flex';
                 } else if (chapterNum === 10) {
@@ -726,7 +765,7 @@
                 } else {
                     finishBox.style.display = 'none';
                 }
-            } else { // 장편
+            } else {
                 if (chapterNum >= 10) {
                     finishBox.style.display = 'flex';
                 } else {
