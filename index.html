@@ -17,6 +17,7 @@
             --border-glow: rgba(56, 189, 248, 0.3);
             --danger-red: #f87171;
             --success-green: #4ade80;
+            --warning-orange: #fbbf24;
         }
 
         * {
@@ -165,6 +166,7 @@
         }
 
         .tag-relay { background: rgba(56, 189, 248, 0.2); color: var(--primary-cyan); }
+        .tag-vote { background: rgba(251, 191, 36, 0.2); color: var(--warning-orange); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
 
         .title-with-flag {
@@ -184,6 +186,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .timer-info {
+            font-size: 0.78rem;
+            color: var(--warning-orange);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .btn {
@@ -384,9 +396,10 @@
         </div>
 
         <div id="relay-card-container">
+            <!-- 샘플 카드 1 (투표 진행 중) -->
             <div class="card" id="card-default-relay">
                 <div class="tag-group">
-                    <span class="tag tag-relay">진행 중 · 3/5명 완료</span>
+                    <span class="tag tag-vote">🗳️ 투표 라운드 진행 중</span>
                     <span class="tag tag-meta">소설</span>
                     <span class="tag tag-meta">Sci-Fi</span>
                     <span class="tag tag-meta">단편 (5-10 Chs)</span>
@@ -395,19 +408,22 @@
                     <span class="flag-badge">🇰🇷</span>
                     <h3>심해 4,000m의 하얀 고래</h3>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;">
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
                     "잠수정이 침묵 속으로 빠져들었을 때, 창밖으로 거대한 백색 소용돌이가 꿈틀거리기 시작했다..."
                 </p>
+                <div class="timer-info">
+                    ⏳ 투표 마감까지: 03일 14시간 남음 (창작자 100% 환원)
+                </div>
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 5.0 Test Pi (승자독식)
+                    💰 상금 풀: 5.0 Test Pi (승자독식 + 호스트 보증금 환불)
                 </div>
                 
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래')">
-                        📖 읽기 (후보 투표)
+                    <button class="btn btn-primary" style="flex: 1;" onclick="openReadVoteModal('심해 4,000m의 하얀 고래', 'card-default-relay', true)">
+                        🗳️ 후보작 읽기 및 투표
                     </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-default-relay', '심해 4,000m의 하얀 고래', sampleNovelKo)">
-                        ✍️ 이어쓰기 참여
+                    <button class="btn btn-outline" style="flex: 1;" disabled>
+                        ✍️ 작성 마감됨
                     </button>
                 </div>
             </div>
@@ -486,8 +502,8 @@
                 <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
             </div>
 
-            <p style="font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px;">
-                💡 독자님은 현재 가장 마음에 드는 후보작에 투표하실 수 있습니다.
+            <p style="font-size: 0.82rem; color: var(--text-sub); margin-bottom: 12px;" id="voteGuideText">
+                💡 독자님은 가장 마음에 드는 후보작 1개에 투표하실 수 있습니다.
             </p>
 
             <div id="candidateListContainer"></div>
@@ -496,7 +512,7 @@
         </div>
     </div>
 
-    <!-- Writer Modal (이어쓰기 작업실 - 번역 및 Byte 검증 완벽 탑재) -->
+    <!-- Writer Modal -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -596,8 +612,16 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function openReadVoteModal(title) {
-            document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록 & 투표`;
+        function openReadVoteModal(title, cardId, isVotePhase) {
+            document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
+            const guideText = document.getElementById('voteGuideText');
+            
+            if (isVotePhase) {
+                guideText.innerText = "🗳️ 현재 5일간의 최종 투표 라운드입니다. 가장 마음에 드는 후보작에 투표해 주세요!";
+            } else {
+                guideText.innerText = "✍️ 현재 스토리 작성 기간(5일)입니다. 작성 기간 종료 후 투표가 시작됩니다.";
+            }
+
             const container = document.getElementById('candidateListContainer');
             container.innerHTML = `
                 <div class="candidate-item">
@@ -605,17 +629,22 @@
                         <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
                     </div>
-                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="alert('🌟 이 후보작에 투표 완료!')">투표하기</button>
+                    ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">투표 대기중</span>`}
                 </div>
                 <div class="candidate-item">
                     <div>
                         <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 B. 백색 소용돌이의 비밀</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: OceanDeep (득표수: 8)</div>
                     </div>
-                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="alert('🌟 이 후보작에 투표 완료!')">투표하기</button>
+                    ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 B')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">투표 대기중</span>`}
                 </div>
             `;
             openModal('readVoteModal');
+        }
+
+        function handleVoteFinish(title, candidateName) {
+            alert(`🎉 '${candidateName}'에 성공적으로 투표하셨습니다!\n\n💡 릴레이 완결 시 우승자 상금 지급 및 호스트 보증금(1.0 Test Pi) 100% 환불이 자동 진행됩니다.`);
+            closeModal('readVoteModal');
         }
 
         function handleJoinOrWrite(cardId, title, content, flag) {
@@ -630,7 +659,7 @@
                     currentBalance -= 1.0;
                     document.getElementById('balance').innerText = currentBalance.toFixed(1);
                     localStorage.setItem(authKey, "true");
-                    alert("✍️ 1.0 Test Pi 참여비가 지불되었습니다. 이어쓰기 작업실로 입장합니다!");
+                    alert("✍️ 1.0 Test Pi 참여비가 지불되었습니다. 5일 작성 기간 동안 이어쓰기가 가능합니다!");
                     openWriterModal(title, content, flag);
                 } else {
                     alert("❌ Test Pi 잔액이 부족합니다.");
@@ -645,7 +674,6 @@
             writerBody.innerText = content;
             writerBody.classList.add('notranslate');
             
-            // 입력창 초기화
             document.getElementById('writerInputContent').value = "";
             document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
             document.getElementById('writer-byte-count').className = "byte-status";
@@ -683,7 +711,7 @@
             newCard.id = uniqueCardId;
             newCard.innerHTML = `
                 <div class="tag-group">
-                    <span class="tag tag-relay">진행 중 · 1/5명 완료</span>
+                    <span class="tag tag-relay">✍️ 작성 기간 (1/5명 완료)</span>
                     <span class="tag tag-meta">${format}</span>
                     <span class="tag tag-meta">${genre}</span>
                     <span class="tag tag-meta">${length}</span>
@@ -692,15 +720,18 @@
                     <span class="flag-badge">${autoFlag}</span>
                     <h3>${title}</h3>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 14px;">
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
                     "${content.substring(0, 80)}..."
                 </p>
+                <div class="timer-info">
+                    ⏳ 작성 마감까지: 05일 00시간 남음 (미참여 시 100% 환불)
+                </div>
                 <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 5.0 Test Pi (승자독식)
+                    💰 상금 풀: 2.0 Test Pi (승자독식 + 완결 시 호스트 1.0 Pi 환불)
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}')">
-                        📖 읽기 (후보 투표)
+                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}', false)">
+                        📖 읽기 (작성 진행중)
                     </button>
                     <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${content.replace(/'/g, "\\'")}', '${autoFlag}')">
                         ✍️ 이어쓰기 참여
@@ -710,7 +741,7 @@
 
             container.prepend(newCard);
             closeModal('createModal');
-            alert("🎉 새 스토리 릴레이가 개설되었습니다!");
+            alert("🎉 새 스토리 릴레이가 개설되었습니다!\n\n💡 5일간 작성 기간이 시작되며, 참여자가 없더라도 보증금 1.0 Test Pi는 100% 안전하게 환불됩니다.");
 
             document.getElementById('inputTitle').value = "";
             document.getElementById('storyContent').value = "";
