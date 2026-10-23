@@ -663,34 +663,34 @@
                 </div>
             </div>
 
-            <!-- 디앱 목적 및 토크노믹스 소개 창 -->
+            <!-- 디앱 목적 및 브랜드 스토리 소개 창 -->
             <div class="landing-info-card">
                 <div class="landing-info-title">
-                    🌊 Deep Blue Sea의 비전 & 플랫폼 구조
+                    🌊 DEEP BLUE SEA의 브랜드 스토리 & 비전
                 </div>
                 <div class="landing-info-text">
-                    Deep Blue Sea는 파이 네트워크(Pi Network) 생태계 기반의 **탈중앙화 집단지성 스토리텔링 및 웹소설 플랫폼**입니다.<br>
-                    누구나 함께 이야기를 완성하는 릴레이 창작과 개인의 고유 IP를 연재하는 독점 연재를 통해 창작 생태계를 확장합니다.
+                    끝없이 깊은 심해 속 미지의 세상에 우리가 아직 알지 못하는 수많은 생명과 비밀이 숨겨져 있듯, **AI가 공존하는 시대 속에서도 인간의 무한한 창작 능력과 가능성은 끊임없이 샘솟아 나옵니다.**<br><br>
+                    Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 **탈중앙화 집단지성 스토리텔링 플랫폼**입니다. 누구나 함께 이야기를 이어가는 '스토리 릴레이'와 개인 작가의 고유한 세계관을 펼치는 '오리지널 시리즈'를 통해 미지의 창작 세상으로 여러분을 안내합니다.
                 </div>
                 <div class="tokenomics-box">
-                    💎 **미래 생태계 확장 계획**: 완성된 우수 스토리 IP는 **RWA(실물자산) 및 NFT**로 판권화되어 글로벌 시장에서 거래됩니다.<br>
-                    ⚖️ **플랫폼 운영 정책**: 지속 가능한 생태계 개발 및 상금 풀 유지를 위해 모든 수익 결제의 **5%**는 플랫폼 배분 및 모듈 운영비로 충당됩니다.
+                    💎 **미래 가치 창출**: 완결된 우수 스토리 작품은 **RWA(실물자산) 및 NFT 디지털 자산**으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 창작자 95% / 플랫폼 5%)
                 </div>
             </div>
 
             <!-- 하단 2개 핵심 탭 이동 카드 -->
             <div class="landing-grid">
-                <!-- 좌측: 스토리 릴레이 안내 카드 -->
+                <!-- 좌측: 스토리 릴레이 안내 카드 (상세 규칙 및 무료 개설 강조) -->
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
                         <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">
                             🔗 스토리 릴레이
                         </div>
                         <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
-                            **집단지성 서사 창작**<br>
-                            • 참여 보증금: 1.0 Pi<br>
-                            • 열람 & 투표: 0.1 Pi or 광고<br>
-                            • 우승자 릴레이 상금 100% 독식!
+                            **집단지성 릴레이 창작 규칙**<br>
+                            • **무료 첫 스토리 개설**: 누구나 자유롭게 첫 릴레이 오픈!<br>
+                            • **작성 5일**: 최대 5명 작가 릴레이 이어쓰기 (보증금 1.0 Pi)<br>
+                            • **투표 5일**: 모든 독자 후보작 열람 & 투표 (0.1 Pi or 광고)<br>
+                            • **상금 독식**: 최다 득표 우승 작가 릴레이 상금 100% 독식!
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">
@@ -705,10 +705,10 @@
                             📚 오리지널 시리즈
                         </div>
                         <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
-                            **창작자 독점 개인 연재**<br>
-                            • 1화 무료 공개 탐색<br>
-                            • 2화부터 0.1 Pi or 광고 해금<br>
-                            • 독자 직속 후원 및 수익 정산!
+                            **창작자 단독 연재 공간**<br>
+                            • **1화 무료 공개**: 누구나 부담 없이 작품 탐색<br>
+                            • **2화부터 유료**: 0.1 Pi 결제 or 광고 시청으로 다음 화 열기<br>
+                            • **수익 창출**: 독자 직접 결제/광고 수익 정산 + RWA/NFT 지분!
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">
@@ -1112,7 +1112,6 @@
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
         }
 
-        // 탭 전환 핸들러 (홈/릴레이/오리지널)
         function switchTab(tabName) {
             const homeSec = document.getElementById('home-section');
             const relaySec = document.getElementById('relay-section');
@@ -1122,7 +1121,6 @@
             const tabRelay = document.getElementById('tabRelayBtn');
             const tabCreator = document.getElementById('tabCreatorBtn');
 
-            // 탭 활성화 해제
             [tabHome, tabRelay, tabCreator].forEach(btn => btn.classList.remove('active'));
 
             if (tabName === 'home') {
