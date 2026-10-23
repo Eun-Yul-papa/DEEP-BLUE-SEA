@@ -38,92 +38,106 @@
         .goog-te-gadget { display: none !important; }
         #google_translate_element { display: none; }
 
+        /* 모바일 겸용 헤더 구도 개편 */
         header {
             background: rgba(2, 9, 22, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-glow);
-            padding: 10px 20px;
+            padding: 12px 16px;
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .header-top-row {
+            display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%;
         }
 
         .brand-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .whale-logo-img {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--primary-cyan);
-            box-shadow: 0 0 12px var(--primary-cyan);
+            box-shadow: 0 0 10px var(--primary-cyan);
         }
 
         .brand-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #ffffff;
             text-transform: uppercase;
+            white-space: nowrap;
         }
 
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: flex-end;
+            width: 100%;
+            gap: 8px;
         }
 
         .lang-select {
             background: rgba(13, 33, 66, 0.9);
             border: 1px solid var(--border-glow);
             color: var(--primary-cyan);
-            padding: 6px 10px;
+            padding: 5px 10px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             outline: none;
             cursor: pointer;
+            max-width: 130px;
         }
 
         .pi-badge {
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid var(--primary-cyan);
             color: var(--primary-cyan);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 4px;
+            white-space: nowrap;
         }
 
         .nav-tabs {
             display: flex;
             background: rgba(13, 33, 66, 0.5);
             border-bottom: 1px solid var(--border-glow);
-            padding: 0 20px;
+            padding: 0 10px;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
             color: var(--text-sub);
-            padding: 14px 20px;
-            font-size: 0.9rem;
+            padding: 12px 14px;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -135,7 +149,7 @@
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 16px;
         }
 
         .section-header {
@@ -143,16 +157,18 @@
             justify-content: space-between;
             align-items: center;
             margin: 10px 0 14px 0;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .section-title-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .section-title {
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 700;
             color: var(--primary-cyan);
         }
@@ -161,9 +177,9 @@
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid var(--primary-cyan);
             color: var(--primary-cyan);
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 600;
             cursor: pointer;
         }
@@ -174,7 +190,7 @@
             color: var(--primary-cyan);
             padding: 6px 12px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
         }
@@ -183,15 +199,15 @@
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 18px;
+            margin-bottom: 16px;
             backdrop-filter: blur(8px);
             transition: all 0.2s;
         }
 
         /* 슬림 리스트 뷰 전용 스타일 */
         .list-view-container .card {
-            padding: 12px 16px;
+            padding: 12px 14px;
             margin-bottom: 10px;
             border-radius: 10px;
             cursor: pointer;
@@ -213,7 +229,7 @@
         }
 
         .list-view-container .card .title-with-flag h3 {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--primary-cyan);
         }
 
@@ -221,7 +237,7 @@
             display: flex;
             gap: 6px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .list-view-container .tag-group {
@@ -230,9 +246,9 @@
 
         .tag {
             display: inline-block;
-            padding: 4px 8px;
+            padding: 3px 7px;
             border-radius: 6px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 600;
         }
 
@@ -245,27 +261,26 @@
         .title-with-flag {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 8px;
         }
 
         .flag-badge {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             background: rgba(255, 255, 255, 0.12);
-            padding: 4px 8px;
-            border-radius: 8px;
+            padding: 3px 6px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .timer-info {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             color: var(--warning-orange);
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 4px;
@@ -273,13 +288,13 @@
 
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             border-radius: 10px;
             border: none;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 8px;
             transition: all 0.2s;
         }
 
@@ -314,7 +329,7 @@
             z-index: 200;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
         }
 
         .modal-content {
@@ -323,7 +338,7 @@
             border-radius: 16px;
             width: 100%;
             max-width: 500px;
-            padding: 20px;
+            padding: 18px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -332,15 +347,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
             border-bottom: 1px solid var(--border-glow);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .modal-title {
             font-weight: 700;
             color: var(--primary-cyan);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .close-btn {
@@ -352,14 +367,14 @@
         }
 
         .form-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .form-label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-sub);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 600;
         }
 
@@ -368,22 +383,22 @@
             background: rgba(2, 9, 22, 0.6);
             border: 1px solid var(--border-glow);
             color: #fff;
-            padding: 10px;
+            padding: 9px;
             border-radius: 8px;
-            font-size: 0.85rem;
+            font-size: 0.83rem;
             outline: none;
         }
 
         textarea.form-control {
             resize: vertical;
-            min-height: 100px;
+            min-height: 90px;
         }
 
         .byte-counter-info {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
-            margin-top: 6px;
+            font-size: 0.72rem;
+            margin-top: 5px;
         }
 
         .guide-text { color: var(--text-sub); }
@@ -391,12 +406,12 @@
         .byte-status.valid { color: var(--success-green); }
 
         .reader-body {
-            line-height: 1.7;
-            font-size: 0.95rem;
+            line-height: 1.65;
+            font-size: 0.9rem;
             color: #e2e8f0;
             white-space: pre-line;
-            margin: 16px 0;
-            padding: 14px;
+            margin: 14px 0;
+            padding: 12px;
             background: rgba(2, 9, 22, 0.5);
             border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -406,24 +421,24 @@
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid var(--primary-cyan);
             color: var(--primary-cyan);
-            padding: 8px 14px;
+            padding: 7px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 6px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             transition: all 0.2s;
         }
 
         .candidate-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -433,25 +448,25 @@
             background: rgba(56, 189, 248, 0.1);
             border: 1px dashed var(--primary-cyan);
             border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 16px;
+            padding: 12px;
+            margin-bottom: 14px;
             text-align: center;
         }
 
         .access-btn-group {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .access-btn {
             flex: 1;
-            padding: 10px;
+            padding: 9px;
             border-radius: 8px;
             border: 1px solid var(--primary-cyan);
             background: rgba(56, 189, 248, 0.15);
             color: #fff;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
@@ -461,25 +476,25 @@
             background: rgba(251, 191, 36, 0.1);
             border: 1px solid rgba(251, 191, 36, 0.3);
             border-radius: 8px;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 8px;
+            margin-top: 8px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
+            gap: 6px;
+            font-size: 0.78rem;
             color: var(--warning-orange);
         }
 
         .finish-proposal-box input {
-            width: 16px;
-            height: 16px;
+            width: 15px;
+            height: 15px;
             cursor: pointer;
         }
 
         .chapter-list-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px;
+            padding: 10px;
             border-radius: 10px;
             margin-bottom: 8px;
             display: flex;
@@ -493,10 +508,17 @@
     <div id="google_translate_element"></div>
 
     <header>
-        <div class="brand-logo">
-            <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
-            <div class="brand-title">Deep Blue Sea</div>
+        <!-- 1열: 로고와 Pi 잔액을 양쪽에 배치 -->
+        <div class="header-top-row">
+            <div class="brand-logo">
+                <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
+                <div class="brand-title">Deep Blue Sea</div>
+            </div>
+            <div class="pi-badge">
+                <span>π</span> <span id="balance">100.0</span>
+            </div>
         </div>
+        <!-- 2열: 언어 선택 셀렉터를 깔끔하게 하단 배치 -->
         <div class="header-controls">
             <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                 <option value="ko" selected>🇰🇷 한국어</option>
@@ -508,9 +530,6 @@
                 <option value="id">🇮🇩 Bahasa Indonesia</option>
                 <option value="hi">🇮🇳 हिन्दी</option>
             </select>
-            <div class="pi-badge">
-                <span>π</span> <span id="balance">100.0</span>
-            </div>
         </div>
     </header>
 
@@ -934,7 +953,6 @@
             }
         }
 
-        // 뷰 모드 토글 (카드 뷰 <-> 리스트 뷰)
         function toggleViewMode(section) {
             const container = document.getElementById(section === 'relay' ? 'relay-card-container' : 'creator-card-container');
             const toggleBtn = document.getElementById(section === 'relay' ? 'relayViewToggle' : 'creatorViewToggle');
@@ -948,7 +966,6 @@
             }
         }
 
-        // 리스트 뷰 클릭 핸들러 (릴레이)
         function handleListCardClick(cardId, title, content, flag, chapterNum, isLong) {
             const container = document.getElementById('relay-card-container');
             if (container.classList.contains('list-view-container')) {
@@ -973,7 +990,6 @@
             }
         }
 
-        // 리스트 뷰 클릭 핸들러 (오리지널 시리즈)
         function handleCreatorListClick(title, totalCh) {
             const container = document.getElementById('creator-card-container');
             if (container.classList.contains('list-view-container')) {
