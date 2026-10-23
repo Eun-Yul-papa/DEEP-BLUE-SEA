@@ -105,7 +105,6 @@
             gap: 4px;
         }
 
-        /* 탭 네비게이션 바 스타일 */
         .nav-tabs {
             display: flex;
             background: rgba(13, 33, 66, 0.5);
@@ -146,13 +145,26 @@
             margin: 10px 0 14px 0;
         }
 
+        .section-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .section-title {
             font-size: 1.15rem;
             font-weight: 700;
             color: var(--primary-cyan);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        }
+
+        .view-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-bright);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
         }
 
         .btn-create-relay {
@@ -175,6 +187,22 @@
             backdrop-filter: blur(8px);
         }
 
+        /* 리스트 뷰 토글용 스타일 */
+        .list-view-container .card {
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .list-view-container .card p,
+        .list-view-container .card .timer-info {
+            display: none;
+        }
+
+        .list-view-container .card .button-group {
+            margin-top: 8px;
+        }
+
         .tag-group {
             display: flex;
             gap: 6px;
@@ -194,6 +222,7 @@
         .tag-vote { background: rgba(251, 191, 36, 0.2); color: var(--warning-orange); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
         .tag-creator { background: rgba(74, 222, 128, 0.2); color: var(--success-green); }
+        .tag-finished { background: rgba(248, 113, 113, 0.2); color: var(--danger-red); }
 
         .title-with-flag {
             display: flex;
@@ -371,11 +400,6 @@
             transition: all 0.2s;
         }
 
-        .translate-btn:hover {
-            background: var(--primary-cyan);
-            color: #020916;
-        }
-
         .candidate-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -413,11 +437,6 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .access-btn:hover {
-            background: var(--primary-cyan);
-            color: #020916;
         }
 
         .finish-proposal-box {
@@ -477,10 +496,10 @@
         </div>
     </header>
 
-    <!-- 상단 탭 네비게이션 바 -->
+    <!-- 상단 탭 네비게이션 바 (숫자 제거) -->
     <div class="nav-tabs">
-        <button class="tab-btn active" id="tabRelayBtn" onclick="switchTab('relay')">🔗 1. 스토리 릴레이</button>
-        <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 2. 창작자 연재</button>
+        <button class="tab-btn active" id="tabRelayBtn" onclick="switchTab('relay')">🔗 스토리 릴레이</button>
+        <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 오리지널 시리즈</button>
     </div>
 
     <div class="container">
@@ -488,7 +507,10 @@
         <!-- [섹션 1] 스토리 릴레이 파트 -->
         <div id="relay-section">
             <div class="section-header">
-                <div class="section-title">🔗 릴레이 스토리 목록</div>
+                <div class="section-title-group">
+                    <div class="section-title">🔗 릴레이 스토리 목록</div>
+                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트 뷰</button>
+                </div>
                 <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
             </div>
 
@@ -557,10 +579,13 @@
             </div>
         </div>
 
-        <!-- [섹션 2] 창작자 연재 파트 -->
+        <!-- [섹션 2] 오리지널 시리즈 파트 -->
         <div id="creator-section" style="display: none;">
             <div class="section-header">
-                <div class="section-title">📚 창작자 독점 연재</div>
+                <div class="section-title-group">
+                    <div class="section-title">📚 오리지널 시리즈</div>
+                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트 뷰</button>
+                </div>
                 <button class="btn-create-relay" onclick="openModal('createCreatorModal')">+ 작품 연재 시작 (무료)</button>
             </div>
 
@@ -594,7 +619,7 @@
 
     </div>
 
-    <!-- Create Story Relay Modal (무료 개설) -->
+    <!-- Create Story Relay Modal -->
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -645,7 +670,7 @@
 
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
-                <textarea class="form-control" id="storyContent" oninput="handleByteCheck(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
+                <textarea class="form-control" id="storyContent" oninput="handleByteCheckRelay(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
                 
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
@@ -659,11 +684,11 @@
         </div>
     </div>
 
-    <!-- Create Creator Series Modal (창작자 연재 개설) -->
+    <!-- Create Creator Series Modal (오리지널 시리즈 개설 - 바이트 한계 해제) -->
     <div class="modal-overlay" id="createCreatorModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">새 창작자 연재 작품 개설 (무료)</div>
+                <div class="modal-title">새 오리지널 시리즈 개설 (무료)</div>
                 <button class="close-btn" onclick="closeModal('createCreatorModal')">✕</button>
             </div>
             
@@ -673,23 +698,47 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Genre (장르)</label>
-                <select class="form-control" id="selectCreatorGenre">
-                    <option value="판타지" selected>판타지 (Fantasy)</option>
-                    <option value="로맨스">로맨스 (Romance)</option>
-                    <option value="추리">추리 (Mystery)</option>
-                    <option value="공상 과학">공상 과학 (Sci-Fi)</option>
-                    <option value="무협">무협 (Wuxia)</option>
+                <label class="form-label">Format (글 종류)</label>
+                <select class="form-control" id="selectCreatorFormat">
+                    <option value="소설">소설 (Novel)</option>
+                    <option value="시나리오/대본">시나리오/대본 (Scenario)</option>
+                    <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Chapter 1 Content (1화 무료 공개 본문)</label>
-                <textarea class="form-control" id="creatorContent" oninput="handleByteCheck(this, 'creator-byte-count', 'btn-submit-creator')" placeholder="1화 내용을 작성하세요..."></textarea>
+                <label class="form-label">Sub-Genre (하위 장르)</label>
+                <select class="form-control" id="selectCreatorGenre">
+                    <option value="역사">역사 (Historical)</option>
+                    <option value="추리">추리 (Mystery)</option>
+                    <option value="과학">과학 (Science)</option>
+                    <option value="공상 과학">공상 과학 (Sci-Fi)</option>
+                    <option value="스릴러">스릴러 (Thriller)</option>
+                    <option value="심리">심리 (Psychological)</option>
+                    <option value="모험">모험 (Adventure)</option>
+                    <option value="판타지" selected>판타지 (Fantasy)</option>
+                    <option value="무협">무협 (Wuxia)</option>
+                    <option value="로맨스">로맨스 (Romance)</option>
+                    <option value="전쟁">전쟁 (War)</option>
+                    <option value="전기">전기 (Biography)</option>
+                    <option value="종교">종교 (Religion)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Chapter 1 Content (1화 본문 - 1화 무료 공개)</label>
+                <textarea class="form-control" id="creatorContent" oninput="handleByteCheckFree(this, 'creator-byte-count', 'btn-submit-creator')" placeholder="1화 내용을 입력하세요..."></textarea>
                 
                 <div class="byte-counter-info">
-                    <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
-                    <span class="byte-status" id="creator-byte-count">0 / 6000 Bytes</span>
+                    <span class="guide-text">작성 중인 분량:</span>
+                    <span class="byte-status valid" id="creator-byte-count">0 Bytes</span>
+                </div>
+
+                <div class="finish-proposal-box" style="margin-top: 10px;">
+                    <input type="checkbox" id="chkCreatorFinished">
+                    <label for="chkCreatorFinished" style="cursor: pointer; font-weight: 600;">
+                        이 작품을 단편/완결 작품으로 등록 (완결 태그 표기)
+                    </label>
                 </div>
             </div>
 
@@ -729,7 +778,7 @@
         </div>
     </div>
 
-    <!-- Creator Read Modal (창작자 연재 회차 목록 & 열람 모달) -->
+    <!-- Creator Read Modal -->
     <div class="modal-overlay" id="creatorReadModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -741,7 +790,7 @@
         </div>
     </div>
 
-    <!-- Creator Single Chapter Reader Modal (개별 회차 본문 보기) -->
+    <!-- Creator Single Chapter Reader Modal -->
     <div class="modal-overlay" id="creatorSingleReaderModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -775,7 +824,7 @@
 
             <div class="form-group" style="margin-top: 14px;">
                 <label class="form-label" id="writerInputLabel">내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)</label>
-                <textarea class="form-control" id="writerInputContent" oninput="handleByteCheck(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요 (1,500 ~ 6,000 바이트)..."></textarea>
+                <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요 (1,500 ~ 6,000 바이트)..."></textarea>
                 
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
@@ -811,7 +860,6 @@
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
         }
 
-        // 탭 전환 함수
         function switchTab(tabName) {
             const relaySec = document.getElementById('relay-section');
             const creatorSec = document.getElementById('creator-section');
@@ -828,6 +876,19 @@
                 creatorSec.style.display = 'block';
                 tabCreator.classList.add('active');
                 tabRelay.classList.remove('active');
+            }
+        }
+
+        function toggleViewMode(section) {
+            const container = document.getElementById(section === 'relay' ? 'relay-card-container' : 'creator-card-container');
+            const toggleBtn = document.getElementById(section === 'relay' ? 'relayViewToggle' : 'creatorViewToggle');
+
+            if (container.classList.contains('list-view-container')) {
+                container.classList.remove('list-view-container');
+                toggleBtn.innerText = '☰ 리스트 뷰';
+            } else {
+                container.classList.add('list-view-container');
+                toggleBtn.innerText = '🎴 카드 뷰';
             }
         }
 
@@ -860,7 +921,8 @@
             return bytes;
         }
 
-        function handleByteCheck(textareaElem, statusId, btnId) {
+        // 릴레이용 (1,500 ~ 6,000 바이트 제약)
+        function handleByteCheckRelay(textareaElem, statusId, btnId) {
             const currentBytes = getByteLength(textareaElem.value);
             const statusElem = document.getElementById(statusId);
             const submitBtn = document.getElementById(btnId);
@@ -875,10 +937,25 @@
             }
         }
 
+        // 오리지널 시리즈용 (바이트 제한 없음 - 0부터 자유롭게 상승)
+        function handleByteCheckFree(textareaElem, statusId, btnId) {
+            const currentBytes = getByteLength(textareaElem.value);
+            const statusElem = document.getElementById(statusId);
+            const submitBtn = document.getElementById(btnId);
+
+            statusElem.innerText = currentBytes + ' Bytes';
+            if (currentBytes > 0) {
+                statusElem.className = 'byte-status valid';
+                submitBtn.disabled = false;
+            } else {
+                statusElem.className = 'byte-status';
+                submitBtn.disabled = true;
+            }
+        }
+
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // 0.1 Pi 공통 결제 핸들러
         function handlePayAccess(amount, desc) {
             if (currentBalance >= amount) {
                 currentBalance -= amount;
@@ -895,7 +972,6 @@
             alert('📺 보상형 광고 재생 중...\n\n(시청 완료 후 열람 권한이 부여됩니다!)');
         }
 
-        // 릴레이 후보 및 투표 모달
         function openReadVoteModal(title, cardId, isVotePhase) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
 
@@ -924,7 +1000,6 @@
             closeModal('readVoteModal');
         }
 
-        // 창작자 연재 회차 목록 모달 열기
         function openCreatorReadModal(title, totalCh) {
             document.getElementById('creatorModalTitle').innerText = `'${title}' 회차 목록`;
             const container = document.getElementById('creatorChapterListContainer');
@@ -1035,7 +1110,6 @@
             closeModal('writerModal');
         }
 
-        // 새 릴레이 개설
         function createNewRelayCard() {
             const currentLangCode = document.getElementById('userLangSelect').value;
             const autoFlag = flagMap[currentLangCode] || '🇰🇷';
@@ -1091,11 +1165,13 @@
             document.getElementById('btn-submit-relay').disabled = true;
         }
 
-        // 새 창작자 연재 작품 개설
+        // 새 오리지널 시리즈 개설
         function createNewCreatorCard() {
             const title = document.getElementById('inputCreatorTitle').value || "무제 작품";
+            const format = document.getElementById('selectCreatorFormat').value;
             const genre = document.getElementById('selectCreatorGenre').value;
             const content = document.getElementById('creatorContent').value;
+            const isFinished = document.getElementById('chkCreatorFinished').checked;
 
             const uniqueCardId = 'creator_card_' + Date.now();
             const container = document.getElementById('creator-card-container');
@@ -1104,8 +1180,8 @@
             newCard.id = uniqueCardId;
             newCard.innerHTML = `
                 <div class="tag-group">
-                    <span class="tag tag-creator">🟢 연재중</span>
-                    <span class="tag tag-meta">소설</span>
+                    <span class="tag ${isFinished ? 'tag-finished' : 'tag-creator'}">${isFinished ? '🏁 완결' : '🟢 연재중'}</span>
+                    <span class="tag tag-meta">${format}</span>
                     <span class="tag tag-meta">${genre}</span>
                     <span class="tag tag-meta">총 1화</span>
                 </div>
@@ -1128,10 +1204,11 @@
 
             container.prepend(newCard);
             closeModal('createCreatorModal');
-            alert("🎉 새 창작자 연재 작품이 성공적으로 등록되었습니다!");
+            alert("🎉 새 오리지널 시리즈 작품이 성공적으로 등록되었습니다!");
 
             document.getElementById('inputCreatorTitle').value = "";
             document.getElementById('creatorContent').value = "";
+            document.getElementById('chkCreatorFinished').checked = false;
             document.getElementById('btn-submit-creator').disabled = true;
         }
     </script>
