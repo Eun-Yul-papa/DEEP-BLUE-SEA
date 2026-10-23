@@ -158,12 +158,13 @@
         }
 
         .view-toggle-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-bright);
-            padding: 4px 8px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 4px 10px;
             border-radius: 6px;
             font-size: 0.75rem;
+            font-weight: 600;
             cursor: pointer;
         }
 
@@ -185,22 +186,35 @@
             padding: 20px;
             margin-bottom: 20px;
             backdrop-filter: blur(8px);
+            transition: all 0.2s;
         }
 
-        /* 리스트 뷰 토글용 스타일 */
+        /* 슬림 리스트 뷰 전용 스타일 */
         .list-view-container .card {
             padding: 12px 16px;
             margin-bottom: 10px;
             border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .list-view-container .card:hover {
+            border-color: var(--primary-cyan);
+            background: rgba(13, 33, 66, 0.95);
         }
 
         .list-view-container .card p,
-        .list-view-container .card .timer-info {
-            display: none;
+        .list-view-container .card .timer-info,
+        .list-view-container .card .prize-info,
+        .list-view-container .card .button-group {
+            display: none !important;
         }
 
-        .list-view-container .card .button-group {
-            margin-top: 8px;
+        .list-view-container .card .title-with-flag h3 {
+            font-size: 0.95rem;
+            color: var(--primary-cyan);
         }
 
         .tag-group {
@@ -208,6 +222,10 @@
             gap: 6px;
             flex-wrap: wrap;
             margin-bottom: 12px;
+        }
+
+        .list-view-container .tag-group {
+            margin-bottom: 2px;
         }
 
         .tag {
@@ -496,7 +514,7 @@
         </div>
     </header>
 
-    <!-- 상단 탭 네비게이션 바 (숫자 제거) -->
+    <!-- 상단 탭 네비게이션 바 -->
     <div class="nav-tabs">
         <button class="tab-btn active" id="tabRelayBtn" onclick="switchTab('relay')">🔗 스토리 릴레이</button>
         <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 오리지널 시리즈</button>
@@ -509,14 +527,14 @@
             <div class="section-header">
                 <div class="section-title-group">
                     <div class="section-title">🔗 릴레이 스토리 목록</div>
-                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트 뷰</button>
+                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트 뷰로 보기</button>
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
             </div>
 
             <div id="relay-card-container">
                 <!-- [테스트용 카드 1] 단편 6화 완결제안 테스트 -->
-                <div class="card" id="card-test-ch6">
+                <div class="card" id="card-test-ch6" onclick="handleListCardClick('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
                     <div class="tag-group">
                         <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
                         <span class="tag tag-meta">소설</span>
@@ -533,21 +551,21 @@
                     <div class="timer-info">
                         ⏳ 작성 마감까지: 04일 12시간 남음
                     </div>
-                    <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                    <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
                         💰 상금 풀: 3.0 Test Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
                             📖 후보 열람 & 투표 (0.1 Pi)
                         </button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
                             ✍️ 이어쓰기 (Ch.6)
                         </button>
                     </div>
                 </div>
 
                 <!-- [테스트용 카드 2] 단편 10화 최종 완결 라운드 테스트 -->
-                <div class="card" id="card-test-ch10">
+                <div class="card" id="card-test-ch10" onclick="handleListCardClick('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
                     <div class="tag-group">
                         <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
                         <span class="tag tag-meta">소설</span>
@@ -564,14 +582,14 @@
                     <div class="timer-info">
                         ⏳ 작성 마감까지: 02일 08시간 남음
                     </div>
-                    <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                    <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
                         💰 상금 풀: 8.0 Test Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
                             📖 후보 열람 & 투표 (0.1 Pi)
                         </button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
                             ✍️ 이어쓰기 (Ch.10)
                         </button>
                     </div>
@@ -584,14 +602,14 @@
             <div class="section-header">
                 <div class="section-title-group">
                     <div class="section-title">📚 오리지널 시리즈</div>
-                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트 뷰</button>
+                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트 뷰로 보기</button>
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createCreatorModal')">+ 작품 연재 시작 (무료)</button>
             </div>
 
             <div id="creator-card-container">
                 <!-- 샘플 연재작 카드 -->
-                <div class="card" id="card-creator-sample">
+                <div class="card" id="card-creator-sample" onclick="handleCreatorListClick('심해 마법사의 공방', 3)">
                     <div class="tag-group">
                         <span class="tag tag-creator">🟢 연재중</span>
                         <span class="tag tag-meta">소설</span>
@@ -605,11 +623,11 @@
                     <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
                         "빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기..."
                     </p>
-                    <div style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
+                    <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
                         ✍️ 작가: DeepMage | 💰 누적 후원/매출: 2.4 Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-primary" style="flex: 1;" onclick="openCreatorReadModal('심해 마법사의 공방', 3)">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">
                             📖 작품 보기 (1화 무료 / 2화부터 0.1 Pi)
                         </button>
                     </div>
@@ -617,6 +635,43 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- 통합 상세 팝업 (리스트 뷰 전용 클릭 모달) -->
+    <div class="modal-overlay" id="integratedRelayModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="title-with-flag" style="margin: 0;">
+                    <span class="flag-badge" id="integratedFlag">🇰🇷</span>
+                    <div class="modal-title" id="integratedTitle">릴레이 상세정보</div>
+                </div>
+                <button class="close-btn" onclick="closeModal('integratedRelayModal')">✕</button>
+            </div>
+
+            <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; line-height: 1.5;" id="integratedDesc">
+                스토리 설명 본문이 여기에 표시됩니다.
+            </p>
+
+            <div class="access-box" style="margin-bottom: 14px;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
+                    🎯 릴레이 참여 & 투표 액션
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-sub);">
+                    원하는 작업을 선택하여 참여해 주세요!
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="btn btn-outline" id="btnIntegratedVote" onclick="">
+                    📖 후보작 열람 & 투표하기 (0.1 Pi / 광고)
+                </button>
+                <button class="btn btn-primary" id="btnIntegratedWrite" onclick="">
+                    ✍️ 이 회차 이어쓰기 참여하기 (1.0 Pi 보증금)
+                </button>
+            </div>
+
+            <button class="btn btn-outline" style="margin-top: 14px; border-color: rgba(255,255,255,0.2); color: var(--text-sub);" onclick="closeModal('integratedRelayModal')">닫기</button>
+        </div>
     </div>
 
     <!-- Create Story Relay Modal -->
@@ -684,7 +739,7 @@
         </div>
     </div>
 
-    <!-- Create Creator Series Modal (오리지널 시리즈 개설 - 바이트 한계 해제) -->
+    <!-- Create Creator Series Modal -->
     <div class="modal-overlay" id="createCreatorModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -748,7 +803,7 @@
         </div>
     </div>
 
-    <!-- Reader / Vote Modal (릴레이 전용) -->
+    <!-- Reader / Vote Modal -->
     <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -805,7 +860,7 @@
         </div>
     </div>
 
-    <!-- Writer Modal (릴레이 이어쓰기) -->
+    <!-- Writer Modal -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -879,16 +934,50 @@
             }
         }
 
+        // 뷰 모드 토글 (카드 뷰 <-> 리스트 뷰)
         function toggleViewMode(section) {
             const container = document.getElementById(section === 'relay' ? 'relay-card-container' : 'creator-card-container');
             const toggleBtn = document.getElementById(section === 'relay' ? 'relayViewToggle' : 'creatorViewToggle');
 
             if (container.classList.contains('list-view-container')) {
                 container.classList.remove('list-view-container');
-                toggleBtn.innerText = '☰ 리스트 뷰';
+                toggleBtn.innerText = '☰ 리스트 뷰로 보기';
             } else {
                 container.classList.add('list-view-container');
-                toggleBtn.innerText = '🎴 카드 뷰';
+                toggleBtn.innerText = '🎴 카드 뷰로 보기';
+            }
+        }
+
+        // 리스트 뷰 클릭 핸들러 (릴레이)
+        function handleListCardClick(cardId, title, content, flag, chapterNum, isLong) {
+            const container = document.getElementById('relay-card-container');
+            if (container.classList.contains('list-view-container')) {
+                document.getElementById('integratedTitle').innerText = title;
+                document.getElementById('integratedFlag').innerText = flag || '🇰🇷';
+                document.getElementById('integratedDesc').innerText = `"${content}"`;
+
+                const btnVote = document.getElementById('btnIntegratedVote');
+                const btnWrite = document.getElementById('btnIntegratedWrite');
+
+                btnVote.onclick = function() {
+                    closeModal('integratedRelayModal');
+                    openReadVoteModal(title, cardId, false);
+                };
+
+                btnWrite.onclick = function() {
+                    closeModal('integratedRelayModal');
+                    handleJoinOrWrite(cardId, title, encodeURIComponent(content), flag, chapterNum, isLong);
+                };
+
+                openModal('integratedRelayModal');
+            }
+        }
+
+        // 리스트 뷰 클릭 핸들러 (오리지널 시리즈)
+        function handleCreatorListClick(title, totalCh) {
+            const container = document.getElementById('creator-card-container');
+            if (container.classList.contains('list-view-container')) {
+                openCreatorReadModal(title, totalCh);
             }
         }
 
@@ -921,7 +1010,6 @@
             return bytes;
         }
 
-        // 릴레이용 (1,500 ~ 6,000 바이트 제약)
         function handleByteCheckRelay(textareaElem, statusId, btnId) {
             const currentBytes = getByteLength(textareaElem.value);
             const statusElem = document.getElementById(statusId);
@@ -937,7 +1025,6 @@
             }
         }
 
-        // 오리지널 시리즈용 (바이트 제한 없음 - 0부터 자유롭게 상승)
         function handleByteCheckFree(textareaElem, statusId, btnId) {
             const currentBytes = getByteLength(textareaElem.value);
             const statusElem = document.getElementById(statusId);
@@ -1126,6 +1213,10 @@
             const newCard = document.createElement('div');
             newCard.className = 'card';
             newCard.id = uniqueCardId;
+            newCard.onclick = function() {
+                handleListCardClick(uniqueCardId, title, content, autoFlag, 2, isLong);
+            };
+
             newCard.innerHTML = `
                 <div class="tag-group">
                     <span class="tag tag-relay">✍️ 작성 기간 (1화 완료)</span>
@@ -1143,14 +1234,14 @@
                 <div class="timer-info">
                     ⏳ 작성 마감까지: 05일 00시간 남음 (5일간 무참여 시 자동 삭제)
                 </div>
-                <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
                     💰 상금 풀: 0.0 Test Pi (우승자 100% 획득)
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}', false)">
+                    <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', false)">
                         📖 후보 열람 & 투표 (0.1 Pi)
                     </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
                         ✍️ 이어쓰기 참여
                     </button>
                 </div>
@@ -1165,7 +1256,6 @@
             document.getElementById('btn-submit-relay').disabled = true;
         }
 
-        // 새 오리지널 시리즈 개설
         function createNewCreatorCard() {
             const title = document.getElementById('inputCreatorTitle').value || "무제 작품";
             const format = document.getElementById('selectCreatorFormat').value;
@@ -1178,6 +1268,10 @@
             const newCard = document.createElement('div');
             newCard.className = 'card';
             newCard.id = uniqueCardId;
+            newCard.onclick = function() {
+                handleCreatorListClick(title, 1);
+            };
+
             newCard.innerHTML = `
                 <div class="tag-group">
                     <span class="tag ${isFinished ? 'tag-finished' : 'tag-creator'}">${isFinished ? '🏁 완결' : '🟢 연재중'}</span>
@@ -1192,11 +1286,11 @@
                 <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
                     "${content.substring(0, 80)}..."
                 </p>
-                <div style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
+                <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
                     ✍️ 작가: 나 | 💰 누적 후원/매출: 0.0 Pi
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-primary" style="flex: 1;" onclick="openCreatorReadModal('${title}', 1)">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('${title}', 1)">
                         📖 작품 보기 (1화 무료)
                     </button>
                 </div>
