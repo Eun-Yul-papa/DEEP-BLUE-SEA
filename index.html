@@ -105,6 +105,34 @@
             gap: 4px;
         }
 
+        /* 탭 네비게이션 바 스타일 */
+        .nav-tabs {
+            display: flex;
+            background: rgba(13, 33, 66, 0.5);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 0 20px;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            padding: 14px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-cyan);
+            border-bottom: 3px solid var(--primary-cyan);
+            background: rgba(56, 189, 248, 0.05);
+        }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -115,7 +143,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 24px 0 14px 0;
+            margin: 10px 0 14px 0;
         }
 
         .section-title {
@@ -165,6 +193,7 @@
         .tag-relay { background: rgba(56, 189, 248, 0.2); color: var(--primary-cyan); }
         .tag-vote { background: rgba(251, 191, 36, 0.2); color: var(--warning-orange); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
+        .tag-creator { background: rgba(74, 222, 128, 0.2); color: var(--success-green); }
 
         .title-with-flag {
             display: flex;
@@ -409,6 +438,17 @@
             height: 16px;
             cursor: pointer;
         }
+
+        .chapter-list-item {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -437,73 +477,117 @@
         </div>
     </header>
 
+    <!-- 상단 탭 네비게이션 바 -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" id="tabRelayBtn" onclick="switchTab('relay')">🔗 1. 스토리 릴레이</button>
+        <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 2. 창작자 연재</button>
+    </div>
+
     <div class="container">
         
-        <div class="section-header">
-            <div class="section-title">🔗 1. 스토리 릴레이 (Story Relay)</div>
-            <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
-        </div>
-
-        <div id="relay-card-container">
-            <!-- [테스트용 카드 1] 단편 6화 완결제안 테스트 -->
-            <div class="card" id="card-test-ch6">
-                <div class="tag-group">
-                    <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
-                    <span class="tag tag-meta">소설</span>
-                    <span class="tag tag-meta">추리</span>
-                    <span class="tag tag-meta">단편 (5-10 Chs)</span>
-                </div>
-                <div class="title-with-flag">
-                    <span class="flag-badge">🇰🇷</span>
-                    <h3>[테스트] 6화 완결 제안 테스트용 소설</h3>
-                </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                    "6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"
-                </p>
-                <div class="timer-info">
-                    ⏳ 작성 마감까지: 04일 12시간 남음
-                </div>
-                <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 3.0 Test Pi
-                </div>
-                <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
-                        📖 읽기 (작성 진행중)
-                    </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
-                        ✍️ 이어쓰기 (Ch.6 완결제안)
-                    </button>
-                </div>
+        <!-- [섹션 1] 스토리 릴레이 파트 -->
+        <div id="relay-section">
+            <div class="section-header">
+                <div class="section-title">🔗 릴레이 스토리 목록</div>
+                <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
             </div>
 
-            <!-- [테스트용 카드 2] 단편 10화 최종 완결 라운드 테스트 -->
-            <div class="card" id="card-test-ch10">
-                <div class="tag-group">
-                    <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
-                    <span class="tag tag-meta">소설</span>
-                    <span class="tag tag-meta">판타지</span>
-                    <span class="tag tag-meta">단편 (5-10 Chs)</span>
+            <div id="relay-card-container">
+                <!-- [테스트용 카드 1] 단편 6화 완결제안 테스트 -->
+                <div class="card" id="card-test-ch6">
+                    <div class="tag-group">
+                        <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
+                        <span class="tag tag-meta">소설</span>
+                        <span class="tag tag-meta">추리</span>
+                        <span class="tag tag-meta">단편 (5-10 Chs)</span>
+                    </div>
+                    <div class="title-with-flag">
+                        <span class="flag-badge">🇰🇷</span>
+                        <h3>[테스트] 6화 완결 제안 테스트용 소설</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                        "6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"
+                    </p>
+                    <div class="timer-info">
+                        ⏳ 작성 마감까지: 04일 12시간 남음
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                        💰 상금 풀: 3.0 Test Pi
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
+                            📖 후보 열람 & 투표 (0.1 Pi)
+                        </button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
+                            ✍️ 이어쓰기 (Ch.6)
+                        </button>
+                    </div>
                 </div>
-                <div class="title-with-flag">
-                    <span class="flag-badge">🇰🇷</span>
-                    <h3>[테스트] 10화 최종 완결 라운드 테스트용</h3>
+
+                <!-- [테스트용 카드 2] 단편 10화 최종 완결 라운드 테스트 -->
+                <div class="card" id="card-test-ch10">
+                    <div class="tag-group">
+                        <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
+                        <span class="tag tag-meta">소설</span>
+                        <span class="tag tag-meta">판타지</span>
+                        <span class="tag tag-meta">단편 (5-10 Chs)</span>
+                    </div>
+                    <div class="title-with-flag">
+                        <span class="flag-badge">🇰🇷</span>
+                        <h3>[테스트] 10화 최종 완결 라운드 테스트용</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                        "단편 10화는 무조건 이야기를 마무리 짓는 최종 결말 라운드로 작동합니다!"
+                    </p>
+                    <div class="timer-info">
+                        ⏳ 작성 마감까지: 02일 08시간 남음
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
+                        💰 상금 풀: 8.0 Test Pi
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
+                            📖 후보 열람 & 투표 (0.1 Pi)
+                        </button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
+                            ✍️ 이어쓰기 (Ch.10)
+                        </button>
+                    </div>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                    "단편 10화는 무조건 이야기를 마무리 짓는 최종 결말 라운드로 작동합니다!"
-                </p>
-                <div class="timer-info">
-                    ⏳ 작성 마감까지: 02일 08시간 남음
-                </div>
-                <div style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 8.0 Test Pi
-                </div>
-                <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
-                        📖 읽기 (작성 진행중)
-                    </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
-                        ✍️ 이어쓰기 (Ch.10 최종결말)
-                    </button>
+            </div>
+        </div>
+
+        <!-- [섹션 2] 창작자 연재 파트 -->
+        <div id="creator-section" style="display: none;">
+            <div class="section-header">
+                <div class="section-title">📚 창작자 독점 연재</div>
+                <button class="btn-create-relay" onclick="openModal('createCreatorModal')">+ 작품 연재 시작 (무료)</button>
+            </div>
+
+            <div id="creator-card-container">
+                <!-- 샘플 연재작 카드 -->
+                <div class="card" id="card-creator-sample">
+                    <div class="tag-group">
+                        <span class="tag tag-creator">🟢 연재중</span>
+                        <span class="tag tag-meta">소설</span>
+                        <span class="tag tag-meta">판타지</span>
+                        <span class="tag tag-meta">총 3화</span>
+                    </div>
+                    <div class="title-with-flag">
+                        <span class="flag-badge">🇰🇷</span>
+                        <h3>심해 마법사의 공방</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                        "빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기..."
+                    </p>
+                    <div style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
+                        ✍️ 작가: DeepMage | 💰 누적 후원/매출: 2.4 Pi
+                    </div>
+                    <div class="button-group">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="openCreatorReadModal('심해 마법사의 공방', 3)">
+                            📖 작품 보기 (1화 무료 / 2화부터 0.1 Pi)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -575,7 +659,47 @@
         </div>
     </div>
 
-    <!-- Reader / Vote Modal -->
+    <!-- Create Creator Series Modal (창작자 연재 개설) -->
+    <div class="modal-overlay" id="createCreatorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">새 창작자 연재 작품 개설 (무료)</div>
+                <button class="close-btn" onclick="closeModal('createCreatorModal')">✕</button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Title (작품 제목)</label>
+                <input type="text" class="form-control" id="inputCreatorTitle" placeholder="작품 제목을 입력하세요...">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Genre (장르)</label>
+                <select class="form-control" id="selectCreatorGenre">
+                    <option value="판타지" selected>판타지 (Fantasy)</option>
+                    <option value="로맨스">로맨스 (Romance)</option>
+                    <option value="추리">추리 (Mystery)</option>
+                    <option value="공상 과학">공상 과학 (Sci-Fi)</option>
+                    <option value="무협">무협 (Wuxia)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Chapter 1 Content (1화 무료 공개 본문)</label>
+                <textarea class="form-control" id="creatorContent" oninput="handleByteCheck(this, 'creator-byte-count', 'btn-submit-creator')" placeholder="1화 내용을 작성하세요..."></textarea>
+                
+                <div class="byte-counter-info">
+                    <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
+                    <span class="byte-status" id="creator-byte-count">0 / 6000 Bytes</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="btn-submit-creator" disabled onclick="createNewCreatorCard()">
+                🚀 연재 작품 등록하기 (0 Pi)
+            </button>
+        </div>
+    </div>
+
+    <!-- Reader / Vote Modal (릴레이 전용) -->
     <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -588,13 +712,13 @@
 
             <div class="access-box">
                 <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 6px;">
-                    📖 릴레이글 전체열람 & 투표권 획득
+                    📖 릴레이글 전체열람 & 투표권 획득 (0.1 Pi)
                 </div>
                 <div style="font-size: 0.78rem; color: var(--text-sub);">
                     아래 방법 중 하나를 선택하면 전체 후보작 열람 및 1표 투표권이 부여됩니다.
                 </div>
                 <div class="access-btn-group">
-                    <button class="access-btn" onclick="handlePayAccess()">💰 0.5 Test Pi 결제</button>
+                    <button class="access-btn" onclick="handlePayAccess(0.1, '릴레이 열람 & 투표권')">💰 0.1 Test Pi 결제</button>
                     <button class="access-btn" onclick="handleAdAccess()">📺 광고 시청</button>
                 </div>
             </div>
@@ -605,7 +729,34 @@
         </div>
     </div>
 
-    <!-- Writer Modal -->
+    <!-- Creator Read Modal (창작자 연재 회차 목록 & 열람 모달) -->
+    <div class="modal-overlay" id="creatorReadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="creatorModalTitle">작품 회차 목록</div>
+                <button class="close-btn" onclick="closeModal('creatorReadModal')">✕</button>
+            </div>
+            <div id="creatorChapterListContainer"></div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('creatorReadModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- Creator Single Chapter Reader Modal (개별 회차 본문 보기) -->
+    <div class="modal-overlay" id="creatorSingleReaderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="singleReaderTitle">회차 본문</div>
+                <button class="close-btn" onclick="closeModal('creatorSingleReaderModal')">✕</button>
+            </div>
+            <button class="translate-btn" onclick="translateCurrentReaderContent()">
+                🌐 Translate to My Language (<span id="targetLangText">English</span>)
+            </button>
+            <div class="reader-body notranslate" id="singleReaderBody"></div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="openCreatorReadModalFromReader()">목록으로</button>
+        </div>
+    </div>
+
+    <!-- Writer Modal (릴레이 이어쓰기) -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -617,7 +768,7 @@
             </div>
 
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
-                🌐 Translate to My Language (<span id="targetLangText">English</span>)
+                🌐 Translate to My Language (<span id="targetLangText2">English</span>)
             </button>
 
             <div class="reader-body notranslate" id="writerBody"></div>
@@ -660,18 +811,38 @@
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
         }
 
+        // 탭 전환 함수
+        function switchTab(tabName) {
+            const relaySec = document.getElementById('relay-section');
+            const creatorSec = document.getElementById('creator-section');
+            const tabRelay = document.getElementById('tabRelayBtn');
+            const tabCreator = document.getElementById('tabCreatorBtn');
+
+            if (tabName === 'relay') {
+                relaySec.style.display = 'block';
+                creatorSec.style.display = 'none';
+                tabRelay.classList.add('active');
+                tabCreator.classList.remove('active');
+            } else {
+                relaySec.style.display = 'none';
+                creatorSec.style.display = 'block';
+                tabCreator.classList.add('active');
+                tabRelay.classList.remove('active');
+            }
+        }
+
         function setUserLanguage(langCode) {
             selectedUserLang = langCode;
             const langTextMap = {
                 'en': 'English', 'zh-CN': '中文', 'ja': '日本語',
                 'es': 'Español', 'vi': 'Tiếng Việt', 'id': 'Bahasa', 'hi': 'हिन्दी', 'ko': '한국어'
             };
-            document.getElementById('targetLangText').innerText = langTextMap[langCode] || 'English';
+            const targetText = langTextMap[langCode] || 'English';
+            document.getElementById('targetLangText').innerText = targetText;
+            document.getElementById('targetLangText2').innerText = targetText;
         }
 
         function translateCurrentReaderContent() {
-            const readerBody = document.getElementById('writerBody');
-            readerBody.classList.remove('notranslate');
             if (selectedUserLang === 'ko') return;
             const googleSelect = document.querySelector('.goog-te-combo');
             if (googleSelect) {
@@ -707,20 +878,24 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function handlePayAccess() {
-            if (currentBalance >= 0.5) {
-                currentBalance -= 0.5;
+        // 0.1 Pi 공통 결제 핸들러
+        function handlePayAccess(amount, desc) {
+            if (currentBalance >= amount) {
+                currentBalance -= amount;
                 document.getElementById('balance').innerText = currentBalance.toFixed(1);
-                alert('🎉 0.5 Test Pi 결제 완료!\n\n전체 후보작 열람 및 투표권이 활성화되었습니다.');
+                alert(`🎉 ${amount} Test Pi ${desc} 완료!\n\n열람 권한이 성공적으로 활성화되었습니다.`);
+                return true;
             } else {
                 alert('❌ Test Pi 잔액이 부족합니다.');
+                return false;
             }
         }
 
         function handleAdAccess() {
-            alert('📺 보상형 광고 재생 중...\n\n(시청 완료 후 전체 열람 및 투표권이 부여됩니다!)');
+            alert('📺 보상형 광고 재생 중...\n\n(시청 완료 후 열람 권한이 부여됩니다!)');
         }
 
+        // 릴레이 후보 및 투표 모달
         function openReadVoteModal(title, cardId, isVotePhase) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
 
@@ -747,6 +922,46 @@
         function handleVoteFinish(title, candidateName) {
             alert(`🎉 '${candidateName}'에 성공적으로 투표하셨습니다!\n\n💡 릴레이 완결 시 상금 풀은 우승자에게 100% 지급됩니다.`);
             closeModal('readVoteModal');
+        }
+
+        // 창작자 연재 회차 목록 모달 열기
+        function openCreatorReadModal(title, totalCh) {
+            document.getElementById('creatorModalTitle').innerText = `'${title}' 회차 목록`;
+            const container = document.getElementById('creatorChapterListContainer');
+            
+            let html = '';
+            for (let i = 1; i <= totalCh; i++) {
+                const isFree = (i === 1);
+                html += `
+                    <div class="chapter-list-item">
+                        <div>
+                            <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">제 ${i}화</div>
+                            <div style="font-size: 0.75rem; color: var(--text-sub);">${isFree ? '무료 공개 회차' : '유료 연재 회차 (0.1 Pi)'}</div>
+                        </div>
+                        <button class="btn ${isFree ? 'btn-outline' : 'btn-primary'}" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.78rem;" onclick="readCreatorChapter('${title}', ${i}, ${isFree})">
+                            ${isFree ? '📖 무료 읽기' : '💰 0.1 Pi 열람'}
+                        </button>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+            openModal('creatorReadModal');
+        }
+
+        function readCreatorChapter(title, chNum, isFree) {
+            if (!isFree) {
+                const success = handlePayAccess(0.1, `제 ${chNum}화 유료 열람`);
+                if (!success) return;
+            }
+            closeModal('creatorReadModal');
+            document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
+            document.getElementById('singleReaderBody').innerText = `[${title} 제 ${chNum}화 본문 내용]\n\n빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다. 마력이 소용돌이치는 가운데 고대 문자의 기동음이 울려 퍼졌다...`;
+            openModal('creatorSingleReaderModal');
+        }
+
+        function openCreatorReadModalFromReader() {
+            closeModal('creatorSingleReaderModal');
+            openModal('creatorReadModal');
         }
 
         function handleJoinOrWrite(cardId, title, encodedContent, flag, chapterNum, isLong) {
@@ -820,6 +1035,7 @@
             closeModal('writerModal');
         }
 
+        // 새 릴레이 개설
         function createNewRelayCard() {
             const currentLangCode = document.getElementById('userLangSelect').value;
             const autoFlag = flagMap[currentLangCode] || '🇰🇷';
@@ -858,7 +1074,7 @@
                 </div>
                 <div class="button-group">
                     <button class="btn btn-outline" style="flex: 1;" onclick="openReadVoteModal('${title}', '${uniqueCardId}', false)">
-                        📖 읽기 (작성 진행중)
+                        📖 후보 열람 & 투표 (0.1 Pi)
                     </button>
                     <button class="btn btn-primary" style="flex: 1;" onclick="handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
                         ✍️ 이어쓰기 참여
@@ -868,11 +1084,55 @@
 
             container.prepend(newCard);
             closeModal('createModal');
-            alert("🎉 새 스토리 릴레이가 무료로 개설되었습니다!\n\n💡 5일 동안 이어쓰기 참가가 없으면 자동 삭제되며, 원작자 본인도 2화 이어쓰기에 참여하실 수 있습니다!");
+            alert("🎉 새 스토리 릴레이가 무료로 개설되었습니다!");
 
             document.getElementById('inputTitle').value = "";
             document.getElementById('storyContent').value = "";
             document.getElementById('btn-submit-relay').disabled = true;
+        }
+
+        // 새 창작자 연재 작품 개설
+        function createNewCreatorCard() {
+            const title = document.getElementById('inputCreatorTitle').value || "무제 작품";
+            const genre = document.getElementById('selectCreatorGenre').value;
+            const content = document.getElementById('creatorContent').value;
+
+            const uniqueCardId = 'creator_card_' + Date.now();
+            const container = document.getElementById('creator-card-container');
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.id = uniqueCardId;
+            newCard.innerHTML = `
+                <div class="tag-group">
+                    <span class="tag tag-creator">🟢 연재중</span>
+                    <span class="tag tag-meta">소설</span>
+                    <span class="tag tag-meta">${genre}</span>
+                    <span class="tag tag-meta">총 1화</span>
+                </div>
+                <div class="title-with-flag">
+                    <span class="flag-badge">🇰🇷</span>
+                    <h3>${title}</h3>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                    "${content.substring(0, 80)}..."
+                </p>
+                <div style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
+                    ✍️ 작가: 나 | 💰 누적 후원/매출: 0.0 Pi
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="openCreatorReadModal('${title}', 1)">
+                        📖 작품 보기 (1화 무료)
+                    </button>
+                </div>
+            `;
+
+            container.prepend(newCard);
+            closeModal('createCreatorModal');
+            alert("🎉 새 창작자 연재 작품이 성공적으로 등록되었습니다!");
+
+            document.getElementById('inputCreatorTitle').value = "";
+            document.getElementById('creatorContent').value = "";
+            document.getElementById('btn-submit-creator').disabled = true;
         }
     </script>
 </body>
