@@ -28,10 +28,17 @@
         }
 
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-bright);
-            padding-bottom: 40px;
-            top: 0 !important;
+            /* 💡 배경화면 설정 추가 */
+        background-image: url('main_bg.jpg'); /* 업로드한 사진 파일명 */
+        background-size: cover; /* 화면에 꽉 차게 조절 */
+        background-position: center; /* 정중앙 배치 */
+        background-attachment: fixed; /* 스크롤 해도 배경 고정 (세련된 느낌) */
+        background-repeat: no-repeat; /* 반복 안 함 */
+        
+        background-color: var(--bg-deep); /* 사진 로딩 전 기본 색상 */
+        color: var(--text-bright);
+        padding-bottom: 40px;
+        top: 0 !important;
         }
 
         .goog-te-banner-frame { display: none !important; }
@@ -508,7 +515,6 @@
     <div id="google_translate_element"></div>
 
     <header>
-        <!-- 1열: 로고와 Pi 잔액을 양쪽에 배치 -->
         <div class="header-top-row">
             <div class="brand-logo">
                 <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
@@ -518,12 +524,11 @@
                 <span>π</span> <span id="balance">100.0</span>
             </div>
         </div>
-        <!-- 2열: 언어 선택 셀렉터를 깔끔하게 하단 배치 -->
         <div class="header-controls">
             <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                 <option value="ko" selected>🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
-                <option value="zh-CN">🇨🇳 中文</option>
+                <option value="zh-CN">🇨🇳 중文</option>
                 <option value="ja">🇯🇵 日本語</option>
                 <option value="es">🇪🇸 Español</option>
                 <option value="vi">🇻🇳 Tiếng Việt</option>
@@ -533,7 +538,6 @@
         </div>
     </header>
 
-    <!-- 상단 탭 네비게이션 바 -->
     <div class="nav-tabs">
         <button class="tab-btn active" id="tabRelayBtn" onclick="switchTab('relay')">🔗 스토리 릴레이</button>
         <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 오리지널 시리즈</button>
@@ -656,7 +660,7 @@
 
     </div>
 
-    <!-- 통합 상세 팝업 (리스트 뷰 전용 클릭 모달) -->
+    <!-- 통합 상세 팝업 -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -953,6 +957,7 @@
             }
         }
 
+        // 뷰 모드 토글 (카드 뷰 <-> 리스트 뷰)
         function toggleViewMode(section) {
             const container = document.getElementById(section === 'relay' ? 'relay-card-container' : 'creator-card-container');
             const toggleBtn = document.getElementById(section === 'relay' ? 'relayViewToggle' : 'creatorViewToggle');
@@ -962,7 +967,7 @@
                 toggleBtn.innerText = '☰ 리스트 뷰로 보기';
             } else {
                 container.classList.add('list-view-container');
-                toggleBtn.innerText = '🎴 카드 뷰로 보기';
+                toggleBtn.innerText = '🗂️ 카드 뷰로 보기';
             }
         }
 
