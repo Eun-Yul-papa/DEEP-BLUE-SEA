@@ -31,7 +31,7 @@
         body {
             background-color: var(--bg-deep);
             color: var(--text-bright);
-            padding-bottom: 70px; /* 하단 띠배너 공간 확보 */
+            padding-bottom: 110px; /* 푸터 및 하단 띠배너 공간 확보 */
             top: 0 !important;
             transition: background 0.3s ease;
         }
@@ -68,6 +68,31 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
+        }
+
+        .header-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 삼선 햄버거 버튼 */
+        .menu-hamburger-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary-cyan);
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .menu-hamburger-btn:hover {
+            background: rgba(56, 189, 248, 0.15);
         }
 
         .brand-logo {
@@ -130,6 +155,99 @@
             white-space: nowrap;
         }
 
+        /* 사이드 슬라이드 메뉴 드로어 스타일 */
+        .drawer-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 9, 22, 0.75);
+            backdrop-filter: blur(6px);
+            z-index: 300;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background: #07152e;
+            border-right: 1px solid var(--border-glow);
+            z-index: 301;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.7);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-header {
+            padding: 18px 16px;
+            border-bottom: 1px solid var(--border-glow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 9, 22, 0.5);
+        }
+
+        .drawer-user-info {
+            padding: 18px 16px;
+            background: rgba(56, 189, 248, 0.08);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .user-welcome-text {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 6px;
+        }
+
+        .user-balance-box {
+            font-size: 0.8rem;
+            color: var(--primary-cyan);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .drawer-menu-list {
+            list-style: none;
+            padding: 10px 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .drawer-menu-item {
+            padding: 13px 20px;
+            font-size: 0.88rem;
+            color: var(--text-bright);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, color 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .drawer-menu-item:hover {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary-cyan);
+            border-left-color: var(--primary-cyan);
+        }
+
         .nav-tabs {
             display: flex;
             background: rgba(13, 33, 66, 0.5);
@@ -156,6 +274,29 @@
             color: var(--primary-cyan);
             border-bottom: 3px solid var(--primary-cyan);
             background: rgba(56, 189, 248, 0.05);
+        }
+
+        /* 푸터 영역 (저작권 문구) */
+        footer.app-footer {
+            margin-top: 30px;
+            padding: 16px;
+            text-align: center;
+            background: rgba(2, 9, 22, 0.6);
+            border-top: 1px dashed var(--border-glow);
+            border-radius: 12px;
+        }
+
+        .copyright-title {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 4px;
+        }
+
+        .copyright-desc {
+            font-size: 0.7rem;
+            color: var(--text-sub);
+            line-height: 1.4;
         }
 
         /* 고정 배너 영역 */
@@ -641,11 +782,54 @@
 
     <div id="google_translate_element"></div>
 
+    <!-- 삼선 슬라이드 메뉴 오버레이 & 드로어 -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+    <div class="side-drawer" id="sideDrawer">
+        <div class="drawer-header">
+            <div class="brand-logo">
+                <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
+                <div class="brand-title" style="font-size: 0.95rem;">Deep Blue Sea</div>
+            </div>
+            <button class="close-btn" onclick="closeDrawer()">✕</button>
+        </div>
+
+        <!-- 1. 프로필 & 잔액 창 -->
+        <div class="drawer-user-info">
+            <div class="user-welcome-text">환영합니다, <span id="drawerUserName">Pioneer</span>님!</div>
+            <div class="user-balance-box">
+                💳 현재 남은 잔액: <b><span id="drawerBalance">100.0</span> Test-Pi</b>
+            </div>
+        </div>
+
+        <!-- 2~6. 메뉴 항목 리스트 -->
+        <ul class="drawer-menu-list">
+            <li class="drawer-menu-item" onclick="openNavModal('aboutModal')">
+                <span>🌊</span> Deep Blue Sea 소개
+            </li>
+            <li class="drawer-menu-item" onclick="openNavModal('noticeModal')">
+                <span>📢</span> 공지사항
+            </li>
+            <li class="drawer-menu-item" onclick="openNavModal('contactModal')">
+                <span>📧</span> Contact Us
+            </li>
+            <li class="drawer-menu-item" onclick="openNavModal('termsModal')">
+                <span>📜</span> 서비스 이용약관
+            </li>
+            <li class="drawer-menu-item" onclick="openNavModal('privacyModal')">
+                <span>🔒</span> 개인정보 처리방침
+            </li>
+        </ul>
+    </div>
+
     <header>
         <div class="header-top-row">
-            <div class="brand-logo" onclick="switchTab('home')">
-                <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
-                <div class="brand-title">Deep Blue Sea</div>
+            <div class="header-left-group">
+                <!-- 좌측 상단 삼선 햄버거 버튼 -->
+                <button class="menu-hamburger-btn" onclick="openDrawer()">☰</button>
+                <div class="brand-logo" onclick="switchTab('home')">
+                    <img src="logo.png" alt="Deep Blue Sea Logo" class="whale-logo-img">
+                    <div class="brand-title">Deep Blue Sea</div>
+                </div>
             </div>
             <div class="pi-badge">
                 <span>π</span> <span id="balance">100.0</span>
@@ -855,6 +1039,99 @@
             </div>
         </div>
 
+        <!-- 푸터 저작권 보호 영역 -->
+        <footer class="app-footer">
+            <div class="copyright-title">Copyright © 2026 Deep Blue Sea. All Rights Reserved.</div>
+            <div class="copyright-desc">
+                본 애플리케이션의 이름, 로고, 디자인 및 콘텐츠의 저작권은 Deep Blue Sea에 있으며 법적 보호를 받습니다.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 메뉴 드로어 연결 모달들 -->
+    <!-- 2. Deep Blue Sea 소개 모달 -->
+    <div class="modal-overlay" id="aboutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🌊 Deep Blue Sea 소개</div>
+                <button class="close-btn" onclick="closeModal('aboutModal')">✕</button>
+            </div>
+            <div class="landing-info-text" style="font-size: 0.85rem; line-height: 1.6;">
+                <b>• 앱 제작 동기 & 비전</b><br>
+                AI가 고도로 발전하는 시대 속에서도 인간 고유의 상상력과 스토리텔링 능력은 대체될 수 없습니다. Deep Blue Sea는 집단지성을 활용하여 누구나 창작에 참여하고 그 가치를 공정하게 보상받는 탈중앙화 Web3 생태계를 지향합니다.<br><br>
+                <b>• 고래 로고(Logo)의 상징성</b><br>
+                끝없이 깊고 신비로운 '심해'를 자유롭게 헤엄치는 고래는, 인간의 무한한 창의성과 파이 네트워크라는 거대한 바다 속에서 피어나는 집단지성의 무한한 가능성을 의미합니다.
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('aboutModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 3. 공지사항 모달 -->
+    <div class="modal-overlay" id="noticeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📢 공지사항 (Notice)</div>
+                <button class="close-btn" onclick="closeModal('noticeModal')">✕</button>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6;">
+                <b>📌 알파 테스트 안내</b><br>
+                • Deep Blue Sea Pi DApp 알파 테스트 버전이 작동 중입니다.<br>
+                • 파이 네트워크 메인넷 업그레이드에 맞춰 스마트 계약 및 결제 연동 기능이 정식 도입될 예정입니다.
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('noticeModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 4. Contact Us 모달 -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📧 Contact Us</div>
+                <button class="close-btn" onclick="closeModal('contactModal')">✕</button>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6;">
+                <b>📧 공식 제안 & 문의 메일</b><br>
+                • <a href="mailto:deepblueseapinet@gmail.com" style="color: var(--primary-cyan); text-decoration: underline;">deepblueseapinet@gmail.com</a><br><br>
+                서비스 관련 문의나 창작 제휴 제안이 있으신 경우 상기 이메일로 메일을 보내주시면 친절히 안내해 드리겠습니다.
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('contactModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 5. 서비스 이용약관 모달 -->
+    <div class="modal-overlay" id="termsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📜 서비스 이용약관</div>
+                <button class="close-btn" onclick="closeModal('termsModal')">✕</button>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-sub); line-height: 1.6; max-height: 50vh; overflow-y: auto;">
+                <b>제 1 조 (목적)</b><br>
+                본 약관은 Deep Blue Sea(이하 "플랫폼")가 제공하는 Web3 스토리텔링 서비스의 이용 조건 및 절차를 규정함을 목적으로 합니다.<br><br>
+                <b>제 2 조 (지적재산권 및 수익 배분)</b><br>
+                1. 스토리 릴레이 우승 작가는 해당 회차의 보증금 풀 상금을 독식합니다.<br>
+                2. 최종 완결 작품의 RWA 및 NFT 판권 지분은 참여 작가진 95%, 플랫폼 5%의 비율로 투명하게 분배됩니다.
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('termsModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 6. 개인정보 처리방침 모달 -->
+    <div class="modal-overlay" id="privacyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🔒 개인정보 처리방침</div>
+                <button class="close-btn" onclick="closeModal('privacyModal')">✕</button>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-sub); line-height: 1.6; max-height: 50vh; overflow-y: auto;">
+                <b>1. 수집하는 개인정보 항목</b><br>
+                플랫폼은 탈중앙화 철학에 따라 사용자의 불필요한 개인정보를 수집하지 않으며, 파이 네트워크 인증을 통한 공개 지갑 주소 및 기본 계정 식별자만을 처리합니다.<br><br>
+                <b>2. 데이터 보존 및 보안</b><br>
+                사용자의 정보는 안전하게 관리되며 타인에게 공유되거나 무단 제공되지 않습니다.
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('privacyModal')">닫기</button>
+        </div>
     </div>
 
     <!-- 하단 고정 띠 배너 광고 영역 -->
@@ -1030,7 +1307,7 @@
         </div>
     </div>
 
-    <!-- Reader / Vote Modal (무료 열람 및 투표) -->
+    <!-- Reader / Vote Modal -->
     <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1136,6 +1413,24 @@
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
+        }
+
+        /* 삼선 슬라이드 메뉴 제어 함수 */
+        function openDrawer() {
+            document.getElementById('drawerOverlay').classList.add('active');
+            document.getElementById('sideDrawer').classList.add('active');
+            // 잔액 최신화
+            document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawerOverlay').classList.remove('active');
+            document.getElementById('sideDrawer').classList.remove('active');
+        }
+
+        function openNavModal(modalId) {
+            closeDrawer();
+            openModal(modalId);
         }
 
         function switchTab(tabName) {
@@ -1280,6 +1575,7 @@
             if (currentBalance >= amount) {
                 currentBalance -= amount;
                 document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
                 alert(`🎉 ${amount} Test Pi ${desc} 완료!\n\n열람 권한이 성공적으로 활성화되었습니다.`);
                 return true;
             } else {
@@ -1366,6 +1662,7 @@
                 if (currentBalance >= 1.0) {
                     currentBalance -= 1.0;
                     document.getElementById('balance').innerText = currentBalance.toFixed(1);
+                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
                     localStorage.setItem(authKey, "true");
                     alert("✍️ 1.0 Test Pi 보증금 지불 완료! (원작자 포함 누구나 이어쓰기 제출 가능)");
                     openWriterModal(title, decodedContent, flag, chapterNum, isLong);
