@@ -25,6 +25,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            word-break: keep-all; /* 한글 단어 끊김 방지 */
         }
 
         body {
@@ -273,7 +274,7 @@
             background: rgba(13, 33, 66, 0.85);
             border: 1px solid var(--border-glow);
             border-radius: 16px;
-            padding: 16px;
+            padding: 18px;
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.25s ease;
@@ -286,6 +287,21 @@
             border-color: var(--primary-cyan);
             transform: translateY(-3px);
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .card-rules-list {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .card-rules-list div {
+            margin-bottom: 6px;
+        }
+
+        .card-rules-list b {
+            color: var(--text-bright);
         }
 
         .section-header {
@@ -675,11 +691,11 @@
                     🌊 DEEP BLUE SEA의 브랜드 스토리 & 비전
                 </div>
                 <div class="landing-info-text">
-                    끝없이 깊은 심해 속 미지의 세상에 우리가 아직 알지 못하는 수많은 생명과 비밀이 숨겨져 있듯, **AI가 공존하는 시대 속에서도 인간의 무한한 창작 능력과 가능성은 끊임없이 샘솟아 나옵니다.**<br><br>
-                    Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 **탈중앙화 Web3 스토리텔링 플랫폼**입니다. 누구나 부담 없이 무료로 이야기를 읽고 투표에 참여하며, 작가는 물론 독자까지 **생태계에 기여한 가치만큼 소득과 보상을 함께 나누는 지속 가능한 창작 경제**를 만들어갑니다.
+                    끝없이 깊은 심해 속 미지의 세상에 우리가 아직 알지 못하는 수많은 생명과 비밀이 숨겨져 있듯, <b>AI가 공존하는 시대 속에서도 인간의 무한한 창작 능력과 가능성은 끊임없이 샘솟아 나옵니다.</b><br><br>
+                    Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 <b>탈중앙화 Web3 스토리텔링 플랫폼</b>입니다. 누구나 부담 없이 무료로 이야기를 읽고 투표에 참여하며, 작가는 물론 독자까지 <b>생태계에 기여한 가치만큼 소득과 보상을 함께 나누는 지속 가능한 창작 경제</b>를 만들어갑니다.
                 </div>
                 <div class="tokenomics-box">
-                    💎 **미래 가치 창출**: 완결된 우수 스토리 작품은 **RWA(실물자산) 및 NFT 디지털 자산**으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 참여 작가진 95% / 플랫폼 5%)
+                    💎 <b>미래 가치 창출</b>: 완결된 우수 스토리 작품은 <b>RWA(실물자산) 및 NFT 디지털 자산</b>으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 참여 작가진 95% / 플랫폼 5%)
                 </div>
             </div>
 
@@ -688,16 +704,16 @@
                 <!-- 좌측: 스토리 릴레이 안내 카드 -->
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 10px;">
                             🔗 스토리 릴레이
                         </div>
-                        <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
-                            **집단지성 릴레이 창작 규칙**<br>
-                            • **0단계 (스토리 개설)**: 누구나 첫 스토리 개설 가능 (무료)<br>
-                            • **1단계 (집필 경쟁 - 5일)**: 회차마다 최대 5명 작가 경쟁 참여 (보증금 1.0 Pi)<br>
-                            • **2단계 (열람 & 투표 - 5일)**: 모든 독자 자유로운 열람 및 투표 참여<br>
-                            • **3단계 (회차 우승 정산)**: 독자 투표 채택 작가가 **보증금 풀 전액(100%) 획득!**<br>
-                            • **4단계 (최종 완결 지분)**: RWA/NFT 판권 지분 **작가진 95% / 플랫폼 5%** 배분
+                        <div class="card-rules-list">
+                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[집단지성 릴레이 창작 규칙]</div>
+                            <div>• <b>0단계 (스토리 개설)</b><br>&nbsp;&nbsp;누구나 첫 스토리 개설 가능 (무료)</div>
+                            <div>• <b>1단계 (집필 경쟁 - 5일)</b><br>&nbsp;&nbsp;회차당 최대 5명 작가 경쟁 (보증금 1.0 Pi)</div>
+                            <div>• <b>2단계 (열람 & 투표 - 5일)</b><br>&nbsp;&nbsp;모든 독자 자유로운 열람 및 투표 참여</div>
+                            <div>• <b>3단계 (회차 우승 정산)</b><br>&nbsp;&nbsp;채택 작가 <b>보증금 풀 전액(100%) 획득!</b></div>
+                            <div>• <b>4단계 (최종 완결 지분)</b><br>&nbsp;&nbsp;RWA/NFT 판권 지분 <b>작가진 95% / 플랫폼 5%</b></div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">
@@ -708,14 +724,14 @@
                 <!-- 우측: 오리지널 시리즈 안내 카드 -->
                 <div class="landing-action-card" onclick="switchTab('creator')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--success-green); margin-bottom: 6px;">
+                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--success-green); margin-bottom: 10px;">
                             📚 오리지널 시리즈
                         </div>
-                        <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
-                            **창작자 단독 연재 공간**<br>
-                            • **1화 무료 공개**: 누구나 부담 없이 작품 탐색<br>
-                            • **2화부터 유료 연재**: 챕터당 0.1 Pi 결제로 광고 없이 몰입 감상<br>
-                            • **수익 창출**: 독자의 0.1 Pi 결제 수익 작가 정산 + 완결 시 RWA/NFT 지분 획득!
+                        <div class="card-rules-list">
+                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[창작자 단독 연재 공간]</div>
+                            <div>• <b>1화 무료 공개</b><br>&nbsp;&nbsp;누구나 부담 없이 작품 탐색</div>
+                            <div>• <b>2화부터 유료 연재</b><br>&nbsp;&nbsp;챕터당 0.1 Pi 결제로 광고 없이 몰입 감상</div>
+                            <div>• <b>수익 창출 & 정산</b><br>&nbsp;&nbsp;독자의 0.1 Pi 결제 수익 작가 정산<br>&nbsp;&nbsp;+ 완결 시 RWA/NFT 지분 획득!</div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">
