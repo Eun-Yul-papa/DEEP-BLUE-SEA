@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Blue Sea - Pi DApp Prototype</title>
+    <title>Deep Blue Sea - Web3 Storytelling DApp</title>
     <!-- Google Translate API 스크립트 -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
@@ -30,7 +30,7 @@
         body {
             background-color: var(--bg-deep);
             color: var(--text-bright);
-            padding-bottom: 40px;
+            padding-bottom: 70px; /* 하단 띠배너 공간 확보 */
             top: 0 !important;
             transition: background 0.3s ease;
         }
@@ -48,7 +48,7 @@
         .goog-te-gadget { display: none !important; }
         #google_translate_element { display: none; }
 
-        /* 모바일 겸용 헤더 구도 개편 */
+        /* 모바일 겸용 헤더 */
         header {
             background: rgba(2, 9, 22, 0.9);
             backdrop-filter: blur(10px);
@@ -157,13 +157,38 @@
             background: rgba(56, 189, 248, 0.05);
         }
 
+        /* 고정 배너 영역 */
+        .bottom-banner-ad {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: rgba(2, 9, 22, 0.95);
+            border-top: 1px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-placeholder {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
             padding: 16px;
         }
 
-        /* 랜딩 메인 전용 스타일 */
+        /* 랜딩 메인 스타일 */
         .landing-container {
             display: flex;
             flex-direction: column;
@@ -217,7 +242,7 @@
         .landing-info-text {
             font-size: 0.88rem;
             color: var(--text-bright);
-            line-height: 1.6;
+            line-height: 1.65;
             margin-bottom: 12px;
         }
 
@@ -316,7 +341,7 @@
             transition: all 0.2s;
         }
 
-        /* 슬림 리스트 뷰 전용 스타일 */
+        /* 슬림 리스트 뷰 */
         .list-view-container .card {
             padding: 12px 14px;
             margin-bottom: 10px;
@@ -450,7 +475,7 @@
             width: 100%;
             max-width: 500px;
             padding: 18px;
-            max-height: 90vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
@@ -547,9 +572,9 @@
         .candidate-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -562,25 +587,6 @@
             padding: 12px;
             margin-bottom: 14px;
             text-align: center;
-        }
-
-        .access-btn-group {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .access-btn {
-            flex: 1;
-            padding: 9px;
-            border-radius: 8px;
-            border: 1px solid var(--primary-cyan);
-            background: rgba(56, 189, 248, 0.15);
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
         .finish-proposal-box {
@@ -663,23 +669,23 @@
                 </div>
             </div>
 
-            <!-- 디앱 목적 및 브랜드 스토리 소개 창 -->
+            <!-- 브랜드 스토리 및 Web3 소득 생태계 비전 -->
             <div class="landing-info-card">
                 <div class="landing-info-title">
                     🌊 DEEP BLUE SEA의 브랜드 스토리 & 비전
                 </div>
                 <div class="landing-info-text">
                     끝없이 깊은 심해 속 미지의 세상에 우리가 아직 알지 못하는 수많은 생명과 비밀이 숨겨져 있듯, **AI가 공존하는 시대 속에서도 인간의 무한한 창작 능력과 가능성은 끊임없이 샘솟아 나옵니다.**<br><br>
-                    Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 **탈중앙화 집단지성 스토리텔링 플랫폼**입니다. 누구나 함께 이야기를 이어가는 '스토리 릴레이'와 개인 작가의 고유한 세계관을 펼치는 '오리지널 시리즈'를 통해 미지의 창작 세상으로 여러분을 안내합니다.
+                    Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 **탈중앙화 Web3 스토리텔링 플랫폼**입니다. 누구나 부담 없이 무료로 이야기를 읽고 투표에 참여하며, 작가는 물론 독자까지 **생태계에 기여한 가치만큼 소득과 보상을 함께 나누는 지속 가능한 창작 경제**를 만들어갑니다.
                 </div>
                 <div class="tokenomics-box">
-                    💎 **미래 가치 창출**: 완결된 우수 스토리 작품은 **RWA(실물자산) 및 NFT 디지털 자산**으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 창작자 95% / 플랫폼 5%)
+                    💎 **미래 가치 창출**: 완결된 우수 스토리 작품은 **RWA(실물자산) 및 NFT 디지털 자산**으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 참여 작가진 95% / 플랫폼 5%)
                 </div>
             </div>
 
             <!-- 하단 2개 핵심 탭 이동 카드 -->
             <div class="landing-grid">
-                <!-- 좌측: 스토리 릴레이 안내 카드 (상세 규칙 및 무료 개설 강조) -->
+                <!-- 좌측: 스토리 릴레이 안내 카드 -->
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
                         <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">
@@ -687,10 +693,11 @@
                         </div>
                         <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
                             **집단지성 릴레이 창작 규칙**<br>
-                            • **무료 첫 스토리 개설**: 누구나 자유롭게 첫 릴레이 오픈!<br>
-                            • **작성 5일**: 최대 5명 작가 릴레이 이어쓰기 (보증금 1.0 Pi)<br>
-                            • **투표 5일**: 모든 독자 후보작 열람 & 투표 (0.1 Pi or 광고)<br>
-                            • **상금 독식**: 최다 득표 우승 작가 릴레이 상금 100% 독식!
+                            • **0단계 (스토리 개설)**: 누구나 첫 스토리 개설 가능 (무료)<br>
+                            • **1단계 (집필 경쟁 - 5일)**: 회차마다 최대 5명 작가 경쟁 참여 (보증금 1.0 Pi)<br>
+                            • **2단계 (열람 & 투표 - 5일)**: 모든 독자 자유로운 열람 및 투표 참여<br>
+                            • **3단계 (회차 우승 정산)**: 독자 투표 채택 작가가 **보증금 풀 전액(100%) 획득!**<br>
+                            • **4단계 (최종 완결 지분)**: RWA/NFT 판권 지분 **작가진 95% / 플랫폼 5%** 배분
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">
@@ -707,8 +714,8 @@
                         <div style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 10px;">
                             **창작자 단독 연재 공간**<br>
                             • **1화 무료 공개**: 누구나 부담 없이 작품 탐색<br>
-                            • **2화부터 유료**: 0.1 Pi 결제 or 광고 시청으로 다음 화 열기<br>
-                            • **수익 창출**: 독자 직접 결제/광고 수익 정산 + RWA/NFT 지분!
+                            • **2화부터 유료 연재**: 챕터당 0.1 Pi 결제로 광고 없이 몰입 감상<br>
+                            • **수익 창출**: 독자의 0.1 Pi 결제 수익 작가 정산 + 완결 시 RWA/NFT 지분 획득!
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">
@@ -730,7 +737,7 @@
             </div>
 
             <div id="relay-card-container">
-                <!-- [테스트용 카드 1] 단편 6화 완결제안 테스트 -->
+                <!-- 테스트용 카드 1 -->
                 <div class="card" id="card-test-ch6" onclick="handleListCardClick('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
                     <div class="tag-group">
                         <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
@@ -752,8 +759,8 @@
                         💰 상금 풀: 3.0 Test Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', false)">
-                            📖 후보 열람 & 투표 (0.1 Pi)
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', true)">
+                            📖 후보 열람 & 투표 (무료)
                         </button>
                         <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
                             ✍️ 이어쓰기 (Ch.6)
@@ -761,7 +768,7 @@
                     </div>
                 </div>
 
-                <!-- [테스트용 카드 2] 단편 10화 최종 완결 라운드 테스트 -->
+                <!-- 테스트용 카드 2 -->
                 <div class="card" id="card-test-ch10" onclick="handleListCardClick('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
                     <div class="tag-group">
                         <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
@@ -783,8 +790,8 @@
                         💰 상금 풀: 8.0 Test Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', false)">
-                            📖 후보 열람 & 투표 (0.1 Pi)
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', true)">
+                            📖 후보 열람 & 투표 (무료)
                         </button>
                         <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
                             ✍️ 이어쓰기 (Ch.10)
@@ -834,6 +841,13 @@
 
     </div>
 
+    <!-- 하단 고정 띠 배너 광고 영역 -->
+    <div class="bottom-banner-ad">
+        <div class="banner-placeholder">
+            📢 <span>ADVERTISEMENT BANNER (DEEP BLUE SEA)</span>
+        </div>
+    </div>
+
     <!-- 통합 상세 팝업 -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
@@ -860,7 +874,7 @@
 
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <button class="btn btn-outline" id="btnIntegratedVote" onclick="">
-                    📖 후보작 열람 & 투표하기 (0.1 Pi / 광고)
+                    📖 후보작 열람 & 투표하기 (무료)
                 </button>
                 <button class="btn btn-primary" id="btnIntegratedWrite" onclick="">
                     ✍️ 이 회차 이어쓰기 참여하기 (1.0 Pi 보증금)
@@ -1000,7 +1014,7 @@
         </div>
     </div>
 
-    <!-- Reader / Vote Modal -->
+    <!-- Reader / Vote Modal (무료 열람 및 투표) -->
     <div class="modal-overlay" id="readVoteModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1012,15 +1026,11 @@
             </div>
 
             <div class="access-box">
-                <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 6px;">
-                    📖 릴레이글 전체열람 & 투표권 획득 (0.1 Pi)
+                <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
+                    📖 자유로운 스토리 열람 & 투표
                 </div>
                 <div style="font-size: 0.78rem; color: var(--text-sub);">
-                    아래 방법 중 하나를 선택하면 전체 후보작 열람 및 1표 투표권이 부여됩니다.
-                </div>
-                <div class="access-btn-group">
-                    <button class="access-btn" onclick="handlePayAccess(0.1, '스토리 릴레이 열람 & 투표권')">💰 0.1 Test Pi 결제</button>
-                    <button class="access-btn" onclick="handleAdAccess()">📺 광고 시청</button>
+                    후보작을 자유롭게 감상하시고 마음에 드는 원고에 투표해 주세요!
                 </div>
             </div>
 
@@ -1169,7 +1179,7 @@
 
                 btnVote.onclick = function() {
                     closeModal('integratedRelayModal');
-                    openReadVoteModal(title, cardId, false);
+                    openReadVoteModal(title, cardId, true);
                 };
 
                 btnWrite.onclick = function() {
@@ -1262,10 +1272,6 @@
             }
         }
 
-        function handleAdAccess() {
-            alert('📺 보상형 광고 재생 중...\n\n(시청 완료 후 열람 권한이 부여됩니다!)');
-        }
-
         function openReadVoteModal(title, cardId, isVotePhase) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
 
@@ -1273,14 +1279,14 @@
             container.innerHTML = `
                 <div class="candidate-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리 [완결제안]</div>
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리 [완결제안]</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
                     </div>
                     ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">작성 진행중</span>`}
                 </div>
                 <div class="candidate-item">
                     <div>
-                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan);">후보 B. 백색 소용돌이의 비밀</div>
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">후보 B. 백색 소용돌이의 비밀</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: OceanDeep (득표수: 8)</div>
                     </div>
                     ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 B')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">작성 진행중</span>`}
@@ -1290,7 +1296,7 @@
         }
 
         function handleVoteFinish(title, candidateName) {
-            alert(`🎉 '${candidateName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 우승자에게 100% 지급됩니다.`);
+            alert(`🎉 '${candidateName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 채택된 우승 작가에게 100% 지급됩니다.`);
             closeModal('readVoteModal');
         }
 
@@ -1445,8 +1451,8 @@
                     💰 상금 풀: 0.0 Test Pi (우승자 100% 획득)
                 </div>
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', false)">
-                        📖 후보 열람 & 투표 (0.1 Pi)
+                    <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', true)">
+                        📖 후보 열람 & 투표 (무료)
                     </button>
                     <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
                         ✍️ 이어쓰기 참여
