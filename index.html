@@ -18,6 +18,7 @@
             --danger-red: #f87171;
             --success-green: #4ade80;
             --warning-orange: #fbbf24;
+            --gold-star: #f59e0b;
         }
 
         * {
@@ -25,18 +26,17 @@
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            word-break: keep-all; /* 한글 단어 끊김 방지 */
+            word-break: keep-all;
         }
 
         body {
             background-color: var(--bg-deep);
             color: var(--text-bright);
-            padding-bottom: 110px; /* 푸터 및 하단 띠배너 공간 확보 */
+            padding-bottom: 110px;
             top: 0 !important;
             transition: background 0.3s ease;
         }
 
-        /* 랜딩 모드 시 심해 배경 고정 */
         body.landing-mode {
             background-image: url('main_bg.jpg');
             background-size: cover;
@@ -49,7 +49,6 @@
         .goog-te-gadget { display: none !important; }
         #google_translate_element { display: none; }
 
-        /* 헤더 전체 단일 행 레이아웃 */
         header {
             background: rgba(2, 9, 22, 0.9);
             backdrop-filter: blur(10px);
@@ -63,7 +62,7 @@
         .header-row {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* 수직 중앙 정렬 */
+            align-items: center;
             width: 100%;
         }
 
@@ -78,7 +77,6 @@
             align-items: center;
         }
 
-        /* 삼선 햄버거 버튼 */
         .menu-hamburger-btn {
             background: transparent;
             border: none;
@@ -93,9 +91,7 @@
             transition: background 0.2s;
         }
 
-        .menu-hamburger-btn:hover {
-            background: rgba(56, 189, 248, 0.15);
-        }
+        .menu-hamburger-btn:hover { background: rgba(56, 189, 248, 0.15); }
 
         .brand-logo {
             display: flex;
@@ -135,7 +131,6 @@
             max-width: 130px;
         }
 
-        /* 사이드 슬라이드 메뉴 드로어 스타일 */
         .drawer-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -167,9 +162,7 @@
             box-shadow: 5px 0 25px rgba(0,0,0,0.7);
         }
 
-        .side-drawer.active {
-            left: 0;
-        }
+        .side-drawer.active { left: 0; }
 
         .drawer-header {
             padding: 18px 16px;
@@ -232,17 +225,17 @@
             display: flex;
             background: rgba(13, 33, 66, 0.5);
             border-bottom: 1px solid var(--border-glow);
-            padding: 0 10px;
-            justify-content: center;
-            gap: 8px;
+            padding: 0 6px;
+            justify-content: space-around;
+            overflow-x: auto;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
             color: var(--text-sub);
-            padding: 12px 14px;
-            font-size: 0.85rem;
+            padding: 12px 8px;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             border-bottom: 3px solid transparent;
@@ -256,7 +249,6 @@
             background: rgba(56, 189, 248, 0.05);
         }
 
-        /* 푸터 영역 (저작권 문구) */
         footer.app-footer {
             margin-top: 30px;
             padding: 16px;
@@ -279,7 +271,6 @@
             line-height: 1.4;
         }
 
-        /* 고정 배너 영역 */
         .bottom-banner-ad {
             position: fixed;
             bottom: 0;
@@ -310,7 +301,6 @@
             padding: 16px;
         }
 
-        /* 랜딩 메인 스타일 */
         .landing-container {
             display: flex;
             flex-direction: column;
@@ -319,10 +309,7 @@
             margin-top: 10px;
         }
 
-        .landing-header-box {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+        .landing-header-box { text-align: center; margin-bottom: 10px; }
 
         .landing-logo-large {
             width: 105px;
@@ -386,9 +373,7 @@
         }
 
         @media (max-width: 480px) {
-            .landing-grid {
-                grid-template-columns: 1fr;
-            }
+            .landing-grid { grid-template-columns: 1fr; }
         }
 
         .landing-action-card {
@@ -417,13 +402,8 @@
             margin-bottom: 14px;
         }
 
-        .card-rules-list div {
-            margin-bottom: 6px;
-        }
-
-        .card-rules-list b {
-            color: var(--text-bright);
-        }
+        .card-rules-list div { margin-bottom: 6px; }
+        .card-rules-list b { color: var(--text-bright); }
 
         .section-header {
             display: flex;
@@ -444,6 +424,24 @@
             font-size: 1.05rem;
             font-weight: 700;
             color: var(--primary-cyan);
+        }
+
+        .sort-filter-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .sort-select {
+            background: rgba(13, 33, 66, 0.9);
+            border: 1px solid var(--border-glow);
+            color: var(--text-bright);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            outline: none;
+            cursor: pointer;
         }
 
         .view-toggle-btn {
@@ -478,6 +476,11 @@
             transition: all 0.2s;
         }
 
+        .archive-card {
+            border-color: rgba(56, 189, 248, 0.4);
+            background: rgba(7, 21, 46, 0.9);
+        }
+
         .list-view-container .card {
             padding: 12px 14px;
             margin-bottom: 10px;
@@ -496,7 +499,8 @@
         .list-view-container .card p,
         .list-view-container .card .timer-info,
         .list-view-container .card .prize-info,
-        .list-view-container .card .button-group {
+        .list-view-container .card .button-group,
+        .list-view-container .card .stats-meta-row {
             display: none !important;
         }
 
@@ -512,9 +516,7 @@
             margin-bottom: 10px;
         }
 
-        .list-view-container .tag-group {
-            margin-bottom: 2px;
-        }
+        .list-view-container .tag-group { margin-bottom: 2px; }
 
         .tag {
             display: inline-block;
@@ -529,6 +531,7 @@
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
         .tag-creator { background: rgba(74, 222, 128, 0.2); color: var(--success-green); }
         .tag-finished { background: rgba(248, 113, 113, 0.2); color: var(--danger-red); }
+        .tag-archive { background: rgba(56, 189, 248, 0.25); color: #7dd3fc; border: 1px solid var(--primary-cyan); }
 
         .title-with-flag {
             display: flex;
@@ -546,6 +549,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .stats-meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.78rem;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        .star-rating-box {
+            color: var(--gold-star);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .timer-info {
@@ -638,9 +661,7 @@
             cursor: pointer;
         }
 
-        .form-group {
-            margin-bottom: 12px;
-        }
+        .form-group { margin-bottom: 12px; }
 
         .form-label {
             display: block;
@@ -705,43 +726,32 @@
             transition: all 0.2s;
         }
 
-        .candidate-item {
+        .star-input-group {
+            display: flex;
+            gap: 8px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+        }
+
+        .star-input-group span.selected { color: var(--gold-star); }
+
+        .review-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+        }
+
+        .review-author {
+            color: var(--primary-cyan);
+            font-weight: 700;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .access-box {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px dashed var(--primary-cyan);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 14px;
-            text-align: center;
-        }
-
-        .finish-proposal-box {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 8px;
-            padding: 8px;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.78rem;
-            color: var(--warning-orange);
-        }
-
-        .finish-proposal-box input {
-            width: 15px;
-            height: 15px;
-            cursor: pointer;
+            margin-bottom: 4px;
         }
 
         .chapter-list-item {
@@ -825,9 +835,11 @@
         <button class="tab-btn active" id="tabHomeBtn" onclick="switchTab('home')">🏠 홈 메인</button>
         <button class="tab-btn" id="tabRelayBtn" onclick="switchTab('relay')">🔗 스토리 릴레이</button>
         <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 오리지널 시리즈</button>
+        <button class="tab-btn" id="tabArchiveBtn" onclick="switchTab('archive')">🏛️ 블루 아카이브</button>
     </div>
 
     <div class="container">
+        <!-- 홈 메인 섹션 -->
         <div id="home-section" class="landing-container">
             <div class="landing-header-box">
                 <img src="logo.png" alt="Deep Blue Sea Logo" class="landing-logo-large">
@@ -858,11 +870,10 @@
                         </div>
                         <div class="card-rules-list">
                             <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[집단지성 릴레이 창작 규칙]</div>
-                            <div>• <b>0단계 (스토리 개설)</b><br>&nbsp;&nbsp;누구나 첫 스토리 개설 가능 (무료)</div>
+                            <div>• <b>0단계 (스토리 개설)</b><br>&nbsp;&nbsp;첫 스토리 개설 (0 Test-Pi 무료)</div>
                             <div>• <b>1단계 (집필 경쟁 - 5일)</b><br>&nbsp;&nbsp;회차당 최대 5명 작가 경쟁 (보증금 1.0 Test-Pi)</div>
                             <div>• <b>2단계 (열람 & 투표 - 5일)</b><br>&nbsp;&nbsp;모든 독자 자유로운 열람 및 투표 참여 (무료)</div>
-                            <div>• <b>3단계 (회차 우승 정산)</b><br>&nbsp;&nbsp;채택 작가 <b>보증금 풀 전액(100%) 획득!</b></div>
-                            <div>• <b>4단계 (최종 완결 지분)</b><br>&nbsp;&nbsp;RWA/NFT 판권 지분 <b>작가진 95% / 플랫폼 5%</b></div>
+                            <div>• <b>3단계 (우승 정산)</b><br>&nbsp;&nbsp;채택 작가 <b>보증금 풀 전액(100%) 획득!</b></div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">
@@ -870,25 +881,26 @@
                     </div>
                 </div>
 
-                <div class="landing-action-card" onclick="switchTab('creator')">
+                <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--success-green); margin-bottom: 10px;">
-                            📚 오리지널 시리즈
+                        <div style="font-size: 1.1rem; font-weight: 800; color: #7dd3fc; margin-bottom: 10px;">
+                            🏛️ 블루 아카이브
                         </div>
                         <div class="card-rules-list">
-                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[창작자 단독 연재 공간]</div>
-                            <div>• <b>1화 무료 공개</b><br>&nbsp;&nbsp;누구나 부담 없이 작품 탐색</div>
-                            <div>• <b>2화부터 유료 연재</b><br>&nbsp;&nbsp;챕터당 0.1 Test-Pi 결제로 광고 없이 몰입 감상</div>
-                            <div>• <b>수익 창출 & 정산</b><br>&nbsp;&nbsp;독자의 0.1 Test-Pi 결제 수익 작가 정산<br>&nbsp;&nbsp;+ 완결 시 RWA/NFT 지분 획득!</div>
+                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[완결작 도서관 & 소장]</div>
+                            <div>• <b>완결작 자동 아카이빙</b><br>&nbsp;&nbsp;릴레이 & 오리지널 완결작 보관</div>
+                            <div>• <b>통합 소장 패키지</b><br>&nbsp;&nbsp;단편 0.5 / 장편 1.0 Test-Pi 한 번 결제 전체 소장</div>
+                            <div>• <b>별점 & 리뷰 평가</b><br>&nbsp;&nbsp;시간순/조회순/별점순/길이순 다채로운 정렬 지원</div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">
-                        목록 보기 ➔
+                        도서관 입장 ➔
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- 스토리 릴레이 섹션 -->
         <div id="relay-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
@@ -928,39 +940,10 @@
                         </button>
                     </div>
                 </div>
-
-                <div class="card" id="card-test-ch10" onclick="handleListCardClick('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
-                    <div class="tag-group">
-                        <span class="tag tag-vote">🏁 final 완결 라운드 (Ch. 10)</span>
-                        <span class="tag tag-meta">소설</span>
-                        <span class="tag tag-meta">판타지</span>
-                        <span class="tag tag-meta">단편 (5-10 Chs)</span>
-                    </div>
-                    <div class="title-with-flag">
-                        <span class="flag-badge">🇰🇷</span>
-                        <h3>[테스트] 10화 최종 완결 라운드 테스트용</h3>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                        "단편 10화는 무조건 이야기를 마무리 짓는 최종 결말 라운드로 작동합니다!"
-                    </p>
-                    <div class="timer-info">
-                        ⏳ 작성 마감까지: 02일 08시간 남음
-                    </div>
-                    <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                        💰 상금 풀: 8.0 Test-Pi
-                    </div>
-                    <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 10화 최종 완결 라운드', 'card-test-ch10', true)">
-                            📖 후보 열람 & 투표 (무료)
-                        </button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch10', '[테스트] 10화 최종 완결 라운드', '10화 최종 결말 이어쓰기 테스트입니다.', '🇰🇷', 10, false)">
-                            ✍️ 이어쓰기 (Ch.10)
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
+        <!-- 오리지널 시리즈 섹션 -->
         <div id="creator-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
@@ -976,7 +959,7 @@
                         <span class="tag tag-creator">🟢 연재중</span>
                         <span class="tag tag-meta">소설</span>
                         <span class="tag tag-meta">판타지</span>
-                        <span class="tag tag-meta">총 3화</span>
+                        <span class="tag tag-meta">장편 (10+ Chs)</span>
                     </div>
                     <div class="title-with-flag">
                         <span class="flag-badge">🇰🇷</span>
@@ -995,6 +978,33 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- 블루 아카이브(완결 라이브러리) 섹션 -->
+        <div id="archive-section" style="display: none;">
+            <div class="section-header">
+                <div class="section-title-group">
+                    <div class="section-title">🏛️ 블루 아카이브 (Blue Archive)</div>
+                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트 뷰로 보기</button>
+                </div>
+            </div>
+
+            <!-- 정렬 및 필터바 -->
+            <div class="sort-filter-bar">
+                <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
+                    <option value="all">전체 작품 보기</option>
+                    <option value="relay">릴레이 완결작</option>
+                    <option value="creator">오리지널 완결작</option>
+                </select>
+                <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
+                    <option value="time">최신순 (시간순)</option>
+                    <option value="views">조회수 높은 순 (인기순)</option>
+                    <option value="rating">별점 높은 순</option>
+                    <option value="length">길이 단편순 (총 챕터 적은 순)</option>
+                </select>
+            </div>
+
+            <div id="archive-card-container"></div>
         </div>
 
         <footer class="app-footer">
@@ -1054,7 +1064,7 @@
         </div>
     </div>
 
-    <!-- 모달: 서비스 이용약관 (terms.html 연동 iframe) -->
+    <!-- 모달: 서비스 이용약관 -->
     <div class="modal-overlay" id="termsModal">
         <div class="modal-content" style="max-width: 500px; height: 75vh; display: flex; flex-direction: column;">
             <div class="modal-header" style="flex-shrink: 0; margin-bottom: 10px;">
@@ -1066,7 +1076,7 @@
         </div>
     </div>
 
-    <!-- 모달: 개인정보 처리방침 (privacy.html 연동 iframe) -->
+    <!-- 모달: 개인정보 처리방침 -->
     <div class="modal-overlay" id="privacyModal">
         <div class="modal-content" style="max-width: 500px; height: 75vh; display: flex; flex-direction: column;">
             <div class="modal-header" style="flex-shrink: 0; margin-bottom: 10px;">
@@ -1075,6 +1085,40 @@
             </div>
             <iframe src="privacy.html" style="width: 100%; flex: 1; border: none; background: rgba(2, 9, 22, 0.4); border-radius: 8px; padding: 4px;"></iframe>
             <button class="btn btn-outline" style="margin-top: 12px; flex-shrink: 0;" onclick="closeModal('privacyModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 별점 및 리뷰 남기기/보기 -->
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="reviewModalTitle">별점 & 리뷰 평가</div>
+                <button class="close-btn" onclick="closeModal('reviewModal')">✕</button>
+            </div>
+
+            <div class="form-group" style="text-align: center;">
+                <label class="form-label">내 별점 부여하기</label>
+                <div class="star-input-group" id="starInputGroup">
+                    <span onclick="setStarRating(1)">★</span>
+                    <span onclick="setStarRating(2)">★</span>
+                    <span onclick="setStarRating(3)">★</span>
+                    <span onclick="setStarRating(4)">★</span>
+                    <span onclick="setStarRating(5)">★</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">리뷰 작성하기</label>
+                <textarea class="form-control" id="inputReviewText" style="min-height: 70px;" placeholder="작품에 대한 솔직한 감상평을 남겨주세요..."></textarea>
+                <button class="btn btn-primary" style="margin-top: 8px;" onclick="submitReview()">리뷰 등록하기</button>
+            </div>
+
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin: 16px 0 8px 0;">
+                💬 등록된 독자 리뷰 목록
+            </div>
+            <div id="reviewListContainer"></div>
+
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('reviewModal')">닫기</button>
         </div>
     </div>
 
@@ -1094,30 +1138,12 @@
                 </div>
                 <button class="close-btn" onclick="closeModal('integratedRelayModal')">✕</button>
             </div>
-
-            <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; line-height: 1.5;" id="integratedDesc">
-                스토리 설명 본문이 여기에 표시됩니다.
-            </p>
-
-            <div class="access-box" style="margin-bottom: 14px;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
-                    🎯 스토리 릴레이 참여 & 투표 액션
-                </div>
-                <div style="font-size: 0.78rem; color: var(--text-sub);">
-                    원하는 작업을 선택하여 참여해 주세요!
-                </div>
+            <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; line-height: 1.5;" id="integratedDesc">스토리 설명</p>
+            <div class="button-group" style="flex-direction: column;">
+                <button class="btn btn-outline" id="btnIntegratedVote">📖 후보작 열람 & 투표하기 (무료)</button>
+                <button class="btn btn-primary" id="btnIntegratedWrite">✍️ 이 회차 이어쓰기 참여하기 (1.0 Test-Pi 보증금)</button>
             </div>
-
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-                <button class="btn btn-outline" id="btnIntegratedVote" onclick="">
-                    📖 후보작 열람 & 투표하기 (무료)
-                </button>
-                <button class="btn btn-primary" id="btnIntegratedWrite" onclick="">
-                    ✍️ 이 회차 이어쓰기 참여하기 (1.0 Test-Pi 보증금)
-                </button>
-            </div>
-
-            <button class="btn btn-outline" style="margin-top: 14px; border-color: rgba(255,255,255,0.2); color: var(--text-sub);" onclick="closeModal('integratedRelayModal')">닫기</button>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('integratedRelayModal')">닫기</button>
         </div>
     </div>
 
@@ -1147,17 +1173,9 @@
                 <select class="form-control" id="selectGenre">
                     <option value="역사">역사 (Historical)</option>
                     <option value="추리">추리 (Mystery)</option>
-                    <option value="과학">과학 (Science)</option>
                     <option value="공상 과학" selected>공상 과학 (Sci-Fi)</option>
-                    <option value="스릴러">스릴러 (Thriller)</option>
-                    <option value="심리">심리 (Psychological)</option>
-                    <option value="모험">모험 (Adventure)</option>
                     <option value="판타지">판타지 (Fantasy)</option>
-                    <option value="무협">무협 (Wuxia)</option>
                     <option value="로맨스">로맨스 (Romance)</option>
-                    <option value="전쟁">전쟁 (War)</option>
-                    <option value="전기">전기 (Biography)</option>
-                    <option value="종교">종교 (Religion)</option>
                 </select>
             </div>
 
@@ -1172,7 +1190,6 @@
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
                 <textarea class="form-control" id="storyContent" oninput="handleByteCheckRelay(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
-                
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
                     <span class="byte-status" id="byte-status-count">0 / 6000 Bytes</span>
@@ -1185,6 +1202,7 @@
         </div>
     </div>
 
+    <!-- 오리지널 시리즈 개설 모달 (단편/장편 구분 선택 포함) -->
     <div class="modal-overlay" id="createCreatorModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1211,17 +1229,17 @@
                 <select class="form-control" id="selectCreatorGenre">
                     <option value="역사">역사 (Historical)</option>
                     <option value="추리">추리 (Mystery)</option>
-                    <option value="과학">과학 (Science)</option>
                     <option value="공상 과학">공상 과학 (Sci-Fi)</option>
-                    <option value="스릴러">스릴러 (Thriller)</option>
-                    <option value="심리">심리 (Psychological)</option>
-                    <option value="모험">모험 (Adventure)</option>
                     <option value="판타지" selected>판타지 (Fantasy)</option>
-                    <option value="무협">무협 (Wuxia)</option>
                     <option value="로맨스">로맨스 (Romance)</option>
-                    <option value="전쟁">전쟁 (War)</option>
-                    <option value="전기">전기 (Biography)</option>
-                    <option value="종교">종교 (Religion)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Length (연재 목표 분량)</label>
+                <select class="form-control" id="selectCreatorLength">
+                    <option value="단편 (5-10 Chs)">단편 (5~10 Chapters)</option>
+                    <option value="장편 (10+ Chs)" selected>장편 (10+ Chapters)</option>
                 </select>
             </div>
 
@@ -1232,13 +1250,6 @@
                 <div class="byte-counter-info">
                     <span class="guide-text">작성 중인 분량:</span>
                     <span class="byte-status valid" id="creator-byte-count">0 Bytes</span>
-                </div>
-
-                <div class="finish-proposal-box" style="margin-top: 10px;">
-                    <input type="checkbox" id="chkCreatorFinished">
-                    <label for="chkCreatorFinished" style="cursor: pointer; font-weight: 600;">
-                        이 작품을 단편/완결 작품으로 등록 (완결 태그 표기)
-                    </label>
                 </div>
             </div>
 
@@ -1258,7 +1269,7 @@
                 <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
             </div>
 
-            <div class="access-box">
+            <div class="access-box" style="background: rgba(56, 189, 248, 0.1); border: 1px dashed var(--primary-cyan); padding: 12px; border-radius: 10px; margin-bottom: 12px; text-align: center;">
                 <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
                     📖 자유로운 스토리 열람 & 투표 (무료)
                 </div>
@@ -1268,7 +1279,6 @@
             </div>
 
             <div id="candidateListContainer"></div>
-
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('readVoteModal')">닫기</button>
         </div>
     </div>
@@ -1315,19 +1325,12 @@
             <div class="reader-body notranslate" id="writerBody"></div>
 
             <div class="form-group" style="margin-top: 14px;">
-                <label class="form-label" id="writerInputLabel">내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)</label>
-                <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요 (1,500 ~ 6,000 바이트)..."></textarea>
+                <label class="form-label" id="writerInputLabel">내 이어쓰기 작성</label>
+                <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요..."></textarea>
                 
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
                     <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
-                </div>
-
-                <div class="finish-proposal-box" id="finishProposalBox" style="display: none;">
-                    <input type="checkbox" id="chkFinishProposal">
-                    <label for="chkFinishProposal" style="cursor: pointer; font-weight: 600;">
-                        이 원고를 끝으로 스토리 완결 제안 (독자 투표 최다 득표 시 조기 완결)
-                    </label>
                 </div>
             </div>
 
@@ -1342,6 +1345,49 @@
         const MAX_BYTES = 6000;
         let currentBalance = 100.0;
         let selectedUserLang = 'en';
+        let currentSelectedArchiveId = null;
+        let currentTempRating = 5;
+
+        // 샘플 완결 라이브러리(블루 아카이브) 데이터
+        let archiveDataList = [
+            {
+                id: 'arc_01',
+                title: '심해의 소용돌이 속에서',
+                type: 'relay',
+                format: '소설',
+                genre: '공상 과학',
+                flag: '🇰🇷',
+                totalCh: 8,
+                isLong: false,
+                views: 142,
+                ratingSum: 23,
+                ratingCount: 5, // 평점 4.6
+                timestamp: Date.now() - 100000000,
+                desc: '심해 10,000m 바닥에서 발견된 정체불명의 외계 구조물과 인류 최초의 교신 기록...',
+                reviews: [
+                    { author: 'Pioneer_A', rating: 5, comment: '집단지성 릴레이 소설인데도 완결성이 대단하네요!' },
+                    { author: 'OceanFan', rating: 4, comment: '엔딩 소름돋았습니다. 강추!' }
+                ]
+            },
+            {
+                id: 'arc_02',
+                title: '파이의 연금술사',
+                type: 'creator',
+                format: '소설',
+                genre: '판타지',
+                flag: '🇰🇷',
+                totalCh: 12,
+                isLong: true,
+                views: 310,
+                ratingSum: 48,
+                ratingCount: 10, // 평점 4.8
+                timestamp: Date.now() - 50000000,
+                desc: '블록체인 세상의 연금술사가 펼치는 판타지 서사시. 완결까지 거침없는 전개!',
+                reviews: [
+                    { author: 'Web3Writer', rating: 5, comment: '1.0 Test-Pi가 전혀 아깝지 않은 명작입니다.' }
+                ]
+            }
+        ];
 
         const flagMap = {
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
@@ -1372,37 +1418,61 @@
             const homeSec = document.getElementById('home-section');
             const relaySec = document.getElementById('relay-section');
             const creatorSec = document.getElementById('creator-section');
+            const archiveSec = document.getElementById('archive-section');
 
             const tabHome = document.getElementById('tabHomeBtn');
             const tabRelay = document.getElementById('tabRelayBtn');
             const tabCreator = document.getElementById('tabCreatorBtn');
+            const tabArchive = document.getElementById('tabArchiveBtn');
 
-            [tabHome, tabRelay, tabCreator].forEach(btn => btn.classList.remove('active'));
+            [tabHome, tabRelay, tabCreator, tabArchive].forEach(btn => btn.classList.remove('active'));
 
             if (tabName === 'home') {
                 document.body.classList.add('landing-mode');
                 homeSec.style.display = 'flex';
                 relaySec.style.display = 'none';
                 creatorSec.style.display = 'none';
+                archiveSec.style.display = 'none';
                 tabHome.classList.add('active');
             } else if (tabName === 'relay') {
                 document.body.classList.remove('landing-mode');
                 homeSec.style.display = 'none';
                 relaySec.style.display = 'block';
                 creatorSec.style.display = 'none';
+                archiveSec.style.display = 'none';
                 tabRelay.classList.add('active');
             } else if (tabName === 'creator') {
                 document.body.classList.remove('landing-mode');
                 homeSec.style.display = 'none';
                 relaySec.style.display = 'none';
                 creatorSec.style.display = 'block';
+                archiveSec.style.display = 'none';
                 tabCreator.classList.add('active');
+            } else if (tabName === 'archive') {
+                document.body.classList.remove('landing-mode');
+                homeSec.style.display = 'none';
+                relaySec.style.display = 'none';
+                creatorSec.style.display = 'none';
+                archiveSec.style.display = 'block';
+                tabArchive.classList.add('active');
+                renderArchiveList(); // 블루 아카이브 리스트 렌더링
             }
         }
 
         function toggleViewMode(section) {
-            const container = document.getElementById(section === 'relay' ? 'relay-card-container' : 'creator-card-container');
-            const toggleBtn = document.getElementById(section === 'relay' ? 'relayViewToggle' : 'creatorViewToggle');
+            let containerId = 'relay-card-container';
+            let toggleBtnId = 'relayViewToggle';
+
+            if (section === 'creator') {
+                containerId = 'creator-card-container';
+                toggleBtnId = 'creatorViewToggle';
+            } else if (section === 'archive') {
+                containerId = 'archive-card-container';
+                toggleBtnId = 'archiveViewToggle';
+            }
+
+            const container = document.getElementById(containerId);
+            const toggleBtn = document.getElementById(toggleBtnId);
 
             if (container.classList.contains('list-view-container')) {
                 container.classList.remove('list-view-container');
@@ -1410,6 +1480,167 @@
             } else {
                 container.classList.add('list-view-container');
                 toggleBtn.innerText = '🗂️ 카드 뷰로 보기';
+            }
+        }
+
+        function renderArchiveList() {
+            const category = document.getElementById('archiveCategorySelect').value;
+            const sortBy = document.getElementById('archiveSortSelect').value;
+            const container = document.getElementById('archive-card-container');
+
+            // 1. 카테고리 필터링
+            let filteredList = archiveDataList.filter(item => {
+                if (category === 'relay') return item.type === 'relay';
+                if (category === 'creator') return item.type === 'creator';
+                return true;
+            });
+
+            // 2. 정렬 (Sorting)
+            filteredList.sort((a, b) => {
+                if (sortBy === 'time') return b.timestamp - a.timestamp; // 최신순
+                if (sortBy === 'views') return b.views - a.views; // 조회수순
+                if (sortBy === 'rating') {
+                    const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
+                    const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
+                    return ratingB - ratingA; // 별점 높은 순
+                }
+                if (sortBy === 'length') return a.totalCh - b.totalCh; // 길이 단편순 (총 챕터 적은 순)
+                return 0;
+            });
+
+            // 3. HTML 카드 생성
+            let html = '';
+            filteredList.forEach(item => {
+                const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
+                const price = item.isLong ? 1.0 : 0.5; // 단편 0.5 / 장편 1.0 Test-Pi
+
+                html += `
+                    <div class="card archive-card" id="${item.id}">
+                        <div class="tag-group">
+                            <span class="tag tag-archive">🏛️ 블루 아카이브</span>
+                            <span class="tag tag-meta">${item.type === 'relay' ? '집단지성 릴레이' : '오리지널'}</span>
+                            <span class="tag tag-meta">${item.format} · ${item.genre}</span>
+                            <span class="tag tag-meta">${item.totalCh}화 완결 (${item.isLong ? '장편' : '단편'})</span>
+                        </div>
+                        <div class="title-with-flag">
+                            <span class="flag-badge">${item.flag}</span>
+                            <h3>${item.title}</h3>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
+                            "${item.desc}"
+                        </p>
+
+                        <div class="stats-meta-row">
+                            <div class="star-rating-box">
+                                ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
+                            </div>
+                            <div>
+                                👀 누적 소장/조회: <b>${item.views}</b>회
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn btn-outline" style="flex: 1;" onclick="openReviewModal('${item.id}')">
+                                ⭐ 별점 & 리뷰 보기
+                            </button>
+                            <button class="btn btn-primary" style="flex: 1;" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${price})">
+                                📖 전체 소장하기 (${price} Test-Pi)
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function buyAndReadArchive(id, title, price) {
+            const item = archiveDataList.find(a => a.id === id);
+            if (!item) return;
+
+            const authKey = `purchased_archive_${id}`;
+            const isAlreadyBought = localStorage.getItem(authKey);
+
+            if (isAlreadyBought) {
+                alert(`📖 이미 소장 중인 작품입니다!\n\n'${title}' 전체 내용을 자유롭게 감상하실 수 있습니다.`);
+                openArchiveFullReader(item);
+            } else {
+                if (currentBalance >= price) {
+                    currentBalance -= price;
+                    item.views += 1; // 조회수 +1 카운팅
+                    localStorage.setItem(authKey, "true");
+                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+                    alert(`🎉 ${price} Test-Pi 결제 완료!\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
+                    renderArchiveList(); // 조회수 반영을 위해 목록 새로고침
+                    openArchiveFullReader(item);
+                } else {
+                    alert('❌ Test-Pi 잔액이 부족합니다.');
+                }
+            }
+        }
+
+        function openArchiveFullReader(item) {
+            document.getElementById('singleReaderTitle').innerText = `[완결] ${item.title} (전체 ${item.totalCh}화)`;
+            document.getElementById('singleReaderBody').innerText = `[${item.title} - 블루 아카이브 완결본]\n\n${item.desc}\n\n(1화부터 ${item.totalCh}화까지 완결본 전체 텍스트가 연속으로 펼쳐집니다...)\n\n[1화] 심해의 문이 열리다...\n[2화] 고대 문자의 암호를 해독하다...\n[${item.totalCh}화] 인류와 심해의 평화로운 공존, 그 위대한 첫 걸음. - FIN -`;
+            openModal('creatorSingleReaderModal');
+        }
+
+        function openReviewModal(archiveId) {
+            currentSelectedArchiveId = archiveId;
+            const item = archiveDataList.find(a => a.id === archiveId);
+            if (!item) return;
+
+            document.getElementById('reviewModalTitle').innerText = `'${item.title}' 별점 & 리뷰`;
+            setStarRating(5); // 기본 5점 설정
+
+            const container = document.getElementById('reviewListContainer');
+            if (item.reviews.length === 0) {
+                container.innerHTML = `<div style="font-size: 0.8rem; color: var(--text-sub); text-align: center; padding: 10px;">아직 작성된 리뷰가 없습니다. 첫 리뷰를 남겨보세요!</div>`;
+            } else {
+                let html = '';
+                item.reviews.forEach(r => {
+                    html += `
+                        <div class="review-item">
+                            <div class="review-author">
+                                <span>${r.author}</span>
+                                <span style="color: var(--gold-star);">★ ${r.rating}</span>
+                            </div>
+                            <div style="color: #e2e8f0;">${r.comment}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+
+            openModal('reviewModal');
+        }
+
+        function setStarRating(rating) {
+            currentTempRating = rating;
+            const stars = document.querySelectorAll('#starInputGroup span');
+            stars.forEach((star, idx) => {
+                if (idx < rating) star.classList.add('selected');
+                else star.classList.remove('selected');
+            });
+        }
+
+        function submitReview() {
+            const comment = document.getElementById('inputReviewText').value.trim();
+            if (!comment) {
+                alert('리뷰 내용을 입력해주세요!');
+                return;
+            }
+
+            const item = archiveDataList.find(a => a.id === currentSelectedArchiveId);
+            if (item) {
+                item.reviews.unshift({ author: 'Pioneer_Me', rating: currentTempRating, comment: comment });
+                item.ratingSum += currentTempRating;
+                item.ratingCount += 1;
+
+                document.getElementById('inputReviewText').value = '';
+                alert('🎉 리뷰가 성공적으로 등록되었습니다!');
+                openReviewModal(currentSelectedArchiveId); // 리뷰 창 갱신
+                renderArchiveList(); // 배경 메인 목록도 별점 갱신
             }
         }
 
@@ -1523,19 +1754,12 @@
 
             const container = document.getElementById('candidateListContainer');
             container.innerHTML = `
-                <div class="candidate-item">
+                <div class="candidate-item" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
                         <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리 [완결제안]</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
                     </div>
-                    ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">작성 진행중</span>`}
-                </div>
-                <div class="candidate-item">
-                    <div>
-                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">후보 B. 백색 소용돌이의 비밀</div>
-                        <div style="font-size: 0.75rem; color: var(--text-sub);">작성자: OceanDeep (득표수: 8)</div>
-                    </div>
-                    ${isVotePhase ? `<button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 B')">투표하기</button>` : `<span style="font-size:0.75rem; color:var(--text-sub);">작성 진행중</span>`}
+                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.75rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>
                 </div>
             `;
             openModal('readVoteModal');
@@ -1576,7 +1800,7 @@
             }
             closeModal('creatorReadModal');
             document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
-            document.getElementById('singleReaderBody').innerText = `[${title} 제 ${chNum}화 본문 내용]\n\n빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다. 마력이 소용돌이치는 가운데 고대 문자의 기동음이 울려 퍼졌다...`;
+            document.getElementById('singleReaderBody').innerText = `[${title} 제 ${chNum}화 본문 내용]\n\n빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...`;
             openModal('creatorSingleReaderModal');
         }
 
@@ -1597,7 +1821,7 @@
                     currentBalance -= 1.0;
                     document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
                     localStorage.setItem(authKey, "true");
-                    alert("✍️ 1.0 Test-Pi 보증금 지불 완료! (원작자 포함 누구나 이어쓰기 제출 가능)");
+                    alert("✍️ 1.0 Test-Pi 보증금 지불 완료!");
                     openWriterModal(title, decodedContent, flag, chapterNum, isLong);
                 } else {
                     alert("❌ Test-Pi 잔액이 부족합니다.");
@@ -1610,49 +1834,16 @@
             document.getElementById('writerTitle').innerText = title + ' - 이어쓰기 (Ch. ' + chapterNum + ')';
             const writerBody = document.getElementById('writerBody');
             writerBody.innerText = content;
-            writerBody.classList.add('notranslate');
             
             document.getElementById('writerInputContent').value = "";
             document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
-            document.getElementById('writer-byte-count').className = "byte-status";
             document.getElementById('btn-submit-write').disabled = true;
-
-            const finishBox = document.getElementById('finishProposalBox');
-            const chkFinish = document.getElementById('chkFinishProposal');
-            const inputLabel = document.getElementById('writerInputLabel');
-            chkFinish.checked = false;
-
-            if (!isLong) {
-                if (chapterNum >= 6 && chapterNum <= 9) {
-                    finishBox.style.display = 'flex';
-                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
-                } else if (chapterNum === 10) {
-                    finishBox.style.display = 'none';
-                    inputLabel.innerText = "🏁 최종 완결 라운드 - 이야기를 마무리하는 결말 원고를 제출해주세요!";
-                } else {
-                    finishBox.style.display = 'none';
-                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
-                }
-            } else {
-                if (chapterNum >= 10) {
-                    finishBox.style.display = 'flex';
-                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
-                } else {
-                    finishBox.style.display = 'none';
-                    inputLabel.innerText = "내 이어쓰기 작성 (원작자 포함 누구나 참여 가능)";
-                }
-            }
 
             openModal('writerModal');
         }
 
         function submitWriterContent() {
-            const isFinishProposed = document.getElementById('chkFinishProposal').checked;
-            if (isFinishProposed) {
-                alert('🏁 [스토리 완결 제안]이 포함된 이어쓰기 원고가 제출되었습니다!\n\n투표에서 최다 득표를 얻으면 스토리가 완성됩니다.');
-            } else {
-                alert('🎉 이어쓰기 원고가 성공적으로 제출되었습니다!');
-            }
+            alert('🎉 이어쓰기 원고가 성공적으로 제출되었습니다!');
             closeModal('writerModal');
         }
 
@@ -1691,10 +1882,10 @@
                     "${content.substring(0, 80)}..."
                 </p>
                 <div class="timer-info">
-                    ⏳ 작성 마감까지: 05일 00시간 남음 (5일간 무참여 시 자동 삭제)
+                    ⏳ 작성 마감까지: 05일 00시간 남음
                 </div>
                 <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 0.0 Test-Pi (우승자 100% 획득)
+                    💰 상금 풀: 0.0 Test-Pi
                 </div>
                 <div class="button-group">
                     <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', true)">
@@ -1719,8 +1910,9 @@
             const title = document.getElementById('inputCreatorTitle').value || "무제 작품";
             const format = document.getElementById('selectCreatorFormat').value;
             const genre = document.getElementById('selectCreatorGenre').value;
+            const length = document.getElementById('selectCreatorLength').value;
             const content = document.getElementById('creatorContent').value;
-            const isFinished = document.getElementById('chkCreatorFinished').checked;
+            const isLong = length.includes('장편');
 
             const uniqueCardId = 'creator_card_' + Date.now();
             const container = document.getElementById('creator-card-container');
@@ -1733,10 +1925,10 @@
 
             newCard.innerHTML = `
                 <div class="tag-group">
-                    <span class="tag ${isFinished ? 'tag-finished' : 'tag-creator'}">${isFinished ? '🏁 완결' : '🟢 연재중'}</span>
+                    <span class="tag tag-creator">🟢 연재중</span>
                     <span class="tag tag-meta">${format}</span>
                     <span class="tag tag-meta">${genre}</span>
-                    <span class="tag tag-meta">총 1화</span>
+                    <span class="tag tag-meta">${length}</span>
                 </div>
                 <div class="title-with-flag">
                     <span class="flag-badge">🇰🇷</span>
@@ -1757,11 +1949,10 @@
 
             container.prepend(newCard);
             closeModal('createCreatorModal');
-            alert("🎉 새 오리지널 시리즈 작품이 성공적으로 등록되었습니다!");
+            alert("🎉 새 오리지널 시리즈 작품이 연재 시작되었습니다!");
 
             document.getElementById('inputCreatorTitle').value = "";
             document.getElementById('creatorContent').value = "";
-            document.getElementById('chkCreatorFinished').checked = false;
             document.getElementById('btn-submit-creator').disabled = true;
         }
     </script>
