@@ -173,7 +173,7 @@
         }
 
         .drawer-user-info {
-            padding: 18px 16px;
+            padding: 16px;
             background: rgba(56, 189, 248, 0.08);
             border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         }
@@ -190,8 +190,8 @@
             color: var(--primary-cyan);
             font-weight: 600;
             display: flex;
-            align-items: center;
-            gap: 4px;
+            flex-direction: column;
+            gap: 3px;
         }
 
         .drawer-menu-list {
@@ -801,10 +801,14 @@
             <button class="close-btn" onclick="closeDrawer()">✕</button>
         </div>
 
+        <!-- Web3 지갑 경제 대시보드 (총 수익 및 상세 내역) -->
         <div class="drawer-user-info">
             <div class="user-welcome-text">환영합니다, <span id="drawerUserName">Pioneer</span>님!</div>
             <div class="user-balance-box">
-                💳 현재 남은 잔액: <b><span id="drawerBalance">100.0</span> Test-Pi</b>
+                <div>💰 총 잔액(순수익) : <b id="drawerTotalNet">100.0</b> Test-Pi</div>
+                <div style="font-size: 0.72rem; color: var(--text-sub); margin-top: 2px;">
+                    결제된 Test-Pi : <span id="drawerSpent">0.0</span> / 보상된 Test-Pi : <span id="drawerRewarded">0.0</span>
+                </div>
             </div>
         </div>
 
@@ -870,11 +874,15 @@
                 </div>
             </div>
 
+            <!-- 홈 메인 3단 카드 (정체성 정의 1줄 요약 추가) -->
             <div class="landing-stack">
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 8px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 4px;">
                             스토리 릴레이
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
+                            📌 집단지성으로 함께 이야기를 만들어가는 릴레이 창작 공간
                         </div>
                         <div class="card-rules-list">
                             <div>• <b>0단계 (스토리 개설)</b>: 누구나 첫 스토리 개설 (0 Test-Pi 무료)</div>
@@ -888,8 +896,11 @@
 
                 <div class="landing-action-card" onclick="switchTab('creator')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--success-green); margin-bottom: 8px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--success-green); margin-bottom: 4px;">
                             오리지널 시리즈
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
+                            📌 크리에이터가 독자적으로 연재하는 오리지널 작품 공간
                         </div>
                         <div class="card-rules-list">
                             <div>• <b>1화 무료 공개</b>: 누구나 부담 없이 작품 탐색 및 감상</div>
@@ -902,8 +913,11 @@
 
                 <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: #7dd3fc; margin-bottom: 8px;">
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #7dd3fc; margin-bottom: 4px;">
                             블루 아카이브
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
+                            📌 완결된 명작들을 소장하고 평가하는 탈중앙화 도서관
                         </div>
                         <div class="card-rules-list">
                             <div>• <b>완결작 자동 아카이빙</b>: 릴레이 & 오리지널 완결작 도서관 보관</div>
@@ -986,7 +1000,7 @@
             </div>
         </div>
 
-        <!-- 블루 아카이브 섹션 (국가별 정렬 추가) -->
+        <!-- 블루 아카이브 섹션 -->
         <div id="archive-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
@@ -1094,7 +1108,7 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 별점 및 리뷰 창 (페이지당 20개 페이징) -->
+    <!-- 블루 아카이브 별점 및 리뷰 창 -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1130,7 +1144,7 @@
         </div>
     </div>
 
-    <!-- 완결작 회차 목록 모달 ('전체목록보기' 클릭 시 팝업) -->
+    <!-- 완결작 회차 목록 모달 -->
     <div class="modal-overlay" id="archiveChapterListModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1142,7 +1156,7 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 -->
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (통합 흐름 수정) -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1154,7 +1168,7 @@
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
 
-            <!-- 뷰어 상단 네비게이션 버튼 -->
+            <!-- 상단 네비게이션 버튼 -->
             <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;">
                 <button class="page-btn" onclick="moveArchiveChapter(-1)">◀ 이전화</button>
                 <button class="page-btn" onclick="moveArchiveChapter(1)">다음화 ▶</button>
@@ -1166,7 +1180,7 @@
             <div style="font-size: 0.78rem; color: var(--primary-cyan); font-weight: 600; margin-bottom: 6px;" id="archiveChapterIndicator">제 1화</div>
             <div class="reader-body notranslate" id="archiveReaderBody" style="min-height: 200px;"></div>
 
-            <!-- 하단 복귀 버튼 ('다른 작품 보기') -->
+            <!-- 하단 복귀 버튼 -->
             <div style="display: flex; gap: 6px; margin-top: 12px;">
                 <button class="btn btn-outline" style="flex: 1; margin: 0;" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">다른 작품 보기</button>
             </div>
@@ -1313,7 +1327,7 @@
                 <button class="close-btn" onclick="closeModal('creatorReadModal')">✕</button>
             </div>
             <div id="creatorChapterListContainer"></div>
-            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('creatorReadModal')">✕</button>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('creatorReadModal')">닫기</button>
         </div>
     </div>
 
@@ -1359,7 +1373,12 @@
     <script>
         const MIN_BYTES = 1500;
         const MAX_BYTES = 6000;
-        let currentBalance = 100.0;
+        
+        // Web3 지갑 경제 상태 관리 변수
+        let userRewardedPi = 0.0;
+        let userSpentPi = 0.0;
+        let currentBalance = 100.0; // 순수익 (보상 - 결제)
+
         let selectedUserLang = 'en';
         let currentSelectedArchiveId = null;
         let currentTempRating = 5;
@@ -1408,7 +1427,6 @@
             }
         ];
 
-        // 30개 리뷰 페이징 테스트용 더미 생성
         function generateDummyReviewsForTesting() {
             const targetItem = archiveDataList[0];
             if (targetItem.reviews.length < 30) {
@@ -1438,10 +1456,16 @@
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
         }
 
+        function updateWalletDisplay() {
+            document.getElementById('drawerTotalNet').innerText = currentBalance.toFixed(1);
+            document.getElementById('drawerSpent').innerText = userSpentPi.toFixed(1);
+            document.getElementById('drawerRewarded').innerText = userRewardedPi.toFixed(1);
+        }
+
         function openDrawer() {
             document.getElementById('drawerOverlay').classList.add('active');
             document.getElementById('sideDrawer').classList.add('active');
-            document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+            updateWalletDisplay();
         }
 
         function closeDrawer() {
@@ -1523,7 +1547,6 @@
             }
         }
 
-        // 국가별, 카테고리별, 정렬별 필터링 렌더링
         function renderArchiveList() {
             const country = document.getElementById('archiveCountrySelect').value;
             const category = document.getElementById('archiveCategorySelect').value;
@@ -1602,7 +1625,6 @@
             buyAndReadArchive(item.id, item.title, price);
         }
 
-        // 중복 결제 방지 및 가격 자동 분기 로직
         function buyAndReadArchive(id, title, price) {
             const item = archiveDataList.find(a => a.id === id);
             if (!item) return;
@@ -1616,9 +1638,10 @@
             } else {
                 if (currentBalance >= price) {
                     currentBalance -= price;
+                    userSpentPi += price;
                     item.views += 1;
                     localStorage.setItem(authKey, "true");
-                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+                    updateWalletDisplay();
                     alert(`🎉 지불 완료되었습니다. 재접속 시 이어서 무료로 읽기 가능합니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
                     renderArchiveList();
                     openArchiveChapterReader(item, 1, false);
@@ -1642,7 +1665,6 @@
 
             document.getElementById('archiveReaderTitle').innerText = `[완결] ${item.title}`;
 
-            // 토글 버튼 문구 동적 변경 ('한번에 전체회차 다보기' ⇄ '회차별로 보기')
             const toggleBtn = document.getElementById('toggleViewAllBtn');
             if (toggleBtn) {
                 toggleBtn.innerText = isArchiveViewAllMode ? '회차별로 보기' : '한번에 전체회차 다보기';
@@ -1683,7 +1705,7 @@
             updateArchiveReaderContent();
         }
 
-        // 회차별 제목 리스트 모달 ('전체목록보기' 클릭 시)
+        // 통합 회차 목록 모달 오픈 함수 (오작동 버그 해결 및 단일 흐름 연동)
         function openArchiveChapterListModal() {
             if (!activeArchiveReaderItem) return;
             const item = activeArchiveReaderItem;
@@ -1947,7 +1969,8 @@
             if (!isFree) {
                 if (currentBalance >= 0.1) {
                     currentBalance -= 0.1;
-                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+                    userSpentPi += 0.1;
+                    updateWalletDisplay();
                     alert(`🎉 0.1 Test-Pi 제 ${chNum}화 유료 열람 완료!`);
                 } else {
                     alert('❌ Test-Pi 잔액이 부족합니다.');
@@ -1975,7 +1998,8 @@
             } else {
                 if (currentBalance >= 1.0) {
                     currentBalance -= 1.0;
-                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+                    userSpentPi += 1.0;
+                    updateWalletDisplay();
                     localStorage.setItem(authKey, "true");
                     alert("✍️ 1.0 Test-Pi 보증금 지불 완료!");
                     openWriterModal(title, decodedContent, flag, chapterNum, isLong);
