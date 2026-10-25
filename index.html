@@ -363,7 +363,6 @@
             line-height: 1.5;
         }
 
-        /* 3단 세로 스택 카드 배치 (모바일 및 PC 일괄 세로 정렬) */
         .landing-stack {
             display: flex;
             flex-direction: column;
@@ -750,7 +749,6 @@
             margin-bottom: 4px;
         }
 
-        /* 리뷰 페이징 컨트롤 바 */
         .pagination-bar {
             display: flex;
             justify-content: center;
@@ -782,7 +780,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
         }
+        .chapter-list-item:hover { border-color: var(--primary-cyan); background: rgba(56, 189, 248, 0.1); }
     </style>
 </head>
 
@@ -840,7 +841,6 @@
         </div>
     </header>
 
-    <!-- 상단 탭 (글자 잘림 방지 및 아이콘 제거) -->
     <div class="nav-tabs">
         <button class="tab-btn active" id="tabHomeBtn" onclick="switchTab('home')">홈</button>
         <button class="tab-btn" id="tabRelayBtn" onclick="switchTab('relay')">스토리 릴레이</button>
@@ -870,7 +870,6 @@
                 </div>
             </div>
 
-            <!-- 홈 메인 3단 세로 스택 카드 (스토리 릴레이 / 오리지널 시리즈 / 블루 아카이브) -->
             <div class="landing-stack">
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
@@ -909,7 +908,7 @@
                         <div class="card-rules-list">
                             <div>• <b>완결작 자동 아카이빙</b>: 릴레이 & 오리지널 완결작 도서관 보관</div>
                             <div>• <b>통합 소장 패키지</b>: 단편 0.5 / 장편 1.0 Test-Pi로 전체 소장</div>
-                            <div>• <b>별점 & 리뷰 평가</b>: 시간순/조회순/별점순/길이순 정렬 지원</div>
+                            <div>• <b>별점 & 리뷰 평가</b>: 국가별·시간순·조회순·별점순 정렬 지원</div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">도서관 입장 ➔</div>
@@ -987,7 +986,7 @@
             </div>
         </div>
 
-        <!-- 블루 아카이브 섹션 -->
+        <!-- 블루 아카이브 섹션 (국가별 정렬 추가) -->
         <div id="archive-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
@@ -997,6 +996,13 @@
             </div>
 
             <div class="sort-filter-bar">
+                <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
+                    <option value="all">🌍 전체 국가 작품</option>
+                    <option value="🇰🇷">🇰🇷 대한민국</option>
+                    <option value="🇺🇸">🇺🇸 미국/영어권</option>
+                    <option value="🇨🇳">🇨🇳 중국</option>
+                    <option value="🇯🇵">🇯🇵 일본</option>
+                </select>
                 <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
                     <option value="all">전체 작품 보기</option>
                     <option value="relay">릴레이 완결작</option>
@@ -1019,7 +1025,7 @@
         </footer>
     </div>
 
-    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 (기존 유지) -->
+    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 -->
     <div class="modal-overlay" id="aboutModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1088,7 +1094,7 @@
         </div>
     </div>
 
-    <!-- 모달: 블루 아카이브 별점 및 리뷰 창 (페이지당 20개 페이징 적용) -->
+    <!-- 블루 아카이브 별점 및 리뷰 창 (페이지당 20개 페이징) -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1118,10 +1124,21 @@
             </div>
             <div id="reviewListContainer"></div>
             
-            <!-- 페이징 컨트롤 -->
             <div class="pagination-bar" id="reviewPaginationBar"></div>
 
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('reviewModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 완결작 회차 목록 모달 ('전체목록보기' 클릭 시 팝업) -->
+    <div class="modal-overlay" id="archiveChapterListModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="archiveChapterListTitle">회차 목록</div>
+                <button class="close-btn" onclick="closeModal('archiveChapterListModal')">✕</button>
+            </div>
+            <div id="archiveChapterListContainer"></div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('archiveChapterListModal')">닫기</button>
         </div>
     </div>
 
@@ -1137,21 +1154,21 @@
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
 
-            <!-- 뷰어 상단 네비게이션 버튼 (이전화 / 다음화 / 처음으로 / 전체목록 / 한번에 다보기) -->
+            <!-- 뷰어 상단 네비게이션 버튼 -->
             <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;">
                 <button class="page-btn" onclick="moveArchiveChapter(-1)">◀ 이전화</button>
                 <button class="page-btn" onclick="moveArchiveChapter(1)">다음화 ▶</button>
                 <button class="page-btn" onclick="jumpArchiveChapter(1)">처음으로</button>
-                <button class="page-btn" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">전체목록보기</button>
-                <button class="page-btn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
+                <button class="page-btn" onclick="openArchiveChapterListModal()">전체목록보기</button>
+                <button class="page-btn" id="toggleViewAllBtn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
             </div>
 
             <div style="font-size: 0.78rem; color: var(--primary-cyan); font-weight: 600; margin-bottom: 6px;" id="archiveChapterIndicator">제 1화</div>
             <div class="reader-body notranslate" id="archiveReaderBody" style="min-height: 200px;"></div>
 
-            <!-- 뷰어 하단 네비게이션 버튼 -->
+            <!-- 하단 복귀 버튼 ('다른 작품 보기') -->
             <div style="display: flex; gap: 6px; margin-top: 12px;">
-                <button class="btn btn-outline" style="flex: 1; margin: 0;" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">목록으로</button>
+                <button class="btn btn-outline" style="flex: 1; margin: 0;" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">다른 작품 보기</button>
             </div>
         </div>
     </div>
@@ -1162,7 +1179,7 @@
         </div>
     </div>
 
-    <!-- 기타 모달들 (릴레이 개설, 오리지널 개설, 이어쓰기 등 기존 유지) -->
+    <!-- 기타 모달들 -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1296,7 +1313,7 @@
                 <button class="close-btn" onclick="closeModal('creatorReadModal')">✕</button>
             </div>
             <div id="creatorChapterListContainer"></div>
-            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('creatorReadModal')">닫기</button>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('creatorReadModal')">✕</button>
         </div>
     </div>
 
@@ -1349,7 +1366,6 @@
         let currentReviewPage = 1;
         const reviewsPerPage = 20;
 
-        // 블루 아카이브 완결작 데이터 (샘플 30개 리뷰 테스트 시뮬레이션용 데이터 포함)
         let archiveDataList = [
             {
                 id: 'arc_01',
@@ -1359,7 +1375,7 @@
                 genre: '공상 과학',
                 flag: '🇰🇷',
                 totalCh: 8,
-                isLong: false,
+                isLong: false, // 단편 (0.5 Test-Pi)
                 views: 142,
                 ratingSum: 23,
                 ratingCount: 5,
@@ -1374,25 +1390,25 @@
             },
             {
                 id: 'arc_02',
-                title: '심해 마법사의 공방',
+                title: '파이의 연금술사 (The Pi Alchemist)',
                 type: 'creator',
                 format: '소설',
                 genre: '판타지',
-                flag: '🇰🇷',
+                flag: '🇺🇸',
                 totalCh: 12,
-                isLong: true,
+                isLong: true, // 장편 (1.0 Test-Pi)
                 views: 310,
                 ratingSum: 48,
                 ratingCount: 10,
                 timestamp: Date.now() - 50000000,
-                desc: '블록체인 세상의 연금술사가 펼치는 판타지 서사시. 완결까지 거침없는 전개!',
+                desc: 'A fantasy epic unfolding in the blockchain world. Unstoppable momentum until the end!',
                 reviews: [
-                    { author: 'Web3Writer', rating: 5, comment: '1.0 Test-Pi가 전혀 아깝지 않은 명작입니다.' }
+                    { author: 'Web3Writer', rating: 5, comment: '1.0 Test-Pi is totally worth it!' }
                 ]
             }
         ];
 
-        // 30개 리뷰 테스트용 더미 생성 함수
+        // 30개 리뷰 페이징 테스트용 더미 생성
         function generateDummyReviewsForTesting() {
             const targetItem = archiveDataList[0];
             if (targetItem.reviews.length < 30) {
@@ -1407,7 +1423,7 @@
                 }
             }
         }
-        generateDummyReviewsForTesting(); // 테스트용 30개 자동 생성
+        generateDummyReviewsForTesting();
 
         let activeArchiveReaderItem = null;
         let activeArchiveChapterIdx = 1;
@@ -1507,14 +1523,17 @@
             }
         }
 
+        // 국가별, 카테고리별, 정렬별 필터링 렌더링
         function renderArchiveList() {
+            const country = document.getElementById('archiveCountrySelect').value;
             const category = document.getElementById('archiveCategorySelect').value;
             const sortBy = document.getElementById('archiveSortSelect').value;
             const container = document.getElementById('archive-card-container');
 
             let filteredList = archiveDataList.filter(item => {
-                if (category === 'relay') return item.type === 'relay';
-                if (category === 'creator') return item.type === 'creator';
+                if (country !== 'all' && item.flag !== country) return false;
+                if (category === 'relay' && item.type !== 'relay') return false;
+                if (category === 'creator' && item.type !== 'creator') return false;
                 return true;
             });
 
@@ -1566,7 +1585,7 @@
                                 ⭐ 별점 & 리뷰 보기
                             </button>
                             <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">
-                                📖 전체 소장하기 (${price} Test-Pi)
+                                📖 작품 읽기 (${price} Test-Pi)
                             </button>
                         </div>
                     </div>
@@ -1576,7 +1595,6 @@
             container.innerHTML = html;
         }
 
-        // 블루 아카이브 리스트뷰에서도 카드 클릭 시 정상 작동하도록 연동
         function handleArchiveCardClick(id) {
             const item = archiveDataList.find(a => a.id === id);
             if (!item) return;
@@ -1584,6 +1602,7 @@
             buyAndReadArchive(item.id, item.title, price);
         }
 
+        // 중복 결제 방지 및 가격 자동 분기 로직
         function buyAndReadArchive(id, title, price) {
             const item = archiveDataList.find(a => a.id === id);
             if (!item) return;
@@ -1592,7 +1611,7 @@
             const isAlreadyBought = localStorage.getItem(authKey);
 
             if (isAlreadyBought) {
-                alert(`📖 이미 소장 중인 작품입니다!\n\n'${title}' 감상을 시작합니다.`);
+                alert(`이미 결제하신 작품은 재결제 되지 않습니다.\n\n'${title}' 감상을 시작합니다.`);
                 openArchiveChapterReader(item, 1, false);
             } else {
                 if (currentBalance >= price) {
@@ -1600,7 +1619,7 @@
                     item.views += 1;
                     localStorage.setItem(authKey, "true");
                     document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
-                    alert(`🎉 ${price} Test-Pi 결제 완료!\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
+                    alert(`🎉 지불 완료되었습니다. 재접속 시 이어서 무료로 읽기 가능합니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
                     renderArchiveList();
                     openArchiveChapterReader(item, 1, false);
                 } else {
@@ -1609,7 +1628,6 @@
             }
         }
 
-        // 챕터별 회차 뷰어 시스템 함수들
         function openArchiveChapterReader(item, chIdx, viewAll) {
             activeArchiveReaderItem = item;
             activeArchiveChapterIdx = chIdx;
@@ -1624,16 +1642,22 @@
 
             document.getElementById('archiveReaderTitle').innerText = `[완결] ${item.title}`;
 
+            // 토글 버튼 문구 동적 변경 ('한번에 전체회차 다보기' ⇄ '회차별로 보기')
+            const toggleBtn = document.getElementById('toggleViewAllBtn');
+            if (toggleBtn) {
+                toggleBtn.innerText = isArchiveViewAllMode ? '회차별로 보기' : '한번에 전체회차 다보기';
+            }
+
             if (isArchiveViewAllMode) {
                 document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
                 let allContentHtml = '';
                 for (let i = 1; i <= item.totalCh; i++) {
-                    allContentHtml += `<b>[제 ${i}화]</b><br>${item.desc} (제 ${i}화 상세 전개 내용이 펼쳐집니다...스토리의 깊은 바다 속 탐험이 계속됩니다.)<br><br>`;
+                    allContentHtml += `<b>[제 ${i}화]</b><br>${item.desc} (제 ${i}화 상세 전개 내용이 펼쳐집니다... 심해의 비밀이 밝혀집니다.)<br><br>`;
                 }
                 document.getElementById('archiveReaderBody').innerHTML = allContentHtml;
             } else {
                 document.getElementById('archiveChapterIndicator').innerText = `제 ${activeArchiveChapterIdx}화 / 총 ${item.totalCh}화`;
-                document.getElementById('archiveReaderBody').innerHTML = `<b>[제 ${activeArchiveChapterIdx}화]</b><br>${item.desc} (제 ${activeArchiveChapterIdx}화 상세 전개 내용입니다. 완결된 원고의 몰입감을 느껴보세요.)`;
+                document.getElementById('archiveReaderBody').innerHTML = `<b>[제 ${activeArchiveChapterIdx}화]</b><br>${item.desc} (제 ${activeArchiveChapterIdx}화 상세 전개 내용입니다. 완결된 원고의 깊은 몰입감을 느껴보세요.)`;
             }
         }
 
@@ -1659,10 +1683,38 @@
             updateArchiveReaderContent();
         }
 
-        // 리뷰 페이징 시스템 적용
+        // 회차별 제목 리스트 모달 ('전체목록보기' 클릭 시)
+        function openArchiveChapterListModal() {
+            if (!activeArchiveReaderItem) return;
+            const item = activeArchiveReaderItem;
+            document.getElementById('archiveChapterListTitle').innerText = `'${item.title}' 회차 목록`;
+            const container = document.getElementById('archiveChapterListContainer');
+            
+            let html = '';
+            for (let i = 1; i <= item.totalCh; i++) {
+                html += `
+                    <div class="chapter-list-item" onclick="jumpArchiveChapterAndCloseList(${i})">
+                        <div>
+                            <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">제 ${i}화</div>
+                            <div style="font-size: 0.75rem; color: var(--text-sub);">완결 소장 회차 본문 감상하기</div>
+                        </div>
+                        <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.78rem;">📖 읽기</button>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+            openModal('archiveChapterListModal');
+        }
+
+        function jumpArchiveChapterAndCloseList(chIdx) {
+            closeModal('archiveChapterListModal');
+            jumpArchiveChapter(chIdx);
+        }
+
+        // 리뷰 페이징 시스템 (페이지당 20개)
         function openReviewModal(archiveId) {
             currentSelectedArchiveId = archiveId;
-            currentReviewPage = 1; // 열 때 1페이지로 초기화
+            currentReviewPage = 1;
             const item = archiveDataList.find(a => a.id === archiveId);
             if (!item) return;
 
@@ -1704,7 +1756,6 @@
                 container.innerHTML = html;
             }
 
-            // 페이징 컨트롤 바 렌더링
             const pagingBar = document.getElementById('reviewPaginationBar');
             pagingBar.innerHTML = `
                 <button class="page-btn" onclick="changeReviewPage(1)" ${currentReviewPage === 1 ? 'disabled style="opacity:0.5"' : ''}>처음</button>
@@ -1749,14 +1800,14 @@
 
                 document.getElementById('inputReviewText').value = '';
                 document.getElementById('totalReviewCount').innerText = item.reviews.length;
-                currentReviewPage = 1; // 새 리뷰 등록 시 첫 페이지로 이동
+                currentReviewPage = 1;
                 alert('🎉 리뷰가 성공적으로 등록되었습니다!');
                 renderReviewPageList();
                 renderArchiveList();
             }
         }
 
-        // 기타 릴레이 및 오리지널 시리즈 보조 함수들 (기존 유지)
+        // 보조 함수들
         function handleListCardClick(cardId, title, content, flag, chapterNum, isLong) {
             const container = document.getElementById('relay-card-container');
             if (container.classList.contains('list-view-container')) {
