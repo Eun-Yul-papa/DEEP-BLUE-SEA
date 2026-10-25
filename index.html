@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Blue Sea - Web3 Storytelling DApp</title>
-    <!-- Google Translate API 스크립트 -->
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
         :root {
@@ -225,17 +224,16 @@
             display: flex;
             background: rgba(13, 33, 66, 0.5);
             border-bottom: 1px solid var(--border-glow);
-            padding: 0 6px;
+            padding: 0 4px;
             justify-content: space-around;
-            overflow-x: auto;
         }
 
         .tab-btn {
             background: transparent;
             border: none;
             color: var(--text-sub);
-            padding: 12px 8px;
-            font-size: 0.8rem;
+            padding: 12px 6px;
+            font-size: 0.78rem;
             font-weight: 700;
             cursor: pointer;
             border-bottom: 3px solid transparent;
@@ -305,23 +303,23 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             margin-top: 10px;
         }
 
-        .landing-header-box { text-align: center; margin-bottom: 10px; }
+        .landing-header-box { text-align: center; margin-bottom: 6px; }
 
         .landing-logo-large {
-            width: 105px;
-            height: 105px;
+            width: 95px;
+            height: 95px;
             border-radius: 50%;
             border: 2px solid var(--primary-cyan);
             box-shadow: 0 0 20px var(--primary-cyan);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .landing-title-large {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 900;
             color: #fff;
             letter-spacing: 1px;
@@ -332,14 +330,14 @@
             background: rgba(2, 9, 22, 0.75);
             border: 1px solid var(--border-glow);
             border-radius: 16px;
-            padding: 20px;
+            padding: 18px;
             width: 100%;
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .landing-info-title {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--primary-cyan);
             margin-bottom: 10px;
@@ -349,31 +347,28 @@
         }
 
         .landing-info-text {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--text-bright);
-            line-height: 1.65;
-            margin-bottom: 12px;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
 
         .tokenomics-box {
             background: rgba(56, 189, 248, 0.1);
             border: 1px dashed var(--primary-cyan);
             border-radius: 10px;
-            padding: 12px;
-            font-size: 0.8rem;
+            padding: 10px;
+            font-size: 0.78rem;
             color: #e2e8f0;
             line-height: 1.5;
         }
 
-        .landing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+        /* 3단 세로 스택 카드 배치 (모바일 및 PC 일괄 세로 정렬) */
+        .landing-stack {
+            display: flex;
+            flex-direction: column;
             gap: 14px;
             width: 100%;
-        }
-
-        @media (max-width: 480px) {
-            .landing-grid { grid-template-columns: 1fr; }
         }
 
         .landing-action-card {
@@ -391,18 +386,18 @@
 
         .landing-action-card:hover {
             border-color: var(--primary-cyan);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
         }
 
         .card-rules-list {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-sub);
-            line-height: 1.6;
-            margin-bottom: 14px;
+            line-height: 1.55;
+            margin-bottom: 12px;
         }
 
-        .card-rules-list div { margin-bottom: 6px; }
+        .card-rules-list div { margin-bottom: 5px; }
         .card-rules-list b { color: var(--text-bright); }
 
         .section-header {
@@ -479,6 +474,7 @@
         .archive-card {
             border-color: rgba(56, 189, 248, 0.4);
             background: rgba(7, 21, 46, 0.9);
+            cursor: pointer;
         }
 
         .list-view-container .card {
@@ -754,6 +750,29 @@
             margin-bottom: 4px;
         }
 
+        /* 리뷰 페이징 컨트롤 바 */
+        .pagination-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin: 12px 0 6px 0;
+        }
+
+        .page-btn {
+            background: rgba(13, 33, 66, 0.9);
+            border: 1px solid var(--border-glow);
+            color: var(--text-bright);
+            padding: 5px 9px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .page-btn:hover { border-color: var(--primary-cyan); color: var(--primary-cyan); }
+        .page-info-text { font-size: 0.78rem; color: var(--primary-cyan); font-weight: 700; padding: 0 4px; }
+
         .chapter-list-item {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -789,21 +808,11 @@
         </div>
 
         <ul class="drawer-menu-list">
-            <li class="drawer-menu-item" onclick="openNavModal('aboutModal')">
-                <span>🌊</span> Deep Blue Sea 소개
-            </li>
-            <li class="drawer-menu-item" onclick="openNavModal('noticeModal')">
-                <span>📢</span> 공지사항
-            </li>
-            <li class="drawer-menu-item" onclick="openNavModal('contactModal')">
-                <span>📧</span> Contact Us
-            </li>
-            <li class="drawer-menu-item" onclick="openNavModal('termsModal')">
-                <span>📜</span> 서비스 이용약관
-            </li>
-            <li class="drawer-menu-item" onclick="openNavModal('privacyModal')">
-                <span>🔒</span> 개인정보 처리방침
-            </li>
+            <li class="drawer-menu-item" onclick="openNavModal('aboutModal')"><span>🌊</span> Deep Blue Sea 소개</li>
+            <li class="drawer-menu-item" onclick="openNavModal('noticeModal')"><span>📢</span> 공지사항</li>
+            <li class="drawer-menu-item" onclick="openNavModal('contactModal')"><span>📧</span> Contact Us</li>
+            <li class="drawer-menu-item" onclick="openNavModal('termsModal')"><span>📜</span> 서비스 이용약관</li>
+            <li class="drawer-menu-item" onclick="openNavModal('privacyModal')"><span>🔒</span> 개인정보 처리방침</li>
         </ul>
     </div>
 
@@ -831,11 +840,12 @@
         </div>
     </header>
 
+    <!-- 상단 탭 (글자 잘림 방지 및 아이콘 제거) -->
     <div class="nav-tabs">
-        <button class="tab-btn active" id="tabHomeBtn" onclick="switchTab('home')">🏠 홈 메인</button>
-        <button class="tab-btn" id="tabRelayBtn" onclick="switchTab('relay')">🔗 스토리 릴레이</button>
-        <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">📚 오리지널 시리즈</button>
-        <button class="tab-btn" id="tabArchiveBtn" onclick="switchTab('archive')">🏛️ 블루 아카이브</button>
+        <button class="tab-btn active" id="tabHomeBtn" onclick="switchTab('home')">홈</button>
+        <button class="tab-btn" id="tabRelayBtn" onclick="switchTab('relay')">스토리 릴레이</button>
+        <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">오리지널 시리즈</button>
+        <button class="tab-btn" id="tabArchiveBtn" onclick="switchTab('archive')">블루 아카이브</button>
     </div>
 
     <div class="container">
@@ -850,9 +860,7 @@
             </div>
 
             <div class="landing-info-card">
-                <div class="landing-info-title">
-                    🌊 DEEP BLUE SEA의 브랜드 스토리 & 비전
-                </div>
+                <div class="landing-info-title">🌊 DEEP BLUE SEA의 브랜드 스토리 & 비전</div>
                 <div class="landing-info-text">
                     끝없이 깊은 심해 속 미지의 세상에 우리가 아직 알지 못하는 수많은 생명과 비밀이 숨겨져 있듯, <b>AI가 공존하는 시대 속에서도 인간의 무한한 창작 능력과 가능성은 끊임없이 샘솟아 나옵니다.</b><br><br>
                     Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 <b>탈중앙화 Web3 스토리텔링 플랫폼</b>입니다. 누구나 부담 없이 무료로 이야기를 읽고 투표에 참여하며, 작가는 물론 독자까지 <b>생태계에 기여한 가치만큼 소득과 보상을 함께 나누는 지속 가능한 창작 경제</b>를 만들어갑니다.
@@ -862,40 +870,49 @@
                 </div>
             </div>
 
-            <div class="landing-grid">
+            <!-- 홈 메인 3단 세로 스택 카드 (스토리 릴레이 / 오리지널 시리즈 / 블루 아카이브) -->
+            <div class="landing-stack">
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 10px;">
-                            🔗 스토리 릴레이
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 8px;">
+                            스토리 릴레이
                         </div>
                         <div class="card-rules-list">
-                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[집단지성 릴레이 창작 규칙]</div>
-                            <div>• <b>0단계 (스토리 개설)</b><br>&nbsp;&nbsp;첫 스토리 개설 (0 Test-Pi 무료)</div>
-                            <div>• <b>1단계 (집필 경쟁 - 5일)</b><br>&nbsp;&nbsp;회차당 최대 5명 작가 경쟁 (보증금 1.0 Test-Pi)</div>
-                            <div>• <b>2단계 (열람 & 투표 - 5일)</b><br>&nbsp;&nbsp;모든 독자 자유로운 열람 및 투표 참여 (무료)</div>
-                            <div>• <b>3단계 (우승 정산)</b><br>&nbsp;&nbsp;채택 작가 <b>보증금 풀 전액(100%) 획득!</b></div>
+                            <div>• <b>0단계 (스토리 개설)</b>: 누구나 첫 스토리 개설 (0 Test-Pi 무료)</div>
+                            <div>• <b>1단계 (집필 경쟁 - 5일)</b>: 회차당 최대 5명 작가 경쟁 (보증금 1.0 Test-Pi)</div>
+                            <div>• <b>2단계 (열람 & 투표 - 5일)</b>: 모든 독자 자유로운 열람 및 투표 (무료)</div>
+                            <div>• <b>3단계 (우승 정산)</b>: 채택 작가 <b>보증금 풀 전액(100%) 획득!</b></div>
                         </div>
                     </div>
-                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">
-                        목록 보기 ➔
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--success-green); text-align: right;">목록 보기 ➔</div>
+                </div>
+
+                <div class="landing-action-card" onclick="switchTab('creator')">
+                    <div>
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--success-green); margin-bottom: 8px;">
+                            오리지널 시리즈
+                        </div>
+                        <div class="card-rules-list">
+                            <div>• <b>1화 무료 공개</b>: 누구나 부담 없이 작품 탐색 및 감상</div>
+                            <div>• <b>2화부터 유료 연재</b>: 챕터당 0.1 Test-Pi 결제로 몰입 감상</div>
+                            <div>• <b>창작자 정산</b>: 독자 결제 수익 투명 정산 + 완결 시 RWA/NFT 지분 획득</div>
+                        </div>
                     </div>
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">목록 보기 ➔</div>
                 </div>
 
                 <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: #7dd3fc; margin-bottom: 10px;">
-                            🏛️ 블루 아카이브
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #7dd3fc; margin-bottom: 8px;">
+                            블루 아카이브
                         </div>
                         <div class="card-rules-list">
-                            <div style="font-size: 0.82rem; color: #fff; font-weight: 700; margin-bottom: 8px;">[완결작 도서관 & 소장]</div>
-                            <div>• <b>완결작 자동 아카이빙</b><br>&nbsp;&nbsp;릴레이 & 오리지널 완결작 보관</div>
-                            <div>• <b>통합 소장 패키지</b><br>&nbsp;&nbsp;단편 0.5 / 장편 1.0 Test-Pi 한 번 결제 전체 소장</div>
-                            <div>• <b>별점 & 리뷰 평가</b><br>&nbsp;&nbsp;시간순/조회순/별점순/길이순 다채로운 정렬 지원</div>
+                            <div>• <b>완결작 자동 아카이빙</b>: 릴레이 & 오리지널 완결작 도서관 보관</div>
+                            <div>• <b>통합 소장 패키지</b>: 단편 0.5 / 장편 1.0 Test-Pi로 전체 소장</div>
+                            <div>• <b>별점 & 리뷰 평가</b>: 시간순/조회순/별점순/길이순 정렬 지원</div>
                         </div>
                     </div>
-                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">
-                        도서관 입장 ➔
-                    </div>
+                    <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">도서관 입장 ➔</div>
                 </div>
             </div>
         </div>
@@ -904,8 +921,8 @@
         <div id="relay-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
-                    <div class="section-title">🔗 스토리 릴레이 목록</div>
-                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트 뷰로 보기</button>
+                    <div class="section-title">스토리 릴레이 목록</div>
+                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트 뷰</button>
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
             </div>
@@ -925,19 +942,11 @@
                     <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
                         "6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"
                     </p>
-                    <div class="timer-info">
-                        ⏳ 작성 마감까지: 04일 12시간 남음
-                    </div>
-                    <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                        💰 상금 풀: 3.0 Test-Pi
-                    </div>
+                    <div class="timer-info">⏳ 작성 마감까지: 04일 12시간 남음</div>
+                    <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">💰 상금 풀: 3.0 Test-Pi</div>
                     <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', true)">
-                            📖 후보 열람 & 투표 (무료)
-                        </button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
-                            ✍️ 이어쓰기 (Ch.6)
-                        </button>
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', true)">후보 열람 & 투표 (무료)</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">이어쓰기 (Ch.6)</button>
                     </div>
                 </div>
             </div>
@@ -947,8 +956,8 @@
         <div id="creator-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
-                    <div class="section-title">📚 오리지널 시리즈</div>
-                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트 뷰로 보기</button>
+                    <div class="section-title">오리지널 시리즈</div>
+                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트 뷰</button>
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createCreatorModal')">+ 작품 연재 시작 (무료)</button>
             </div>
@@ -972,24 +981,21 @@
                         ✍️ 작가: DeepMage | 💰 누적 후원/매출: 2.4 Test-Pi
                     </div>
                     <div class="button-group">
-                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">
-                            📖 작품 보기 (1화 무료 / 2화부터 0.1 Test-Pi)
-                        </button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">작품 보기 (1화 무료 / 2화부터 0.1 Test-Pi)</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 블루 아카이브(완결 라이브러리) 섹션 -->
+        <!-- 블루 아카이브 섹션 -->
         <div id="archive-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
-                    <div class="section-title">🏛️ 블루 아카이브 (Blue Archive)</div>
-                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트 뷰로 보기</button>
+                    <div class="section-title">블루 아카이브 (Blue Archive)</div>
+                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트 뷰</button>
                 </div>
             </div>
 
-            <!-- 정렬 및 필터바 -->
             <div class="sort-filter-bar">
                 <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
                     <option value="all">전체 작품 보기</option>
@@ -1009,13 +1015,11 @@
 
         <footer class="app-footer">
             <div class="copyright-title">Copyright © 2026 Deep Blue Sea. All Rights Reserved.</div>
-            <div class="copyright-desc">
-                본 애플리케이션의 이름, 로고, 디자인 및 콘텐츠의 저작권은 Deep Blue Sea에 있으며 법적 보호를 받습니다.
-            </div>
+            <div class="copyright-desc">본 애플리케이션의 이름, 로고, 디자인 및 콘텐츠의 저작권은 Deep Blue Sea에 있으며 법적 보호를 받습니다.</div>
         </footer>
     </div>
 
-    <!-- 모달: 소개 -->
+    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 (기존 유지) -->
     <div class="modal-overlay" id="aboutModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1032,7 +1036,6 @@
         </div>
     </div>
 
-    <!-- 모달: 공지사항 -->
     <div class="modal-overlay" id="noticeModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1048,7 +1051,6 @@
         </div>
     </div>
 
-    <!-- 모달: Contact Us -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1064,7 +1066,6 @@
         </div>
     </div>
 
-    <!-- 모달: 서비스 이용약관 -->
     <div class="modal-overlay" id="termsModal">
         <div class="modal-content" style="max-width: 500px; height: 75vh; display: flex; flex-direction: column;">
             <div class="modal-header" style="flex-shrink: 0; margin-bottom: 10px;">
@@ -1076,7 +1077,6 @@
         </div>
     </div>
 
-    <!-- 모달: 개인정보 처리방침 -->
     <div class="modal-overlay" id="privacyModal">
         <div class="modal-content" style="max-width: 500px; height: 75vh; display: flex; flex-direction: column;">
             <div class="modal-header" style="flex-shrink: 0; margin-bottom: 10px;">
@@ -1088,7 +1088,7 @@
         </div>
     </div>
 
-    <!-- 모달: 별점 및 리뷰 남기기/보기 -->
+    <!-- 모달: 블루 아카이브 별점 및 리뷰 창 (페이지당 20개 페이징 적용) -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1114,11 +1114,45 @@
             </div>
 
             <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin: 16px 0 8px 0;">
-                💬 등록된 독자 리뷰 목록
+                💬 등록된 독자 리뷰 목록 (<span id="totalReviewCount">0</span>개)
             </div>
             <div id="reviewListContainer"></div>
+            
+            <!-- 페이징 컨트롤 -->
+            <div class="pagination-bar" id="reviewPaginationBar"></div>
 
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('reviewModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 -->
+    <div class="modal-overlay" id="archiveChapterReaderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="archiveReaderTitle">완결작 회차 보기</div>
+                <button class="close-btn" onclick="closeModal('archiveChapterReaderModal')">✕</button>
+            </div>
+
+            <button class="translate-btn" onclick="translateCurrentReaderContent()">
+                🌐 Translate to My Language (<span id="targetLangText">English</span>)
+            </button>
+
+            <!-- 뷰어 상단 네비게이션 버튼 (이전화 / 다음화 / 처음으로 / 전체목록 / 한번에 다보기) -->
+            <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;">
+                <button class="page-btn" onclick="moveArchiveChapter(-1)">◀ 이전화</button>
+                <button class="page-btn" onclick="moveArchiveChapter(1)">다음화 ▶</button>
+                <button class="page-btn" onclick="jumpArchiveChapter(1)">처음으로</button>
+                <button class="page-btn" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">전체목록보기</button>
+                <button class="page-btn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
+            </div>
+
+            <div style="font-size: 0.78rem; color: var(--primary-cyan); font-weight: 600; margin-bottom: 6px;" id="archiveChapterIndicator">제 1화</div>
+            <div class="reader-body notranslate" id="archiveReaderBody" style="min-height: 200px;"></div>
+
+            <!-- 뷰어 하단 네비게이션 버튼 -->
+            <div style="display: flex; gap: 6px; margin-top: 12px;">
+                <button class="btn btn-outline" style="flex: 1; margin: 0;" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">목록으로</button>
+            </div>
         </div>
     </div>
 
@@ -1128,7 +1162,7 @@
         </div>
     </div>
 
-    <!-- 기타 기능 모달들 -->
+    <!-- 기타 모달들 (릴레이 개설, 오리지널 개설, 이어쓰기 등 기존 유지) -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1140,8 +1174,8 @@
             </div>
             <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 14px; line-height: 1.5;" id="integratedDesc">스토리 설명</p>
             <div class="button-group" style="flex-direction: column;">
-                <button class="btn btn-outline" id="btnIntegratedVote">📖 후보작 열람 & 투표하기 (무료)</button>
-                <button class="btn btn-primary" id="btnIntegratedWrite">✍️ 이 회차 이어쓰기 참여하기 (1.0 Test-Pi 보증금)</button>
+                <button class="btn btn-outline" id="btnIntegratedVote">후보작 열람 & 투표하기 (무료)</button>
+                <button class="btn btn-primary" id="btnIntegratedWrite">이어쓰기 참여하기 (1.0 Test-Pi 보증금)</button>
             </div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('integratedRelayModal')">닫기</button>
         </div>
@@ -1153,12 +1187,10 @@
                 <div class="modal-title">새 스토리 릴레이 개설 (무료)</div>
                 <button class="close-btn" onclick="closeModal('createModal')">✕</button>
             </div>
-            
             <div class="form-group">
                 <label class="form-label">Title (제목)</label>
                 <input type="text" class="form-control" id="inputTitle" placeholder="제목을 입력하세요...">
             </div>
-
             <div class="form-group">
                 <label class="form-label">Format (글 종류)</label>
                 <select class="form-control" id="selectFormat">
@@ -1167,7 +1199,6 @@
                     <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Sub-Genre (하위 장르)</label>
                 <select class="form-control" id="selectGenre">
@@ -1178,7 +1209,6 @@
                     <option value="로맨스">로맨스 (Romance)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Length (분량 구분)</label>
                 <select class="form-control" id="selectLength">
@@ -1186,7 +1216,6 @@
                     <option value="장편 (10+ Chs)">장편 (10+ Chapters)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (첫 화 작성)</label>
                 <textarea class="form-control" id="storyContent" oninput="handleByteCheckRelay(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
@@ -1195,26 +1224,20 @@
                     <span class="byte-status" id="byte-status-count">0 / 6000 Bytes</span>
                 </div>
             </div>
-
-            <button class="btn btn-primary" id="btn-submit-relay" disabled onclick="createNewRelayCard()">
-                🚀 무료로 첫 화 개설하기 (0 Test-Pi)
-            </button>
+            <button class="btn btn-primary" id="btn-submit-relay" disabled onclick="createNewRelayCard()">무료로 첫 화 개설하기 (0 Test-Pi)</button>
         </div>
     </div>
 
-    <!-- 오리지널 시리즈 개설 모달 (단편/장편 구분 선택 포함) -->
     <div class="modal-overlay" id="createCreatorModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">새 오리지널 시리즈 개설 (무료)</div>
                 <button class="close-btn" onclick="closeModal('createCreatorModal')">✕</button>
             </div>
-            
             <div class="form-group">
                 <label class="form-label">Title (작품 제목)</label>
                 <input type="text" class="form-control" id="inputCreatorTitle" placeholder="작품 제목을 입력하세요...">
             </div>
-
             <div class="form-group">
                 <label class="form-label">Format (글 종류)</label>
                 <select class="form-control" id="selectCreatorFormat">
@@ -1223,7 +1246,6 @@
                     <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Sub-Genre (하위 장르)</label>
                 <select class="form-control" id="selectCreatorGenre">
@@ -1234,7 +1256,6 @@
                     <option value="로맨스">로맨스 (Romance)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Length (연재 목표 분량)</label>
                 <select class="form-control" id="selectCreatorLength">
@@ -1242,20 +1263,15 @@
                     <option value="장편 (10+ Chs)" selected>장편 (10+ Chapters)</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Chapter 1 Content (1화 본문 - 1화 무료 공개)</label>
                 <textarea class="form-control" id="creatorContent" oninput="handleByteCheckFree(this, 'creator-byte-count', 'btn-submit-creator')" placeholder="1화 내용을 입력하세요..."></textarea>
-                
                 <div class="byte-counter-info">
                     <span class="guide-text">작성 중인 분량:</span>
                     <span class="byte-status valid" id="creator-byte-count">0 Bytes</span>
                 </div>
             </div>
-
-            <button class="btn btn-primary" id="btn-submit-creator" disabled onclick="createNewCreatorCard()">
-                🚀 연재 작품 등록하기 (0 Test-Pi)
-            </button>
+            <button class="btn btn-primary" id="btn-submit-creator" disabled onclick="createNewCreatorCard()">연재 작품 등록하기 (0 Test-Pi)</button>
         </div>
     </div>
 
@@ -1268,16 +1284,6 @@
                 </div>
                 <button class="close-btn" onclick="closeModal('readVoteModal')">✕</button>
             </div>
-
-            <div class="access-box" style="background: rgba(56, 189, 248, 0.1); border: 1px dashed var(--primary-cyan); padding: 12px; border-radius: 10px; margin-bottom: 12px; text-align: center;">
-                <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan); margin-bottom: 4px;">
-                    📖 자유로운 스토리 열람 & 투표 (무료)
-                </div>
-                <div style="font-size: 0.78rem; color: var(--text-sub);">
-                    후보작을 자유롭게 감상하시고 마음에 드는 원고에 투표해 주세요!
-                </div>
-            </div>
-
             <div id="candidateListContainer"></div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('readVoteModal')">닫기</button>
         </div>
@@ -1317,26 +1323,19 @@
                 </div>
                 <button class="close-btn" onclick="closeModal('writerModal')">✕</button>
             </div>
-
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
                 🌐 Translate to My Language (<span id="targetLangText2">English</span>)
             </button>
-
             <div class="reader-body notranslate" id="writerBody"></div>
-
             <div class="form-group" style="margin-top: 14px;">
                 <label class="form-label" id="writerInputLabel">내 이어쓰기 작성</label>
                 <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요..."></textarea>
-                
                 <div class="byte-counter-info">
                     <span class="guide-text">1,500~6,000 바이트 사이로 작성해주세요.</span>
                     <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
                 </div>
             </div>
-
-            <button class="btn btn-primary" id="btn-submit-write" disabled onclick="submitWriterContent()">
-                이어쓰기 제출하기
-            </button>
+            <button class="btn btn-primary" id="btn-submit-write" disabled onclick="submitWriterContent()">이어쓰기 제출하기</button>
         </div>
     </div>
 
@@ -1347,8 +1346,10 @@
         let selectedUserLang = 'en';
         let currentSelectedArchiveId = null;
         let currentTempRating = 5;
+        let currentReviewPage = 1;
+        const reviewsPerPage = 20;
 
-        // 샘플 완결 라이브러리(블루 아카이브) 데이터
+        // 블루 아카이브 완결작 데이터 (샘플 30개 리뷰 테스트 시뮬레이션용 데이터 포함)
         let archiveDataList = [
             {
                 id: 'arc_01',
@@ -1361,17 +1362,19 @@
                 isLong: false,
                 views: 142,
                 ratingSum: 23,
-                ratingCount: 5, // 평점 4.6
+                ratingCount: 5,
                 timestamp: Date.now() - 100000000,
                 desc: '심해 10,000m 바닥에서 발견된 정체불명의 외계 구조물과 인류 최초의 교신 기록...',
                 reviews: [
-                    { author: 'Pioneer_A', rating: 5, comment: '집단지성 릴레이 소설인데도 완결성이 대단하네요!' },
-                    { author: 'OceanFan', rating: 4, comment: '엔딩 소름돋았습니다. 강추!' }
+                    { author: 'Pioneer_A', rating: 5, comment: '스토리 릴레이 소설인데도 완결성이 대단하네요!' },
+                    { author: 'OceanFan', rating: 4, comment: '엔딩 소름돋았습니다. 강추!' },
+                    { author: 'StarPioneer', rating: 5, comment: '몰입감 최고입니다!' },
+                    { author: 'DeepDive', rating: 4, comment: '다음 작품도 기대됩니다.' }
                 ]
             },
             {
                 id: 'arc_02',
-                title: '파이의 연금술사',
+                title: '심해 마법사의 공방',
                 type: 'creator',
                 format: '소설',
                 genre: '판타지',
@@ -1380,7 +1383,7 @@
                 isLong: true,
                 views: 310,
                 ratingSum: 48,
-                ratingCount: 10, // 평점 4.8
+                ratingCount: 10,
                 timestamp: Date.now() - 50000000,
                 desc: '블록체인 세상의 연금술사가 펼치는 판타지 서사시. 완결까지 거침없는 전개!',
                 reviews: [
@@ -1388,6 +1391,27 @@
                 ]
             }
         ];
+
+        // 30개 리뷰 테스트용 더미 생성 함수
+        function generateDummyReviewsForTesting() {
+            const targetItem = archiveDataList[0];
+            if (targetItem.reviews.length < 30) {
+                for (let i = 1; i <= 28; i++) {
+                    targetItem.reviews.push({
+                        author: `Tester_${i}`,
+                        rating: (i % 2 === 0) ? 5 : 4,
+                        comment: `이것은 페이징 테스트를 위한 ${i}번째 리뷰 감상평입니다. 아주 재밌어요!`
+                    });
+                    targetItem.ratingSum += 5;
+                    targetItem.ratingCount += 1;
+                }
+            }
+        }
+        generateDummyReviewsForTesting(); // 테스트용 30개 자동 생성
+
+        let activeArchiveReaderItem = null;
+        let activeArchiveChapterIdx = 1;
+        let isArchiveViewAllMode = false;
 
         const flagMap = {
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
@@ -1455,7 +1479,7 @@
                 creatorSec.style.display = 'none';
                 archiveSec.style.display = 'block';
                 tabArchive.classList.add('active');
-                renderArchiveList(); // 블루 아카이브 리스트 렌더링
+                renderArchiveList();
             }
         }
 
@@ -1476,10 +1500,10 @@
 
             if (container.classList.contains('list-view-container')) {
                 container.classList.remove('list-view-container');
-                toggleBtn.innerText = '☰ 리스트 뷰로 보기';
+                toggleBtn.innerText = '☰ 리스트 뷰';
             } else {
                 container.classList.add('list-view-container');
-                toggleBtn.innerText = '🗂️ 카드 뷰로 보기';
+                toggleBtn.innerText = '🗂️ 카드 뷰';
             }
         }
 
@@ -1488,37 +1512,35 @@
             const sortBy = document.getElementById('archiveSortSelect').value;
             const container = document.getElementById('archive-card-container');
 
-            // 1. 카테고리 필터링
             let filteredList = archiveDataList.filter(item => {
                 if (category === 'relay') return item.type === 'relay';
                 if (category === 'creator') return item.type === 'creator';
                 return true;
             });
 
-            // 2. 정렬 (Sorting)
             filteredList.sort((a, b) => {
-                if (sortBy === 'time') return b.timestamp - a.timestamp; // 최신순
-                if (sortBy === 'views') return b.views - a.views; // 조회수순
+                if (sortBy === 'time') return b.timestamp - a.timestamp;
+                if (sortBy === 'views') return b.views - a.views;
                 if (sortBy === 'rating') {
                     const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
                     const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
-                    return ratingB - ratingA; // 별점 높은 순
+                    return ratingB - ratingA;
                 }
-                if (sortBy === 'length') return a.totalCh - b.totalCh; // 길이 단편순 (총 챕터 적은 순)
+                if (sortBy === 'length') return a.totalCh - b.totalCh;
                 return 0;
             });
 
-            // 3. HTML 카드 생성
             let html = '';
             filteredList.forEach(item => {
                 const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
-                const price = item.isLong ? 1.0 : 0.5; // 단편 0.5 / 장편 1.0 Test-Pi
+                const price = item.isLong ? 1.0 : 0.5;
+                const typeLabel = (item.type === 'relay') ? '스토리 릴레이' : '오리지널 시리즈';
 
                 html += `
-                    <div class="card archive-card" id="${item.id}">
+                    <div class="card archive-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
                         <div class="tag-group">
                             <span class="tag tag-archive">🏛️ 블루 아카이브</span>
-                            <span class="tag tag-meta">${item.type === 'relay' ? '집단지성 릴레이' : '오리지널'}</span>
+                            <span class="tag tag-meta">${typeLabel}</span>
                             <span class="tag tag-meta">${item.format} · ${item.genre}</span>
                             <span class="tag tag-meta">${item.totalCh}화 완결 (${item.isLong ? '장편' : '단편'})</span>
                         </div>
@@ -1540,10 +1562,10 @@
                         </div>
 
                         <div class="button-group">
-                            <button class="btn btn-outline" style="flex: 1;" onclick="openReviewModal('${item.id}')">
+                            <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">
                                 ⭐ 별점 & 리뷰 보기
                             </button>
-                            <button class="btn btn-primary" style="flex: 1;" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${price})">
+                            <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">
                                 📖 전체 소장하기 (${price} Test-Pi)
                             </button>
                         </div>
@@ -1554,6 +1576,14 @@
             container.innerHTML = html;
         }
 
+        // 블루 아카이브 리스트뷰에서도 카드 클릭 시 정상 작동하도록 연동
+        function handleArchiveCardClick(id) {
+            const item = archiveDataList.find(a => a.id === id);
+            if (!item) return;
+            const price = item.isLong ? 1.0 : 0.5;
+            buyAndReadArchive(item.id, item.title, price);
+        }
+
         function buyAndReadArchive(id, title, price) {
             const item = archiveDataList.find(a => a.id === id);
             if (!item) return;
@@ -1562,43 +1592,105 @@
             const isAlreadyBought = localStorage.getItem(authKey);
 
             if (isAlreadyBought) {
-                alert(`📖 이미 소장 중인 작품입니다!\n\n'${title}' 전체 내용을 자유롭게 감상하실 수 있습니다.`);
-                openArchiveFullReader(item);
+                alert(`📖 이미 소장 중인 작품입니다!\n\n'${title}' 감상을 시작합니다.`);
+                openArchiveChapterReader(item, 1, false);
             } else {
                 if (currentBalance >= price) {
                     currentBalance -= price;
-                    item.views += 1; // 조회수 +1 카운팅
+                    item.views += 1;
                     localStorage.setItem(authKey, "true");
                     document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
                     alert(`🎉 ${price} Test-Pi 결제 완료!\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
-                    renderArchiveList(); // 조회수 반영을 위해 목록 새로고침
-                    openArchiveFullReader(item);
+                    renderArchiveList();
+                    openArchiveChapterReader(item, 1, false);
                 } else {
                     alert('❌ Test-Pi 잔액이 부족합니다.');
                 }
             }
         }
 
-        function openArchiveFullReader(item) {
-            document.getElementById('singleReaderTitle').innerText = `[완결] ${item.title} (전체 ${item.totalCh}화)`;
-            document.getElementById('singleReaderBody').innerText = `[${item.title} - 블루 아카이브 완결본]\n\n${item.desc}\n\n(1화부터 ${item.totalCh}화까지 완결본 전체 텍스트가 연속으로 펼쳐집니다...)\n\n[1화] 심해의 문이 열리다...\n[2화] 고대 문자의 암호를 해독하다...\n[${item.totalCh}화] 인류와 심해의 평화로운 공존, 그 위대한 첫 걸음. - FIN -`;
-            openModal('creatorSingleReaderModal');
+        // 챕터별 회차 뷰어 시스템 함수들
+        function openArchiveChapterReader(item, chIdx, viewAll) {
+            activeArchiveReaderItem = item;
+            activeArchiveChapterIdx = chIdx;
+            isArchiveViewAllMode = viewAll;
+            updateArchiveReaderContent();
+            openModal('archiveChapterReaderModal');
         }
 
+        function updateArchiveReaderContent() {
+            if (!activeArchiveReaderItem) return;
+            const item = activeArchiveReaderItem;
+
+            document.getElementById('archiveReaderTitle').innerText = `[완결] ${item.title}`;
+
+            if (isArchiveViewAllMode) {
+                document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
+                let allContentHtml = '';
+                for (let i = 1; i <= item.totalCh; i++) {
+                    allContentHtml += `<b>[제 ${i}화]</b><br>${item.desc} (제 ${i}화 상세 전개 내용이 펼쳐집니다...스토리의 깊은 바다 속 탐험이 계속됩니다.)<br><br>`;
+                }
+                document.getElementById('archiveReaderBody').innerHTML = allContentHtml;
+            } else {
+                document.getElementById('archiveChapterIndicator').innerText = `제 ${activeArchiveChapterIdx}화 / 총 ${item.totalCh}화`;
+                document.getElementById('archiveReaderBody').innerHTML = `<b>[제 ${activeArchiveChapterIdx}화]</b><br>${item.desc} (제 ${activeArchiveChapterIdx}화 상세 전개 내용입니다. 완결된 원고의 몰입감을 느껴보세요.)`;
+            }
+        }
+
+        function moveArchiveChapter(direction) {
+            if (isArchiveViewAllMode) {
+                isArchiveViewAllMode = false;
+            }
+            let nextIdx = activeArchiveChapterIdx + direction;
+            if (nextIdx < 1) nextIdx = 1;
+            if (nextIdx > activeArchiveReaderItem.totalCh) nextIdx = activeArchiveReaderItem.totalCh;
+            activeArchiveChapterIdx = nextIdx;
+            updateArchiveReaderContent();
+        }
+
+        function jumpArchiveChapter(chIdx) {
+            isArchiveViewAllMode = false;
+            activeArchiveChapterIdx = chIdx;
+            updateArchiveReaderContent();
+        }
+
+        function toggleArchiveViewAll() {
+            isArchiveViewAllMode = !isArchiveViewAllMode;
+            updateArchiveReaderContent();
+        }
+
+        // 리뷰 페이징 시스템 적용
         function openReviewModal(archiveId) {
             currentSelectedArchiveId = archiveId;
+            currentReviewPage = 1; // 열 때 1페이지로 초기화
             const item = archiveDataList.find(a => a.id === archiveId);
             if (!item) return;
 
             document.getElementById('reviewModalTitle').innerText = `'${item.title}' 별점 & 리뷰`;
-            setStarRating(5); // 기본 5점 설정
+            document.getElementById('totalReviewCount').innerText = item.reviews.length;
+            setStarRating(5);
+            renderReviewPageList();
+            openModal('reviewModal');
+        }
+
+        function renderReviewPageList() {
+            const item = archiveDataList.find(a => a.id === currentSelectedArchiveId);
+            if (!item) return;
+
+            const totalReviews = item.reviews.length;
+            const totalPages = Math.ceil(totalReviews / reviewsPerPage) || 1;
+            if (currentReviewPage > totalPages) currentReviewPage = totalPages;
+
+            const startIndex = (currentReviewPage - 1) * reviewsPerPage;
+            const endIndex = startIndex + reviewsPerPage;
+            const slicedReviews = item.reviews.slice(startIndex, endIndex);
 
             const container = document.getElementById('reviewListContainer');
-            if (item.reviews.length === 0) {
-                container.innerHTML = `<div style="font-size: 0.8rem; color: var(--text-sub); text-align: center; padding: 10px;">아직 작성된 리뷰가 없습니다. 첫 리뷰를 남겨보세요!</div>`;
+            if (slicedReviews.length === 0) {
+                container.innerHTML = `<div style="font-size: 0.8rem; color: var(--text-sub); text-align: center; padding: 10px;">아직 작성된 리뷰가 없습니다.</div>`;
             } else {
                 let html = '';
-                item.reviews.forEach(r => {
+                slicedReviews.forEach(r => {
                     html += `
                         <div class="review-item">
                             <div class="review-author">
@@ -1612,7 +1704,25 @@
                 container.innerHTML = html;
             }
 
-            openModal('reviewModal');
+            // 페이징 컨트롤 바 렌더링
+            const pagingBar = document.getElementById('reviewPaginationBar');
+            pagingBar.innerHTML = `
+                <button class="page-btn" onclick="changeReviewPage(1)" ${currentReviewPage === 1 ? 'disabled style="opacity:0.5"' : ''}>처음</button>
+                <button class="page-btn" onclick="changeReviewPage(${currentReviewPage - 1})" ${currentReviewPage === 1 ? 'disabled style="opacity:0.5"' : ''}>이전</button>
+                <span class="page-info-text">${currentReviewPage} / ${totalPages}</span>
+                <button class="page-btn" onclick="changeReviewPage(${currentReviewPage + 1})" ${currentReviewPage === totalPages ? 'disabled style="opacity:0.5"' : ''}>다음</button>
+                <button class="page-btn" onclick="changeReviewPage(${totalPages})" ${currentReviewPage === totalPages ? 'disabled style="opacity:0.5"' : ''}>끝</button>
+            `;
+        }
+
+        function changeReviewPage(targetPage) {
+            const item = archiveDataList.find(a => a.id === currentSelectedArchiveId);
+            if (!item) return;
+            const totalPages = Math.ceil(item.reviews.length / reviewsPerPage) || 1;
+            if (targetPage < 1) targetPage = 1;
+            if (targetPage > totalPages) targetPage = totalPages;
+            currentReviewPage = targetPage;
+            renderReviewPageList();
         }
 
         function setStarRating(rating) {
@@ -1638,12 +1748,15 @@
                 item.ratingCount += 1;
 
                 document.getElementById('inputReviewText').value = '';
+                document.getElementById('totalReviewCount').innerText = item.reviews.length;
+                currentReviewPage = 1; // 새 리뷰 등록 시 첫 페이지로 이동
                 alert('🎉 리뷰가 성공적으로 등록되었습니다!');
-                openReviewModal(currentSelectedArchiveId); // 리뷰 창 갱신
-                renderArchiveList(); // 배경 메인 목록도 별점 갱신
+                renderReviewPageList();
+                renderArchiveList();
             }
         }
 
+        // 기타 릴레이 및 오리지널 시리즈 보조 함수들 (기존 유지)
         function handleListCardClick(cardId, title, content, flag, chapterNum, isLong) {
             const container = document.getElementById('relay-card-container');
             if (container.classList.contains('list-view-container')) {
@@ -1737,21 +1850,8 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function handlePayAccess(amount, desc) {
-            if (currentBalance >= amount) {
-                currentBalance -= amount;
-                document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
-                alert(`🎉 ${amount} Test-Pi ${desc} 완료!\n\n열람 권한이 성공적으로 활성화되었습니다.`);
-                return true;
-            } else {
-                alert('❌ Test-Pi 잔액이 부족합니다.');
-                return false;
-            }
-        }
-
         function openReadVoteModal(title, cardId, isVotePhase) {
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
-
             const container = document.getElementById('candidateListContainer');
             container.innerHTML = `
                 <div class="candidate-item" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
@@ -1773,7 +1873,6 @@
         function openCreatorReadModal(title, totalCh) {
             document.getElementById('creatorModalTitle').innerText = `'${title}' 회차 목록`;
             const container = document.getElementById('creatorChapterListContainer');
-            
             let html = '';
             for (let i = 1; i <= totalCh; i++) {
                 const isFree = (i === 1);
@@ -1795,8 +1894,14 @@
 
         function readCreatorChapter(title, chNum, isFree) {
             if (!isFree) {
-                const success = handlePayAccess(0.1, `제 ${chNum}화 유료 열람`);
-                if (!success) return;
+                if (currentBalance >= 0.1) {
+                    currentBalance -= 0.1;
+                    document.getElementById('drawerBalance').innerText = currentBalance.toFixed(1);
+                    alert(`🎉 0.1 Test-Pi 제 ${chNum}화 유료 열람 완료!`);
+                } else {
+                    alert('❌ Test-Pi 잔액이 부족합니다.');
+                    return;
+                }
             }
             closeModal('creatorReadModal');
             document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
@@ -1832,13 +1937,10 @@
         function openWriterModal(title, content, flag, chapterNum = 2, isLong = false) {
             document.getElementById('writerFlag').innerText = flag || '🇰🇷';
             document.getElementById('writerTitle').innerText = title + ' - 이어쓰기 (Ch. ' + chapterNum + ')';
-            const writerBody = document.getElementById('writerBody');
-            writerBody.innerText = content;
-            
+            document.getElementById('writerBody').innerText = content;
             document.getElementById('writerInputContent').value = "";
             document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
             document.getElementById('btn-submit-write').disabled = true;
-
             openModal('writerModal');
         }
 
@@ -1878,29 +1980,18 @@
                     <span class="flag-badge">${autoFlag}</span>
                     <h3>${title}</h3>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                    "${content.substring(0, 80)}..."
-                </p>
-                <div class="timer-info">
-                    ⏳ 작성 마감까지: 05일 00시간 남음
-                </div>
-                <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">
-                    💰 상금 풀: 0.0 Test-Pi
-                </div>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">"${content.substring(0, 80)}..."</p>
+                <div class="timer-info">⏳ 작성 마감까지: 05일 00시간 남음</div>
+                <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">💰 상금 풀: 0.0 Test-Pi</div>
                 <div class="button-group">
-                    <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', true)">
-                        📖 후보 열람 & 투표 (무료)
-                    </button>
-                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">
-                        ✍️ 이어쓰기 참여
-                    </button>
+                    <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${title}', '${uniqueCardId}', true)">후보 열람 & 투표 (무료)</button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${uniqueCardId}', '${title}', '${safeContent}', '${autoFlag}', 2, ${isLong})">이어쓰기 참여</button>
                 </div>
             `;
 
             container.prepend(newCard);
             closeModal('createModal');
             alert("🎉 새 스토리 릴레이가 무료로 개설되었습니다!");
-
             document.getElementById('inputTitle').value = "";
             document.getElementById('storyContent').value = "";
             document.getElementById('btn-submit-relay').disabled = true;
@@ -1919,9 +2010,7 @@
             const newCard = document.createElement('div');
             newCard.className = 'card';
             newCard.id = uniqueCardId;
-            newCard.onclick = function() {
-                handleCreatorListClick(title, 1);
-            };
+            newCard.onclick = function() { handleCreatorListClick(title, 1); };
 
             newCard.innerHTML = `
                 <div class="tag-group">
@@ -1934,23 +2023,16 @@
                     <span class="flag-badge">🇰🇷</span>
                     <h3>${title}</h3>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                    "${content.substring(0, 80)}..."
-                </p>
-                <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
-                    ✍️ 작가: 나 | 💰 누적 후원/매출: 0.0 Test-Pi
-                </div>
+                <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">"${content.substring(0, 80)}..."</p>
+                <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">✍️ 작가: 나 | 💰 누적 후원/매출: 0.0 Test-Pi</div>
                 <div class="button-group">
-                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('${title}', 1)">
-                        📖 작품 보기 (1화 무료)
-                    </button>
+                    <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('${title}', 1)">작품 보기 (1화 무료)</button>
                 </div>
             `;
 
             container.prepend(newCard);
             closeModal('createCreatorModal');
             alert("🎉 새 오리지널 시리즈 작품이 연재 시작되었습니다!");
-
             document.getElementById('inputCreatorTitle').value = "";
             document.getElementById('creatorContent').value = "";
             document.getElementById('btn-submit-creator').disabled = true;
