@@ -56,10 +56,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: transform 0.3s ease;
         }
-
-        header.fullscreen-hidden { transform: translateY(-100%); }
 
         .header-row {
             display: flex;
@@ -119,15 +116,14 @@
 
         .drawer-menu-list { list-style: none; padding: 10px 0; flex: 1; overflow-y: auto; }
         .drawer-menu-item {
-            padding: 13px 20px; font-size: 0.88rem; color: var(--text-bright); font-weight: 600; cursor: pointer;
+            padding: 12px 20px; font-size: 0.85rem; color: var(--text-bright); font-weight: 600; cursor: pointer;
             display: flex; align-items: center; gap: 10px; transition: background 0.2s, color 0.2s; border-left: 3px solid transparent;
         }
         .drawer-menu-item:hover { background: rgba(56, 189, 248, 0.12); color: var(--primary-cyan); border-left-color: var(--primary-cyan); }
 
         .nav-tabs {
-            display: flex; background: rgba(13, 33, 66, 0.5); border-bottom: 1px solid var(--border-glow); padding: 0 4px; justify-content: space-around; transition: transform 0.3s ease;
+            display: flex; background: rgba(13, 33, 66, 0.5); border-bottom: 1px solid var(--border-glow); padding: 0 4px; justify-content: space-around;
         }
-        .nav-tabs.fullscreen-hidden { transform: translateY(-150%); }
 
         .tab-btn {
             background: transparent; border: none; color: var(--text-sub); padding: 12px 6px; font-size: 0.78rem; font-weight: 700;
@@ -137,18 +133,16 @@
 
         footer.app-footer {
             margin-top: 30px; padding: 16px; text-align: center; background: rgba(2, 9, 22, 0.6);
-            border-top: 1px dashed var(--border-glow); border-radius: 12px; transition: opacity 0.3s;
+            border-top: 1px dashed var(--border-glow); border-radius: 12px;
         }
-        footer.app-footer.fullscreen-hidden { opacity: 0; pointer-events: none; }
 
         .copyright-title { font-size: 0.78rem; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; }
         .copyright-desc { font-size: 0.7rem; color: var(--text-sub); line-height: 1.4; }
 
         .bottom-banner-ad {
             position: fixed; bottom: 0; left: 0; right: 0; height: 50px; background: rgba(2, 9, 22, 0.95);
-            border-top: 1px solid var(--border-glow); display: flex; align-items: center; justify-content: center; z-index: 90; backdrop-filter: blur(10px); transition: transform 0.3s ease;
+            border-top: 1px solid var(--border-glow); display: flex; align-items: center; justify-content: center; z-index: 90; backdrop-filter: blur(10px);
         }
-        .bottom-banner-ad.fullscreen-hidden { transform: translateY(100%); }
         .banner-placeholder { font-size: 0.75rem; color: var(--text-sub); letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
 
         .container { max-width: 600px; margin: 0 auto; padding: 16px; }
@@ -186,7 +180,6 @@
         .card-rules-list div { margin-bottom: 5px; }
         .card-rules-list b { color: var(--text-bright); }
 
-        /* 허브 스타일 카드 디자인 */
         .hub-container { display: flex; flex-direction: column; gap: 14px; }
         .hub-guide-card {
             background: rgba(13, 33, 66, 0.85); border: 1px solid var(--border-glow); border-radius: 16px; padding: 18px; backdrop-filter: blur(8px);
@@ -207,9 +200,6 @@
         }
         .view-toggle-btn {
             background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan); color: var(--primary-cyan); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer;
-        }
-        .btn-create-relay {
-            background: rgba(56, 189, 248, 0.2); border: 1px solid var(--primary-cyan); color: var(--primary-cyan); padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
         }
 
         .card {
@@ -236,7 +226,6 @@
         .tag-vote { background: rgba(251, 191, 36, 0.2); color: var(--warning-orange); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
         .tag-creator { background: rgba(74, 222, 128, 0.2); color: var(--success-green); }
-        .tag-finished { background: rgba(248, 113, 113, 0.2); color: var(--danger-red); }
         .tag-archive { background: rgba(56, 189, 248, 0.25); color: #7dd3fc; border: 1px solid var(--primary-cyan); }
 
         .title-with-flag { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -259,12 +248,12 @@
         .btn-outline { background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan); }
         .button-group { display: flex; gap: 8px; }
 
-        /* 모달 Z-Index 정돈 (댓글 소통방이 최상단에 뜨도록 보장) */
+        /* 모달 Z-Index 정돈 (댓글 소통방 최상단 보장) */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(2, 9, 22, 0.85); backdrop-filter: blur(8px); z-index: 350; align-items: center; justify-content: center; padding: 16px;
         }
-        .modal-overlay.z-top { z-index: 500; } /* 회차별 댓글 소통방 전용 최상단 Z-index */
+        .modal-overlay.z-top { z-index: 500; }
 
         .modal-content {
             background: #0d2142; border: 1px solid var(--primary-cyan); border-radius: 16px;
@@ -356,6 +345,7 @@
 
         <ul class="drawer-menu-list">
             <li class="drawer-menu-item" onclick="openNavModal('creatorStudioModal')"><span>🎨</span> 크리에이터 스튜디오</li>
+            <li class="drawer-menu-item" onclick="openNavModal('subscriptionActivityModal')"><span>📌</span> 나의 구독 활동</li>
             <li class="drawer-menu-item" onclick="openNavModal('aboutModal')"><span>🌊</span> Deep Blue Sea 소개</li>
             <li class="drawer-menu-item" onclick="openNavModal('noticeModal')"><span>📢</span> 공지사항</li>
             <li class="drawer-menu-item" onclick="openNavModal('contactModal')"><span>📧</span> Contact Us</li>
@@ -417,7 +407,6 @@
                 </div>
             </div>
 
-            <!-- 홈 메인 3단 카드 (블루 아카이브 카드 안에 '지분 수익 분배 안내' 포함) -->
             <div class="landing-stack">
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
@@ -476,21 +465,20 @@
                 </div>
                 <div class="hub-action-btn-card" onclick="showRelayListView('write')">
                     <div>
-                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--success-green);">📖 이어쓰기 참여 가능한 글 목록 보기 (최신순)</div>
+                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--success-green);">📖 이어쓰기 참여 가능한 글 목록 보기 (<span id="relayWriteCountBadge">1건</span> 진행 중)</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">현재 집필 경쟁이 진행 중인 릴레이에 도전하세요.</div>
                     </div>
                     <div style="font-weight: 700; color: var(--success-green);">목록 보기 ➔</div>
                 </div>
                 <div class="hub-action-btn-card" onclick="showRelayListView('vote')">
                     <div>
-                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--warning-orange);">🗳️ 후보 열람 및 투표 가능한 글 목록 보기</div>
+                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--warning-orange);">🗳️ 후보 열람 및 투표 가능한 글 목록 보기 (<span id="relayVoteCountBadge">1건</span> 진행 중)</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">독자로 참여하여 마음에 드는 후보작에 투표하세요.</div>
                     </div>
                     <div style="font-weight: 700; color: var(--warning-orange);">투표소 ➔</div>
                 </div>
             </div>
 
-            <!-- 실제 릴레이 목록 뷰 (기본 숨김, 허브에서 버튼 누를 시 노출) -->
             <div id="relayListViewContainer" style="display: none;">
                 <div class="section-header">
                     <div class="section-title-group">
@@ -544,14 +532,13 @@
                 </div>
                 <div class="hub-action-btn-card" onclick="showCreatorListView()">
                     <div>
-                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary-cyan);">📚 전체 오리지널 시리즈 목록 보기 (최신순)</div>
+                        <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary-cyan);">📚 전체 오리지널 시리즈 목록 보기 (<span id="creatorListCountBadge">1건</span> 연재 중)</div>
                         <div style="font-size: 0.75rem; color: var(--text-sub);">크리에이터들이 연재 중인 명작들을 탐색하세요.</div>
                     </div>
                     <div style="font-weight: 700; color: var(--primary-cyan);">목록 보기 ➔</div>
                 </div>
             </div>
 
-            <!-- 실제 오리지널 목록 뷰 -->
             <div id="creatorListViewContainer" style="display: none;">
                 <div class="section-header">
                     <div class="section-title-group">
@@ -621,7 +608,7 @@
         </footer>
     </div>
 
-    <!-- 모달: 크리에이터 스튜디오 대시보드 -->
+    <!-- 모달: 크리에이터 스튜디오 (내 참여/연재 작품 추가 제안 포함) -->
     <div class="modal-overlay" id="creatorStudioModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -634,13 +621,43 @@
                     <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;">수수료 최적화를 위해 모아둔 수익을 한 번에 출금하세요!</div>
                     <button class="btn btn-primary" style="margin-top: 8px; padding: 6px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
                 </div>
-                <div><b>📚 내 연재 및 참여 작품 (지분 현황)</b></div>
-                <div style="margin-top: 6px; font-size: 0.8rem; color: var(--text-sub);" id="studioMyWorksList">
+                <div><b>📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</b></div>
+                <div style="margin-top: 6px; font-size: 0.8rem; color: var(--text-sub); line-height: 1.5;" id="studioMyWorksList">
                     • 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)<br>
-                    • 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)
+                    • 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)<br>
+                    • [테스트] 6화 완결 제안 (릴레이 이어쓰기 참여중)
                 </div>
             </div>
             <button class="btn btn-outline" onclick="closeModal('creatorStudioModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 나의 구독 활동 -->
+    <div class="modal-overlay" id="subscriptionActivityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📌 나의 구독 활동 (Subscription Activity)</div>
+                <button class="close-btn" onclick="closeModal('subscriptionActivityModal')">✕</button>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6; margin-bottom: 14px;">
+                <div style="margin-bottom: 12px;">
+                    <div style="color:var(--primary-cyan); font-weight:700; margin-bottom:4px;">✨ 팔로잉 작가 (1명)</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub); background:rgba(255,255,255,0.04); padding:8px; border-radius:6px;">• DeepMage (새 회차 알림 활성화)</div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <div style="color:var(--warning-orange); font-weight:700; margin-bottom:4px;">🗳️ 투표에 참여중인 글 (1건)</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub); background:rgba(255,255,255,0.04); padding:8px; border-radius:6px;">• [테스트] 6화 완결 제안 (후보 A 투표 완료)</div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <div style="color:var(--success-green); font-weight:700; margin-bottom:4px;">📚 구독중인 오리지널 시리즈 (1개)</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub); background:rgba(255,255,255,0.04); padding:8px; border-radius:6px;">• 심해 마법사의 공방 (연재 알림 수신중)</div>
+                </div>
+                <div>
+                    <div style="color:#7dd3fc; font-weight:700; margin-bottom:4px;">🏛️ 소장한 아카이브 도서 (1권)</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub); background:rgba(255,255,255,0.04); padding:8px; border-radius:6px;">• 심해의 소용돌이 속에서 (완결 영구 소장 완료)</div>
+                </div>
+            </div>
+            <button class="btn btn-outline" onclick="closeModal('subscriptionActivityModal')">닫기</button>
         </div>
     </div>
 
@@ -665,7 +682,7 @@
         </div>
     </div>
 
-    <!-- 모달: 회차별 댓글 소통방 (Z-index 500으로 최상단 보장) -->
+    <!-- 모달: 회차별 댓글 소통방 (Z-index 최상단) -->
     <div class="modal-overlay z-top" id="chapterCommentModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -673,7 +690,7 @@
                 <button class="close-btn" onclick="closeModal('chapterCommentModal')">✕</button>
             </div>
             <div style="font-size: 0.75rem; color: var(--warning-orange); background: rgba(251,191,36,0.1); padding: 6px 10px; border-radius: 6px; margin-bottom: 10px;">
-                ℹ️ <b>ⓒ</b> 표기된 아이디는 해당 회차를 집필한 원작 작가(Creator)입니다. (완결작에서도 성지순례 소통은 영구 상시 오픈됩니다!)
+                ℹ️ <b>ⓒ</b> 표기된 아이디는 해당 회차를 집필한 원작 작가(Creator)입니다. (블루 아카이브 완결작 소통방은 영구 상시 오픈됩니다!)
             </div>
             <div class="form-group">
                 <textarea class="form-control" id="inputCommentText" style="min-height: 60px;" placeholder="작품 감상이나 소통 메시지를 남겨주세요..."></textarea>
@@ -684,7 +701,7 @@
         </div>
     </div>
 
-    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 -->
+    <!-- 기타 필수 모달들 -->
     <div class="modal-overlay" id="aboutModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -790,7 +807,7 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (풀스크린 읽기 버튼 장착) -->
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (풀스크린 버튼 제거 완료) -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
         <div class="modal-content" id="archiveReaderModalContent">
             <div class="modal-header" id="archiveReaderHeaderBar">
@@ -798,14 +815,12 @@
                 <button class="close-btn" onclick="closeModal('archiveChapterReaderModal')">✕</button>
             </div>
 
-            <!-- E-Reader 독서 편의 옵션 바 (테마, 폰트크기, 📱 전체화면으로 읽기 버튼) -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 8px; font-size:0.75rem; flex-wrap:wrap; gap:4px;">
                 <div style="display:flex; gap:6px;">
                     <button class="page-btn" onclick="setReaderTheme('dark')">🌙 어두운 테마</button>
                     <button class="page-btn" onclick="setReaderTheme('light')">☀️ 밝은 테마</button>
                 </div>
                 <div style="display:flex; gap:4px; align-items:center;">
-                    <button class="page-btn" onclick="toggleFullscreenMode()" style="border-color:var(--primary-cyan); color:var(--primary-cyan);">📱 전체화면으로 읽기</button>
                     <button class="page-btn" onclick="adjustFontSize(-1)">A-</button>
                     <button class="page-btn" onclick="adjustFontSize(1)">A+</button>
                 </div>
@@ -815,7 +830,6 @@
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
 
-            <!-- 상단 네비게이션 버튼 -->
             <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;" id="archiveReaderTopNav">
                 <button class="page-btn" onclick="moveArchiveChapter(-1)">◀ 이전화</button>
                 <button class="page-btn" onclick="moveArchiveChapter(1)">다음화 ▶</button>
@@ -844,7 +858,7 @@
         </div>
     </div>
 
-    <!-- 모달: 릴레이 개설 (소제목 입력 필드 추가) -->
+    <!-- 모달: 릴레이 개설 -->
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -896,7 +910,7 @@
         </div>
     </div>
 
-    <!-- 모달: 오리지널 시리즈 개설 (소제목 입력 필드 추가) -->
+    <!-- 모달: 오리지널 시리즈 개설 -->
     <div class="modal-overlay" id="createCreatorModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -948,7 +962,7 @@
         </div>
     </div>
 
-    <!-- 모달: 이어쓰기 작업실 (소제목 입력 필드 추가) -->
+    <!-- 모달: 이어쓰기 작업실 -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -978,7 +992,6 @@
         </div>
     </div>
 
-    <!-- 기타 필수 모달들 -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1074,7 +1087,7 @@
                     { ch: 5, title: '빛과 어둠의 경계', content: '5화 본문: 진실이 서서히 수면 위로 떠오른다...', comments: [] },
                     { ch: 6, title: '최후의 선택', content: '6화 본문: 인류의 운명을 건 선택의 순간...', comments: [] },
                     { ch: 7, title: '새로운 여명', content: '7화 본문: 어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
-                    { ch: 8, title: '평화로운 공존 (FIN)', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '성지순례 왔습니다! 명작이네요.'}] }
+                    { ch: 8, title: '평화로운 공존 (FIN)', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '명작이네요.'}] }
                 ],
                 reviews: [
                     { author: 'Pioneer_A', rating: 5, comment: '스토리 릴레이 소설인데도 완결성이 대단하네요!' },
@@ -1111,7 +1124,6 @@
         let activeArchiveChapterIdx = 1;
         let isArchiveViewAllMode = false;
         let currentReaderFontSize = 0.95;
-        let isFullscreenMode = false;
 
         const flagMap = {
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
@@ -1184,7 +1196,7 @@
                 creatorSec.style.display = 'none';
                 archiveSec.style.display = 'none';
                 tabRelay.classList.add('active');
-                backToRelayHub(); // 릴레이 탭 클릭 시 허브 화면 우선 노출
+                backToRelayHub();
             } else if (tabName === 'creator') {
                 document.body.classList.remove('landing-mode');
                 homeSec.style.display = 'none';
@@ -1192,7 +1204,7 @@
                 creatorSec.style.display = 'block';
                 archiveSec.style.display = 'none';
                 tabCreator.classList.add('active');
-                backToCreatorHub(); // 오리지널 탭 클릭 시 허브 화면 우선 노출
+                backToCreatorHub();
             } else if (tabName === 'archive') {
                 document.body.classList.remove('landing-mode');
                 homeSec.style.display = 'none';
@@ -1204,11 +1216,10 @@
             }
         }
 
-        // 릴레이 허브 및 리스트 제어 함수
         function showRelayListView(mode) {
             document.getElementById('relayHubView').style.display = 'none';
             document.getElementById('relayListViewContainer').style.display = 'block';
-            document.getElementById('relayListHeaderTitle').innerText = mode === 'write' ? '이어쓰기 참여 글 목록 (최신순)' : '후보 열람 & 투표 목록';
+            document.getElementById('relayListHeaderTitle').innerText = mode === 'write' ? '이어쓰기 참여 글 목록' : '후보 열람 & 투표 목록';
         }
 
         function backToRelayHub() {
@@ -1216,7 +1227,6 @@
             document.getElementById('relayListViewContainer').style.display = 'none';
         }
 
-        // 오리지널 허브 및 리스트 제어 함수
         function showCreatorListView() {
             document.getElementById('creatorHubView').style.display = 'none';
             document.getElementById('creatorListViewContainer').style.display = 'block';
@@ -1329,7 +1339,7 @@
             const isAlreadyBought = localStorage.getItem(authKey);
 
             if (isAlreadyBought) {
-                alert(`이미 결제하신 작품은 재결제 되지 않습니다.\n\n'${title}' 감상을 시작합니다.`);
+                alert(`이미 소장하신 작품입니다.\n\n'${title}' 감상을 시작합니다.`);
                 openArchiveChapterReader(item, 1, false);
             } else {
                 if (currentBalance >= price) {
@@ -1338,7 +1348,7 @@
                     item.views += 1;
                     localStorage.setItem(authKey, "true");
                     updateWalletDisplay();
-                    alert(`🎉 지불 완료되었습니다. 재접속 시 이어서 무료로 읽기 가능합니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (지분 95% 작가 자동 분배 완료)`);
+                    alert(`🎉 지불 완료되었습니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (지분 95% 작가 자동 분배 완료)`);
                     renderArchiveList();
                     openArchiveChapterReader(item, 1, false);
                 } else {
@@ -1417,35 +1427,6 @@
             if (currentReaderFontSize < 0.75) currentReaderFontSize = 0.75;
             if (currentReaderFontSize > 1.4) currentReaderFontSize = 1.4;
             document.getElementById('archiveReaderBody').style.fontSize = currentReaderFontSize + 'rem';
-        }
-
-        // 전체화면 토글 기능 완벽 구현
-        function toggleFullscreenMode() {
-            isFullscreenMode = !isFullscreenMode;
-            const header = document.getElementById('mainHeader');
-            const navTabs = document.getElementById('mainNavTabs');
-            const banner = document.getElementById('mainBannerAd');
-            const footer = document.getElementById('mainFooter');
-            
-            const topNav = document.getElementById('archiveReaderTopNav');
-            const bottomNav = document.getElementById('archiveReaderBottomNav');
-
-            if (isFullscreenMode) {
-                if(header) header.classList.add('fullscreen-hidden');
-                if(navTabs) navTabs.classList.add('fullscreen-hidden');
-                if(banner) banner.classList.add('fullscreen-hidden');
-                if(footer) footer.classList.add('fullscreen-hidden');
-                if(topNav) topNav.style.display = 'none';
-                if(bottomNav) bottomNav.style.display = 'none';
-                alert('📱 풀스크린 읽기 모드가 켜졌습니다. 해제하려면 다시 버튼을 누르세요.');
-            } else {
-                if(header) header.classList.remove('fullscreen-hidden');
-                if(navTabs) navTabs.classList.remove('fullscreen-hidden');
-                if(banner) banner.classList.remove('fullscreen-hidden');
-                if(footer) footer.classList.remove('fullscreen-hidden');
-                if(topNav) topNav.style.display = 'flex';
-                if(bottomNav) bottomNav.style.display = 'flex';
-            }
         }
 
         function openArchiveChapterListModal() {
