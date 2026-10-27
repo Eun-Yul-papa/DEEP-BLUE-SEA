@@ -56,6 +56,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        header.fullscreen-hidden {
+            transform: translateY(-100%);
         }
 
         .header-row {
@@ -74,6 +79,7 @@
         .header-right-group {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
 
         .menu-hamburger-btn {
@@ -128,6 +134,17 @@
             outline: none;
             cursor: pointer;
             max-width: 130px;
+        }
+
+        .alarm-btn {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan);
+            padding: 5px 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            position: relative;
         }
 
         .drawer-overlay {
@@ -226,6 +243,11 @@
             border-bottom: 1px solid var(--border-glow);
             padding: 0 4px;
             justify-content: space-around;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-tabs.fullscreen-hidden {
+            transform: translateY(-150%);
         }
 
         .tab-btn {
@@ -254,26 +276,17 @@
             background: rgba(2, 9, 22, 0.6);
             border-top: 1px dashed var(--border-glow);
             border-radius: 12px;
+            transition: opacity 0.3s;
         }
 
-        .copyright-title {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-bright);
-            margin-bottom: 4px;
-        }
+        footer.app-footer.fullscreen-hidden { opacity: 0; pointer-events: none; }
 
-        .copyright-desc {
-            font-size: 0.7rem;
-            color: var(--text-sub);
-            line-height: 1.4;
-        }
+        .copyright-title { font-size: 0.78rem; font-weight: 700; color: var(--text-bright); margin-bottom: 4px; }
+        .copyright-desc { font-size: 0.7rem; color: var(--text-sub); line-height: 1.4; }
 
         .bottom-banner-ad {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 50px;
             background: rgba(2, 9, 22, 0.95);
             border-top: 1px solid var(--border-glow);
@@ -282,6 +295,11 @@
             justify-content: center;
             z-index: 90;
             backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .bottom-banner-ad.fullscreen-hidden {
+            transform: translateY(100%);
         }
 
         .banner-placeholder {
@@ -310,8 +328,7 @@
         .landing-header-box { text-align: center; margin-bottom: 6px; }
 
         .landing-logo-large {
-            width: 95px;
-            height: 95px;
+            width: 95px; height: 95px;
             border-radius: 50%;
             border: 2px solid var(--primary-cyan);
             box-shadow: 0 0 20px var(--primary-cyan);
@@ -319,208 +336,94 @@
         }
 
         .landing-title-large {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 1px;
+            font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: 1px;
             text-shadow: 0 0 12px var(--primary-cyan);
         }
 
         .landing-info-card {
             background: rgba(2, 9, 22, 0.75);
             border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 18px;
-            width: 100%;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border-radius: 16px; padding: 18px; width: 100%;
+            backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .landing-info-title {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--primary-cyan);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 10px;
+            display: flex; align-items: center; gap: 6px;
         }
 
-        .landing-info-text {
-            font-size: 0.85rem;
-            color: var(--text-bright);
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
+        .landing-info-text { font-size: 0.85rem; color: var(--text-bright); line-height: 1.6; margin-bottom: 10px; }
 
         .tokenomics-box {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px dashed var(--primary-cyan);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 0.78rem;
-            color: #e2e8f0;
-            line-height: 1.5;
+            background: rgba(56, 189, 248, 0.1); border: 1px dashed var(--primary-cyan);
+            border-radius: 10px; padding: 10px; font-size: 0.78rem; color: #e2e8f0; line-height: 1.5;
         }
 
-        .landing-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            width: 100%;
-        }
+        .landing-stack { display: flex; flex-direction: column; gap: 14px; width: 100%; }
 
         .landing-action-card {
-            background: rgba(13, 33, 66, 0.85);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 18px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: rgba(13, 33, 66, 0.85); border: 1px solid var(--border-glow);
+            border-radius: 16px; padding: 18px; cursor: pointer; backdrop-filter: blur(10px);
+            transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between;
         }
 
         .landing-action-card:hover {
-            border-color: var(--primary-cyan);
-            transform: translateY(-2px);
+            border-color: var(--primary-cyan); transform: translateY(-2px);
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
         }
 
-        .card-rules-list {
-            font-size: 0.78rem;
-            color: var(--text-sub);
-            line-height: 1.55;
-            margin-bottom: 12px;
-        }
-
+        .card-rules-list { font-size: 0.78rem; color: var(--text-sub); line-height: 1.55; margin-bottom: 12px; }
         .card-rules-list div { margin-bottom: 5px; }
         .card-rules-list b { color: var(--text-bright); }
 
         .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0 14px 0;
-            flex-wrap: wrap;
-            gap: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin: 10px 0 14px 0; flex-wrap: wrap; gap: 8px;
         }
 
-        .section-title-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .section-title-group { display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 1.05rem; font-weight: 700; color: var(--primary-cyan); }
 
-        .section-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--primary-cyan);
-        }
-
-        .sort-filter-bar {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-        }
+        .sort-filter-bar { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
 
         .sort-select {
-            background: rgba(13, 33, 66, 0.9);
-            border: 1px solid var(--border-glow);
-            color: var(--text-bright);
-            padding: 6px 10px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            outline: none;
-            cursor: pointer;
+            background: rgba(13, 33, 66, 0.9); border: 1px solid var(--border-glow);
+            color: var(--text-bright); padding: 6px 10px; border-radius: 8px; font-size: 0.78rem; outline: none; cursor: pointer;
         }
 
         .view-toggle-btn {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid var(--primary-cyan);
-            color: var(--primary-cyan);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            cursor: pointer;
+            background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan); padding: 4px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; cursor: pointer;
         }
 
         .btn-create-relay {
-            background: rgba(56, 189, 248, 0.2);
-            border: 1px solid var(--primary-cyan);
-            color: var(--primary-cyan);
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
+            background: rgba(56, 189, 248, 0.2); border: 1px solid var(--primary-cyan);
+            color: var(--primary-cyan); padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
         }
 
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 16px;
-            backdrop-filter: blur(8px);
-            transition: all 0.2s;
+            background: var(--bg-card); border: 1px solid var(--border-glow);
+            border-radius: 16px; padding: 18px; margin-bottom: 16px; backdrop-filter: blur(8px); transition: all 0.2s;
         }
 
-        .archive-card {
-            border-color: rgba(56, 189, 248, 0.4);
-            background: rgba(7, 21, 46, 0.9);
-            cursor: pointer;
-        }
+        .archive-card { border-color: rgba(56, 189, 248, 0.4); background: rgba(7, 21, 46, 0.9); cursor: pointer; }
 
         .list-view-container .card {
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            padding: 12px 14px; margin-bottom: 10px; border-radius: 10px; cursor: pointer;
+            display: flex; flex-direction: column; gap: 6px;
         }
-
-        .list-view-container .card:hover {
-            border-color: var(--primary-cyan);
-            background: rgba(13, 33, 66, 0.95);
-        }
-
+        .list-view-container .card:hover { border-color: var(--primary-cyan); background: rgba(13, 33, 66, 0.95); }
         .list-view-container .card p,
         .list-view-container .card .timer-info,
         .list-view-container .card .prize-info,
         .list-view-container .card .button-group,
-        .list-view-container .card .stats-meta-row {
-            display: none !important;
-        }
+        .list-view-container .card .stats-meta-row { display: none !important; }
+        .list-view-container .card .title-with-flag h3 { font-size: 0.92rem; color: var(--primary-cyan); }
 
-        .list-view-container .card .title-with-flag h3 {
-            font-size: 0.92rem;
-            color: var(--primary-cyan);
-        }
-
-        .tag-group {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-
+        .tag-group { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
         .list-view-container .tag-group { margin-bottom: 2px; }
 
-        .tag {
-            display: inline-block;
-            padding: 3px 7px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
+        .tag { display: inline-block; padding: 3px 7px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; }
         .tag-relay { background: rgba(56, 189, 248, 0.2); color: var(--primary-cyan); }
         .tag-vote { background: rgba(251, 191, 36, 0.2); color: var(--warning-orange); }
         .tag-meta { background: rgba(255, 255, 255, 0.1); color: var(--text-sub); }
@@ -528,266 +431,100 @@
         .tag-finished { background: rgba(248, 113, 113, 0.2); color: var(--danger-red); }
         .tag-archive { background: rgba(56, 189, 248, 0.25); color: #7dd3fc; border: 1px solid var(--primary-cyan); }
 
-        .title-with-flag {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
+        .title-with-flag { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .flag-badge {
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.12);
-            padding: 3px 6px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-size: 1.1rem; background: rgba(255, 255, 255, 0.12); padding: 3px 6px;
+            border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center;
         }
 
         .stats-meta-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.78rem;
-            color: var(--text-sub);
-            margin-bottom: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 6px 10px;
-            border-radius: 8px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.78rem; color: var(--text-sub); margin-bottom: 10px; background: rgba(0, 0, 0, 0.2); padding: 6px 10px; border-radius: 8px;
         }
-
-        .star-rating-box {
-            color: var(--gold-star);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .timer-info {
-            font-size: 0.75rem;
-            color: var(--warning-orange);
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .star-rating-box { color: var(--gold-star); font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .timer-info { font-size: 0.75rem; color: var(--warning-orange); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 4px; }
 
         .btn {
-            width: 100%;
-            padding: 11px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: all 0.2s;
+            width: 100%; padding: 11px; border-radius: 10px; border: none;
+            font-weight: 700; font-size: 0.85rem; cursor: pointer; margin-top: 8px; transition: all 0.2s;
         }
-
-        .btn-primary {
-            background: var(--primary-cyan);
-            color: #020916;
-        }
-
-        .btn-primary:disabled {
-            background: #334155;
-            color: #64748b;
-            cursor: not-allowed;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--primary-cyan);
-            color: var(--primary-cyan);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 8px;
-        }
+        .btn-primary { background: var(--primary-cyan); color: #020916; }
+        .btn-primary:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+        .btn-outline { background: transparent; border: 1px solid var(--primary-cyan); color: var(--primary-cyan); }
+        .button-group { display: flex; gap: 8px; }
 
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(2, 9, 22, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 9, 22, 0.85); backdrop-filter: blur(8px); z-index: 200; align-items: center; justify-content: center; padding: 16px;
         }
-
         .modal-content {
-            background: #0d2142;
-            border: 1px solid var(--primary-cyan);
-            border-radius: 16px;
-            width: 100%;
-            max-width: 500px;
-            padding: 18px;
-            max-height: 85vh;
-            overflow-y: auto;
+            background: #0d2142; border: 1px solid var(--primary-cyan); border-radius: 16px;
+            width: 100%; max-width: 500px; padding: 18px; max-height: 85vh; overflow-y: auto;
         }
-
         .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 14px;
-            border-bottom: 1px solid var(--border-glow);
-            padding-bottom: 8px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;
+            border-bottom: 1px solid var(--border-glow); padding-bottom: 8px;
         }
-
-        .modal-title {
-            font-weight: 700;
-            color: var(--primary-cyan);
-            font-size: 1.05rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-sub);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
+        .modal-title { font-weight: 700; color: var(--primary-cyan); font-size: 1.05rem; }
+        .close-btn { background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; }
 
         .form-group { margin-bottom: 12px; }
-
-        .form-label {
-            display: block;
-            font-size: 0.78rem;
-            color: var(--text-sub);
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
+        .form-label { display: block; font-size: 0.78rem; color: var(--text-sub); margin-bottom: 5px; font-weight: 600; }
         .form-control {
-            width: 100%;
-            background: rgba(2, 9, 22, 0.6);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 9px;
-            border-radius: 8px;
-            font-size: 0.83rem;
-            outline: none;
+            width: 100%; background: rgba(2, 9, 22, 0.6); border: 1px solid var(--border-glow);
+            color: #fff; padding: 9px; border-radius: 8px; font-size: 0.83rem; outline: none;
         }
+        textarea.form-control { resize: vertical; min-height: 90px; }
 
-        textarea.form-control {
-            resize: vertical;
-            min-height: 90px;
-        }
-
-        .byte-counter-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.72rem;
-            margin-top: 5px;
-        }
-
+        .byte-counter-info { display: flex; justify-content: space-between; font-size: 0.72rem; margin-top: 5px; }
         .guide-text { color: var(--text-sub); }
         .byte-status { font-weight: 700; color: var(--danger-red); }
         .byte-status.valid { color: var(--success-green); }
 
+        /* 블루 아카이브 뷰어 독서 테마 및 글자 크기 가독성 옵션 */
         .reader-body {
-            line-height: 1.65;
-            font-size: 0.9rem;
-            color: #e2e8f0;
-            white-space: pre-line;
-            margin: 14px 0;
-            padding: 12px;
-            background: rgba(2, 9, 22, 0.5);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.7; font-size: 0.95rem; white-space: pre-line;
+            margin: 14px 0; padding: 14px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s, color 0.3s;
         }
+        .reader-body.theme-dark { background: rgba(2, 9, 22, 0.7); color: #e2e8f0; }
+        .reader-body.theme-light { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
 
         .translate-btn {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid var(--primary-cyan);
-            color: var(--primary-cyan);
-            padding: 7px 12px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 10px;
-            transition: all 0.2s;
+            background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan); color: var(--primary-cyan);
+            padding: 7px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; gap: 6px; margin-bottom: 10px; transition: all 0.2s;
         }
 
-        .star-input-group {
-            display: flex;
-            gap: 8px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-sub);
-            margin-bottom: 10px;
-        }
-
+        .star-input-group { display: flex; gap: 8px; font-size: 1.5rem; cursor: pointer; color: var(--text-sub); margin-bottom: 10px; }
         .star-input-group span.selected { color: var(--gold-star); }
 
-        .review-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 0.8rem;
+        .review-item, .comment-item {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 0.8rem;
+        }
+        .review-author, .comment-author {
+            color: var(--primary-cyan); font-weight: 700; display: flex; justify-content: space-between; margin-bottom: 4px;
         }
 
-        .review-author {
-            color: var(--primary-cyan);
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 4px;
-        }
-
-        .pagination-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 6px;
-            margin: 12px 0 6px 0;
-        }
-
+        .pagination-bar { display: flex; justify-content: center; align-items: center; gap: 6px; margin: 12px 0 6px 0; }
         .page-btn {
-            background: rgba(13, 33, 66, 0.9);
-            border: 1px solid var(--border-glow);
-            color: var(--text-bright);
-            padding: 5px 9px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            cursor: pointer;
+            background: rgba(13, 33, 66, 0.9); border: 1px solid var(--border-glow); color: var(--text-bright);
+            padding: 5px 9px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer;
         }
-
         .page-btn:hover { border-color: var(--primary-cyan); color: var(--primary-cyan); }
         .page-info-text { font-size: 0.78rem; color: var(--primary-cyan); font-weight: 700; padding: 0 4px; }
 
         .chapter-list-item {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: all 0.2s;
         }
         .chapter-list-item:hover { border-color: var(--primary-cyan); background: rgba(56, 189, 248, 0.1); }
     </style>
 </head>
 
-<body class="landing-mode">
+<body class="landing-mode" onclick="handleBodyFullscreenClick(event)">
 
     <div id="google_translate_element"></div>
 
@@ -801,18 +538,19 @@
             <button class="close-btn" onclick="closeDrawer()">✕</button>
         </div>
 
-        <!-- Web3 지갑 경제 대시보드 (총 수익 및 상세 내역) -->
+        <!-- 햄버거 메뉴: '총수익' 명칭 적용 대시보드 -->
         <div class="drawer-user-info">
             <div class="user-welcome-text">환영합니다, <span id="drawerUserName">Pioneer</span>님!</div>
             <div class="user-balance-box">
-                <div>💰 총 잔액(순수익) : <b id="drawerTotalNet">100.0</b> Test-Pi</div>
+                <div>💰 총수익 : <b id="drawerTotalNet">100.0</b> Test-Pi</div>
                 <div style="font-size: 0.72rem; color: var(--text-sub); margin-top: 2px;">
-                    결제된 Test-Pi : <span id="drawerSpent">0.0</span> / 보상된 Test-Pi : <span id="drawerRewarded">0.0</span>
+                    결제됨 : <span id="drawerSpent">0.0</span> / 보상됨 : <span id="drawerRewarded">0.0</span>
                 </div>
             </div>
         </div>
 
         <ul class="drawer-menu-list">
+            <li class="drawer-menu-item" onclick="openNavModal('creatorStudioModal')"><span>🎨</span> 크리에이터 스튜디오</li>
             <li class="drawer-menu-item" onclick="openNavModal('aboutModal')"><span>🌊</span> Deep Blue Sea 소개</li>
             <li class="drawer-menu-item" onclick="openNavModal('noticeModal')"><span>📢</span> 공지사항</li>
             <li class="drawer-menu-item" onclick="openNavModal('contactModal')"><span>📧</span> Contact Us</li>
@@ -821,7 +559,7 @@
         </ul>
     </div>
 
-    <header>
+    <header id="mainHeader">
         <div class="header-row">
             <div class="header-left-group">
                 <button class="menu-hamburger-btn" onclick="openDrawer()">☰</button>
@@ -831,6 +569,7 @@
                 </div>
             </div>
             <div class="header-right-group">
+                <button class="alarm-btn" onclick="openAlarmModal()">🔔 <span id="alarmBadge" style="position:absolute; top:-2px; right:-2px; width:8px; height:8px; background:var(--danger-red); border-radius:50%;"></span></button>
                 <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
                     <option value="ko" selected>🇰🇷 한국어</option>
                     <option value="en">🇺🇸 English</option>
@@ -845,7 +584,7 @@
         </div>
     </header>
 
-    <div class="nav-tabs">
+    <div class="nav-tabs" id="mainNavTabs">
         <button class="tab-btn active" id="tabHomeBtn" onclick="switchTab('home')">홈</button>
         <button class="tab-btn" id="tabRelayBtn" onclick="switchTab('relay')">스토리 릴레이</button>
         <button class="tab-btn" id="tabCreatorBtn" onclick="switchTab('creator')">오리지널 시리즈</button>
@@ -870,20 +609,16 @@
                     Deep Blue Sea는 파이 네트워크(Pi Network) 기반의 <b>탈중앙화 Web3 스토리텔링 플랫폼</b>입니다. 누구나 부담 없이 무료로 이야기를 읽고 투표에 참여하며, 작가는 물론 독자까지 <b>생태계에 기여한 가치만큼 소득과 보상을 함께 나누는 지속 가능한 창작 경제</b>를 만들어갑니다.
                 </div>
                 <div class="tokenomics-box">
-                    💎 <b>미래 가치 창출</b>: 완결된 우수 스토리 작품은 <b>RWA(실물자산) 및 NFT 디지털 자산</b>으로 판권화되어 글로벌 시장으로 확장됩니다. (작품 RWA/NFT 지분: 참여 작가진 95% / 플랫폼 5%)
+                    💎 <b>미래 가치 창출 & 지분 수익 분배</b>: 완결된 스토리 작품의 소장 결제 금액은 <b>참여 작가진 95% / 플랫폼 5%</b> 비율로 자동 정산됩니다. 우수 작품은 RWA/NFT IP로 확장됩니다.
                 </div>
             </div>
 
-            <!-- 홈 메인 3단 카드 (정체성 정의 1줄 요약 추가) -->
+            <!-- 홈 메인 3단 카드 (정체성 정의 1줄 요약) -->
             <div class="landing-stack">
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 4px;">
-                            스토리 릴레이
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
-                            📌 집단지성으로 함께 이야기를 만들어가는 릴레이 창작 공간
-                        </div>
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 4px;">스토리 릴레이</div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">📌 집단지성으로 함께 이야기를 만들어가는 릴레이 창작 공간</div>
                         <div class="card-rules-list">
                             <div>• <b>0단계 (스토리 개설)</b>: 누구나 첫 스토리 개설 (0 Test-Pi 무료)</div>
                             <div>• <b>1단계 (집필 경쟁 - 5일)</b>: 회차당 최대 5명 작가 경쟁 (보증금 1.0 Test-Pi)</div>
@@ -896,16 +631,12 @@
 
                 <div class="landing-action-card" onclick="switchTab('creator')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--success-green); margin-bottom: 4px;">
-                            오리지널 시리즈
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
-                            📌 크리에이터가 독자적으로 연재하는 오리지널 작품 공간
-                        </div>
+                        <div style="font-size: 1.05rem; font-weight: 800; color: var(--success-green); margin-bottom: 4px;">오리지널 시리즈</div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">📌 크리에이터가 독자적으로 연재하는 오리지널 작품 공간</div>
                         <div class="card-rules-list">
                             <div>• <b>1화 무료 공개</b>: 누구나 부담 없이 작품 탐색 및 감상</div>
                             <div>• <b>2화부터 유료 연재</b>: 챕터당 0.1 Test-Pi 결제로 몰입 감상</div>
-                            <div>• <b>창작자 정산</b>: 독자 결제 수익 투명 정산 + 완결 시 RWA/NFT 지분 획득</div>
+                            <div>• <b>창작자 정산</b>: 독자 결제 수익 투명 정산 + 완결 시 지분 수익 획득</div>
                         </div>
                     </div>
                     <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">목록 보기 ➔</div>
@@ -913,12 +644,8 @@
 
                 <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
-                        <div style="font-size: 1.05rem; font-weight: 800; color: #7dd3fc; margin-bottom: 4px;">
-                            블루 아카이브
-                        </div>
-                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">
-                            📌 완결된 명작들을 소장하고 평가하는 탈중앙화 도서관
-                        </div>
+                        <div style="font-size: 1.05rem; font-weight: 800; color: #7dd3fc; margin-bottom: 4px;">블루 아카이브</div>
+                        <div style="font-size: 0.8rem; color: var(--text-bright); font-weight: 600; margin-bottom: 8px;">📌 완결된 명작들을 소장하고 평가하는 탈중앙화 도서관</div>
                         <div class="card-rules-list">
                             <div>• <b>완결작 자동 아카이빙</b>: 릴레이 & 오리지널 완결작 도서관 보관</div>
                             <div>• <b>통합 소장 패키지</b>: 단편 0.5 / 장편 1.0 Test-Pi로 전체 소장</div>
@@ -939,7 +666,6 @@
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createModal')">+ 릴레이 개설 (무료)</button>
             </div>
-
             <div id="relay-card-container">
                 <div class="card" id="card-test-ch6" onclick="handleListCardClick('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
                     <div class="tag-group">
@@ -952,9 +678,7 @@
                         <span class="flag-badge">🇰🇷</span>
                         <h3>[테스트] 6화 완결 제안 테스트용 소설</h3>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                        "6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"
-                    </p>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">"6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"</p>
                     <div class="timer-info">⏳ 작성 마감까지: 04일 12시간 남음</div>
                     <div class="prize-info" style="font-size: 0.85rem; color: var(--primary-cyan); margin-bottom: 10px;">💰 상금 풀: 3.0 Test-Pi</div>
                     <div class="button-group">
@@ -974,7 +698,6 @@
                 </div>
                 <button class="btn-create-relay" onclick="openModal('createCreatorModal')">+ 작품 연재 시작 (무료)</button>
             </div>
-
             <div id="creator-card-container">
                 <div class="card" id="card-creator-sample" onclick="handleCreatorListClick('심해 마법사의 공방', 3)">
                     <div class="tag-group">
@@ -987,12 +710,8 @@
                         <span class="flag-badge">🇰🇷</span>
                         <h3>심해 마법사의 공방</h3>
                     </div>
-                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                        "빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기..."
-                    </p>
-                    <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">
-                        ✍️ 작가: DeepMage | 💰 누적 후원/매출: 2.4 Test-Pi
-                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">"빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기..."</p>
+                    <div class="prize-info" style="font-size: 0.85rem; color: var(--success-green); margin-bottom: 10px;">✍️ 작가: DeepMage | 💰 누적 후원/매출: 2.4 Test-Pi</div>
                     <div class="button-group">
                         <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">작품 보기 (1화 무료 / 2화부터 0.1 Test-Pi)</button>
                     </div>
@@ -1000,13 +719,17 @@
             </div>
         </div>
 
-        <!-- 블루 아카이브 섹션 -->
+        <!-- 블루 아카이브 섹션 (지분 수익 분배 안내 문구 및 국가별 정렬 포함) -->
         <div id="archive-section" style="display: none;">
             <div class="section-header">
                 <div class="section-title-group">
                     <div class="section-title">블루 아카이브 (Blue Archive)</div>
                     <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트 뷰</button>
                 </div>
+            </div>
+
+            <div style="font-size: 0.78rem; color: var(--primary-cyan); background: rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding: 8px 12px; border-radius: 8px; margin-bottom: 12px;">
+                💡 <b>지분 수익 분배 안내</b>: 완결작 소장 결제 금액의 <b>95%는 참여 작가진에게 지분율에 따라 자동 분배</b>되며, 5%는 플랫폼에 기여됩니다.
             </div>
 
             <div class="sort-filter-bar">
@@ -1033,13 +756,76 @@
             <div id="archive-card-container"></div>
         </div>
 
-        <footer class="app-footer">
+        <footer class="app-footer" id="mainFooter">
             <div class="copyright-title">Copyright © 2026 Deep Blue Sea. All Rights Reserved.</div>
             <div class="copyright-desc">본 애플리케이션의 이름, 로고, 디자인 및 콘텐츠의 저작권은 Deep Blue Sea에 있으며 법적 보호를 받습니다.</div>
         </footer>
     </div>
 
-    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 -->
+    <!-- 모달: 크리에이터 스튜디오 대시보드 (신규 추가) -->
+    <div class="modal-overlay" id="creatorStudioModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🎨 크리에이터 스튜디오 (Creator Studio)</div>
+                <button class="close-btn" onclick="closeModal('creatorStudioModal')">✕</button>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6; margin-bottom: 14px;">
+                <div style="background: rgba(56,189,248,0.1); border:1px dashed var(--primary-cyan); padding: 12px; border-radius: 10px; margin-bottom: 12px;">
+                    <div>💰 <b>출금 가능 정산액 (Claimable):</b> <span style="color:var(--success-green); font-weight:700;" id="studioClaimableBalance">1.8 Test-Pi</span></div>
+                    <div style="font-size: 0.75rem; color: var(--text-sub); margin-top: 4px;">수수료 최적화를 위해 모아둔 수익을 한 번에 출금하세요!</div>
+                    <button class="btn btn-primary" style="margin-top: 8px; padding: 6px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
+                </div>
+                <div><b>📚 내 연재 및 참여 작품 (지분 현황)</b></div>
+                <div style="margin-top: 6px; font-size: 0.8rem; color: var(--text-sub);" id="studioMyWorksList">
+                    • 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)<br>
+                    • 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)
+                </div>
+            </div>
+            <button class="btn btn-outline" onclick="closeModal('creatorStudioModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 알림 센터 (신규 추가) -->
+    <div class="modal-overlay" id="alarmModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">🔔 실시간 알림 피드 (Notifications)</div>
+                <button class="close-btn" onclick="closeModal('alarmModal')">✕</button>
+            </div>
+            <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6;" id="alarmListContainer">
+                <div style="padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px; margin-bottom: 8px;">
+                    <div style="color:var(--primary-cyan); font-weight:700;">✨ [팔로우 소식] DeepMage 작가님</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">'심해 마법사의 공방' 제 4화가 업로드되었습니다!</div>
+                </div>
+                <div style="padding: 10px; background: rgba(255,255,255,0.04); border-radius: 8px; margin-bottom: 8px;">
+                    <div style="color:var(--warning-orange); font-weight:700;">🗳️ [투표 마감 임박] 스토리 릴레이</div>
+                    <div style="font-size:0.8rem; color:var(--text-sub);">'[테스트] 6화 완결 제안' 후보 투표가 진행 중입니다.</div>
+                </div>
+            </div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('alarmModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 회차별 댓글 소통방 (신규 추가) -->
+    <div class="modal-overlay" id="chapterCommentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="commentModalTitle">💬 회차별 댓글 소통방</div>
+                <button class="close-btn" onclick="closeModal('chapterCommentModal')">✕</button>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--warning-orange); background: rgba(251,191,36,0.1); padding: 6px 10px; border-radius: 6px; margin-bottom: 10px;">
+                ℹ️ <b>ⓒ</b> 표기된 아이디는 해당 회차를 집필한 원작 작가(Creator)입니다. (완결작에서도 성지순례 소통은 영구 상시 오픈됩니다!)
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="inputCommentText" style="min-height: 60px;" placeholder="작품 감상이나 소통 메시지를 남겨주세요..."></textarea>
+                <button class="btn btn-primary" style="margin-top: 6px; padding: 8px;" onclick="submitChapterComment()">댓글 남기기</button>
+            </div>
+            <div id="chapterCommentListContainer" style="max-height: 250px; overflow-y: auto;"></div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('chapterCommentModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 소개, 공지, Contact, 약관, 개인정보 (기존 유지) -->
     <div class="modal-overlay" id="aboutModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1047,10 +833,8 @@
                 <button class="close-btn" onclick="closeModal('aboutModal')">✕</button>
             </div>
             <div class="landing-info-text" style="font-size: 0.85rem; line-height: 1.6;">
-                <b>• 앱 제작 동기 & 비전</b><br>
-                AI가 고도로 발전하는 시대 속에서도 인간 고유의 상상력과 스토리텔링 능력은 대체될 수 없습니다. Deep Blue Sea는 집단지성을 활용하여 누구나 창작에 참여하고 그 가치를 공정하게 보상받는 탈중앙화 Web3 생태계를 지향합니다.<br><br>
-                <b>• 고래 로고(Logo)의 상징성</b><br>
-                끝없이 깊고 신비로운 '심해'를 자유롭게 헤엄치는 고래는, 인간의 무한한 창의성과 파이 네트워크라는 거대한 바다 속에서 피어나는 집단지성의 무한한 가능성을 의미합니다.
+                <b>• 앱 제작 동기 & 비전</b><br>AI가 고도로 발전하는 시대 속에서도 인간 고유의 상상력과 스토리텔링 능력은 대체될 수 없습니다. Deep Blue Sea는 집단지성을 활용하여 누구나 창작에 참여하고 그 가치를 공정하게 보상받는 탈중앙화 Web3 생태계를 지향합니다.<br><br>
+                <b>• 고래 로고(Logo)의 상징성</b><br>끝없이 깊고 신비로운 '심해'를 자유롭게 헤엄치는 고래는, 인간의 무한한 창의성과 파이 네트워크라는 거대한 바다 속에서 피어나는 집단지성의 무한한 가능성을 의미합니다.
             </div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('aboutModal')">닫기</button>
         </div>
@@ -1063,9 +847,7 @@
                 <button class="close-btn" onclick="closeModal('noticeModal')">✕</button>
             </div>
             <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6;">
-                <b>📌 알파 테스트 안내</b><br>
-                • 현재 Deep Blue Sea는 알파 테스트 서비스 기간으로, 모든 기능은 <b>Test-Pi</b>를 기반으로 동작하며 유저 피드백을 수집하고 있습니다.<br>
-                • 파이 네트워크 메인넷 업그레이드 및 로드맵 진척 상황에 맞춰, 정식 출시 시 메인넷 <b>Pi</b> 또는 <b>플랫폼 자체 DEX 토큰</b> 생태계로 결제 단위가 정식 연동될 예정입니다.
+                <b>📌 알파 테스트 안내</b><br>• 현재 Deep Blue Sea는 알파 테스트 서비스 기간으로, 모든 기능은 <b>Test-Pi</b>를 기반으로 동작하며 유저 피드백을 수집하고 있습니다.<br>• 파이 네트워크 메인넷 업그레이드 및 로드맵 진척 상황에 맞춰, 정식 출시 시 메인넷 <b>Pi</b> 생태계로 결제 단위가 정식 연동될 예정입니다.
             </div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('noticeModal')">닫기</button>
         </div>
@@ -1078,9 +860,7 @@
                 <button class="close-btn" onclick="closeModal('contactModal')">✕</button>
             </div>
             <div style="font-size: 0.85rem; color: var(--text-bright); line-height: 1.6;">
-                <b>📧 공식 제안 & 문의 메일</b><br>
-                • <a href="mailto:deepblueseapinet@gmail.com" style="color: var(--primary-cyan); text-decoration: underline;">deepblueseapinet@gmail.com</a><br><br>
-                서비스 관련 문의나 창작 제휴 제안이 있으신 경우 상기 이메일로 메일을 보내주시면 친절히 안내해 드리겠습니다.
+                <b>📧 공식 제안 & 문의 메일</b><br>• <a href="mailto:deepblueseapinet@gmail.com" style="color: var(--primary-cyan); text-decoration: underline;">deepblueseapinet@gmail.com</a><br><br>서비스 관련 문의나 창작 제휴 제안이 있으신 경우 상기 이메일로 메일을 보내주시면 친절히 안내해 드리겠습니다.
             </div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('contactModal')">닫기</button>
         </div>
@@ -1115,7 +895,6 @@
                 <div class="modal-title" id="reviewModalTitle">별점 & 리뷰 평가</div>
                 <button class="close-btn" onclick="closeModal('reviewModal')">✕</button>
             </div>
-
             <div class="form-group" style="text-align: center;">
                 <label class="form-label">내 별점 부여하기</label>
                 <div class="star-input-group" id="starInputGroup">
@@ -1126,20 +905,16 @@
                     <span onclick="setStarRating(5)">★</span>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="form-label">리뷰 작성하기</label>
                 <textarea class="form-control" id="inputReviewText" style="min-height: 70px;" placeholder="작품에 대한 솔직한 감상평을 남겨주세요..."></textarea>
                 <button class="btn btn-primary" style="margin-top: 8px;" onclick="submitReview()">리뷰 등록하기</button>
             </div>
-
             <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); margin: 16px 0 8px 0;">
                 💬 등록된 독자 리뷰 목록 (<span id="totalReviewCount">0</span>개)
             </div>
             <div id="reviewListContainer"></div>
-            
             <div class="pagination-bar" id="reviewPaginationBar"></div>
-
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('reviewModal')">닫기</button>
         </div>
     </div>
@@ -1156,12 +931,25 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (통합 흐름 수정) -->
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (테마, 글자크기, 풀스크린, 댓글소통방 버튼 포함) -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content" id="archiveReaderModalContent">
+            <div class="modal-header" id="archiveReaderHeaderBar">
                 <div class="modal-title" id="archiveReaderTitle">완결작 회차 보기</div>
                 <button class="close-btn" onclick="closeModal('archiveChapterReaderModal')">✕</button>
+            </div>
+
+            <!-- E-Reader 독서 편의 옵션 바 (테마 변경 및 글자 크기 조절) -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 8px; font-size:0.75rem;">
+                <div style="display:flex; gap:6px;">
+                    <button class="page-btn" onclick="setReaderTheme('dark')">🌙 어두운 테마</button>
+                    <button class="page-btn" onclick="setReaderTheme('light')">☀️ 밝은 테마</button>
+                </div>
+                <div style="display:flex; gap:4px; align-items:center;">
+                    <span style="color:var(--text-sub);">폰트:</span>
+                    <button class="page-btn" onclick="adjustFontSize(-1)">A-</button>
+                    <button class="page-btn" onclick="adjustFontSize(1)">A+</button>
+                </div>
             </div>
 
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
@@ -1169,7 +957,7 @@
             </button>
 
             <!-- 상단 네비게이션 버튼 -->
-            <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 4px; margin-bottom: 10px; flex-wrap: wrap;" id="archiveReaderTopNav">
                 <button class="page-btn" onclick="moveArchiveChapter(-1)">◀ 이전화</button>
                 <button class="page-btn" onclick="moveArchiveChapter(1)">다음화 ▶</button>
                 <button class="page-btn" onclick="jumpArchiveChapter(1)">처음으로</button>
@@ -1178,22 +966,29 @@
             </div>
 
             <div style="font-size: 0.78rem; color: var(--primary-cyan); font-weight: 600; margin-bottom: 6px;" id="archiveChapterIndicator">제 1화</div>
-            <div class="reader-body notranslate" id="archiveReaderBody" style="min-height: 200px;"></div>
+            
+            <!-- 본문 뷰어 (테마 및 글자크기 적용) -->
+            <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 180px; font-size: 0.95rem;"></div>
+
+            <!-- 회차별 댓글 소통방 진입 버튼 -->
+            <button class="btn btn-outline" style="border-color: var(--success-green); color: var(--success-green); margin-bottom: 8px;" onclick="openChapterCommentModal()">
+                💬 이 회차 댓글 소통방 입장하기
+            </button>
 
             <!-- 하단 복귀 버튼 -->
-            <div style="display: flex; gap: 6px; margin-top: 12px;">
+            <div style="display: flex; gap: 6px; margin-top: 6px;" id="archiveReaderBottomNav">
                 <button class="btn btn-outline" style="flex: 1; margin: 0;" onclick="closeModal('archiveChapterReaderModal'); switchTab('archive');">다른 작품 보기</button>
             </div>
         </div>
     </div>
 
-    <div class="bottom-banner-ad">
+    <div class="bottom-banner-ad" id="mainBannerAd">
         <div class="banner-placeholder">
             📢 <span>ADVERTISEMENT BANNER (DEEP BLUE SEA)</span>
         </div>
     </div>
 
-    <!-- 기타 모달들 -->
+    <!-- 기타 필수 모달들 (릴레이 개설, 오리지널 개설 등) -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1340,7 +1135,7 @@
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
                 🌐 Translate to My Language (<span id="targetLangText">English</span>)
             </button>
-            <div class="reader-body notranslate" id="singleReaderBody"></div>
+            <div class="reader-body theme-dark notranslate" id="singleReaderBody"></div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="openCreatorReadModalFromReader()">목록으로</button>
         </div>
     </div>
@@ -1357,7 +1152,7 @@
             <button class="translate-btn" onclick="translateCurrentReaderContent()">
                 🌐 Translate to My Language (<span id="targetLangText2">English</span>)
             </button>
-            <div class="reader-body notranslate" id="writerBody"></div>
+            <div class="reader-body theme-dark notranslate" id="writerBody"></div>
             <div class="form-group" style="margin-top: 14px;">
                 <label class="form-label" id="writerInputLabel">내 이어쓰기 작성</label>
                 <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요..."></textarea>
@@ -1374,10 +1169,9 @@
         const MIN_BYTES = 1500;
         const MAX_BYTES = 6000;
         
-        // Web3 지갑 경제 상태 관리 변수
         let userRewardedPi = 0.0;
         let userSpentPi = 0.0;
-        let currentBalance = 100.0; // 순수익 (보상 - 결제)
+        let currentBalance = 100.0; // 총수익 (순수익)
 
         let selectedUserLang = 'en';
         let currentSelectedArchiveId = null;
@@ -1394,17 +1188,26 @@
                 genre: '공상 과학',
                 flag: '🇰🇷',
                 totalCh: 8,
-                isLong: false, // 단편 (0.5 Test-Pi)
+                isLong: false,
                 views: 142,
                 ratingSum: 23,
                 ratingCount: 5,
                 timestamp: Date.now() - 100000000,
                 desc: '심해 10,000m 바닥에서 발견된 정체불명의 외계 구조물과 인류 최초의 교신 기록...',
+                creatorName: 'OceanMaster',
+                chapters: [
+                    { ch: 1, title: '심해의 문이 열리다', content: '1화 본문: 심해 10,000m 바닥에서 정체불명의 신호가 감지되었다...', comments: [{author: 'OceanMaster ⓒ', text: '첫 화 집필하며 많이 고민했습니다!'}] },
+                    { ch: 2, title: '고대 문자의 해독', content: '2화 본문: 고대 기계 공학의 흔적이 발견되기 시작했다...', comments: [] },
+                    { ch: 3, title: '미지의 존재와의 접촉', content: '3화 본문: 마침내 그들과의 교신이 성공했다...', comments: [] },
+                    { ch: 4, title: '소용돌이의 중심', content: '4화 본문: 바다가 요동치기 시작했다...', comments: [] },
+                    { ch: 5, title: '빛과 어둠의 경계', content: '5화 본문: 진실이 서서히 수면 위로 떠오른다...', comments: [] },
+                    { ch: 6, title: '최후의 선택', content: '6화 본문: 인류의 운명을 건 선택의 순간...', comments: [] },
+                    { ch: 7, title: '새로운 여명', content: '7화 본문: 어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
+                    { ch: 8, title: '평화로운 공존 (FIN)', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '성지순례 왔습니다! 명작이네요.'}] }
+                ],
                 reviews: [
                     { author: 'Pioneer_A', rating: 5, comment: '스토리 릴레이 소설인데도 완결성이 대단하네요!' },
-                    { author: 'OceanFan', rating: 4, comment: '엔딩 소름돋았습니다. 강추!' },
-                    { author: 'StarPioneer', rating: 5, comment: '몰입감 최고입니다!' },
-                    { author: 'DeepDive', rating: 4, comment: '다음 작품도 기대됩니다.' }
+                    { author: 'OceanFan', rating: 4, comment: '엔딩 소름돋았습니다. 강추!' }
                 ]
             },
             {
@@ -1414,38 +1217,30 @@
                 format: '소설',
                 genre: '판타지',
                 flag: '🇺🇸',
-                totalCh: 12,
-                isLong: true, // 장편 (1.0 Test-Pi)
+                totalCh: 3,
+                isLong: true,
                 views: 310,
                 ratingSum: 48,
                 ratingCount: 10,
                 timestamp: Date.now() - 50000000,
                 desc: 'A fantasy epic unfolding in the blockchain world. Unstoppable momentum until the end!',
+                creatorName: 'DeepMage',
+                chapters: [
+                    { ch: 1, title: 'The Genesis Block', content: 'Chapter 1 content: In the beginning, there was Pi...', comments: [{author: 'DeepMage ⓒ', text: 'Welcome to my fantasy world!'}] },
+                    { ch: 2, title: 'Alchemy of Consensus', content: 'Chapter 2 content: Mining the magic...', comments: [] },
+                    { ch: 3, title: 'Mainnet Awakening (FIN)', content: 'Chapter 3 content: The final consensus is reached. FIN.', comments: [] }
+                ],
                 reviews: [
                     { author: 'Web3Writer', rating: 5, comment: '1.0 Test-Pi is totally worth it!' }
                 ]
             }
         ];
 
-        function generateDummyReviewsForTesting() {
-            const targetItem = archiveDataList[0];
-            if (targetItem.reviews.length < 30) {
-                for (let i = 1; i <= 28; i++) {
-                    targetItem.reviews.push({
-                        author: `Tester_${i}`,
-                        rating: (i % 2 === 0) ? 5 : 4,
-                        comment: `이것은 페이징 테스트를 위한 ${i}번째 리뷰 감상평입니다. 아주 재밌어요!`
-                    });
-                    targetItem.ratingSum += 5;
-                    targetItem.ratingCount += 1;
-                }
-            }
-        }
-        generateDummyReviewsForTesting();
-
         let activeArchiveReaderItem = null;
         let activeArchiveChapterIdx = 1;
         let isArchiveViewAllMode = false;
+        let currentReaderFontSize = 0.95; // rem 단위
+        let isFullscreenMode = false;
 
         const flagMap = {
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
@@ -1476,6 +1271,15 @@
         function openNavModal(modalId) {
             closeDrawer();
             openModal(modalId);
+        }
+
+        function openAlarmModal() {
+            openModal('alarmModal');
+        }
+
+        function claimCreatorEarnings() {
+            alert('🎉 크리에이터 수익이 파이 지갑으로 성공적으로 출금(Claim)되었습니다! (수수료 1회 최적화 적용)');
+            document.getElementById('studioClaimableBalance').innerText = '0.0 Test-Pi';
         }
 
         function switchTab(tabName) {
@@ -1590,26 +1394,18 @@
                             <span class="flag-badge">${item.flag}</span>
                             <h3>${item.title}</h3>
                         </div>
-                        <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">
-                            "${item.desc}"
-                        </p>
+                        <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px;">"${item.desc}"</p>
 
                         <div class="stats-meta-row">
                             <div class="star-rating-box">
                                 ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
                             </div>
-                            <div>
-                                👀 누적 소장/조회: <b>${item.views}</b>회
-                            </div>
+                            <div>눈적 소장/조회: <b>${item.views}</b>회</div>
                         </div>
 
                         <div class="button-group">
-                            <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">
-                                ⭐ 별점 & 리뷰 보기
-                            </button>
-                            <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">
-                                📖 작품 읽기 (${price} Test-Pi)
-                            </button>
+                            <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">⭐ 별점 & 리뷰 보기</button>
+                            <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">📖 작품 읽기 (${price} Test-Pi)</button>
                         </div>
                     </div>
                 `;
@@ -1642,7 +1438,7 @@
                     item.views += 1;
                     localStorage.setItem(authKey, "true");
                     updateWalletDisplay();
-                    alert(`🎉 지불 완료되었습니다. 재접속 시 이어서 무료로 읽기 가능합니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (조회수 +1 누적)`);
+                    alert(`🎉 지불 완료되었습니다. 재접속 시 이어서 무료로 읽기 가능합니다.\n\n'${title}' 작품 전체 소장이 완료되었습니다. (지분 95% 작가 자동 분배 완료)`);
                     renderArchiveList();
                     openArchiveChapterReader(item, 1, false);
                 } else {
@@ -1670,16 +1466,20 @@
                 toggleBtn.innerText = isArchiveViewAllMode ? '회차별로 보기' : '한번에 전체회차 다보기';
             }
 
+            const bodyElem = document.getElementById('archiveReaderBody');
+            bodyElem.style.fontSize = currentReaderFontSize + 'rem';
+
             if (isArchiveViewAllMode) {
                 document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
                 let allContentHtml = '';
-                for (let i = 1; i <= item.totalCh; i++) {
-                    allContentHtml += `<b>[제 ${i}화]</b><br>${item.desc} (제 ${i}화 상세 전개 내용이 펼쳐집니다... 심해의 비밀이 밝혀집니다.)<br><br>`;
-                }
-                document.getElementById('archiveReaderBody').innerHTML = allContentHtml;
+                item.chapters.forEach(ch => {
+                    allContentHtml += `<b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
+                });
+                bodyElem.innerHTML = allContentHtml;
             } else {
-                document.getElementById('archiveChapterIndicator').innerText = `제 ${activeArchiveChapterIdx}화 / 총 ${item.totalCh}화`;
-                document.getElementById('archiveReaderBody').innerHTML = `<b>[제 ${activeArchiveChapterIdx}화]</b><br>${item.desc} (제 ${activeArchiveChapterIdx}화 상세 전개 내용입니다. 완결된 원고의 깊은 몰입감을 느껴보세요.)`;
+                const currentChObj = item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0];
+                document.getElementById('archiveChapterIndicator').innerText = `제 ${currentChObj.ch}화 : ${currentChObj.title} (총 ${item.totalCh}화)`;
+                bodyElem.innerHTML = `<b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}`;
             }
         }
 
@@ -1705,7 +1505,60 @@
             updateArchiveReaderContent();
         }
 
-// [수정완료] 회차별 제목 리스트 모달 (뒤로 숨거나 꺼지는 버그 완벽 해결)
+        // 뷰어 독서 편의 기능: 테마 변경 (어두운 테마 / 밝은 테마)
+        function setReaderTheme(theme) {
+            const bodyElem = document.getElementById('archiveReaderBody');
+            bodyElem.classList.remove('theme-dark', 'theme-light');
+            if (theme === 'dark') bodyElem.classList.add('theme-dark');
+            else bodyElem.classList.add('theme-light');
+        }
+
+        // 뷰어 독서 편의 기능: 글자 크기 조절
+        function adjustFontSize(step) {
+            currentReaderFontSize += (step * 0.1);
+            if (currentReaderFontSize < 0.75) currentReaderFontSize = 0.75;
+            if (currentReaderFontSize > 1.4) currentReaderFontSize = 1.4;
+            document.getElementById('archiveReaderBody').style.fontSize = currentReaderFontSize + 'rem';
+        }
+
+        // 뷰어 독서 편의 기능: 풀스크린 토글 (화면 터치 시 상하단 메뉴 자동 숨김/표시)
+        function handleBodyFullscreenClick(e) {
+            // 만약 모달 내부나 버튼을 누른 게 아니라 배경/본문을 터치한 경우 풀스크린 토글
+            if (document.getElementById('archiveChapterReaderModal').style.display === 'flex') {
+                if (e.target.closest('.modal-content') === null) {
+                    toggleFullscreenMode();
+                }
+            }
+        }
+
+        function toggleFullscreenMode() {
+            isFullscreenMode = !isFullscreenMode;
+            const header = document.getElementById('mainHeader');
+            const navTabs = document.getElementById('mainNavTabs');
+            const banner = document.getElementById('mainBannerAd');
+            const footer = document.getElementById('mainFooter');
+            
+            const topNav = document.getElementById('archiveReaderTopNav');
+            const bottomNav = document.getElementById('archiveReaderBottomNav');
+
+            if (isFullscreenMode) {
+                if(header) header.classList.add('fullscreen-hidden');
+                if(navTabs) navTabs.classList.add('fullscreen-hidden');
+                if(banner) banner.classList.add('fullscreen-hidden');
+                if(footer) footer.classList.add('fullscreen-hidden');
+                if(topNav) topNav.style.display = 'none';
+                if(bottomNav) bottomNav.style.display = 'none';
+            } else {
+                if(header) header.classList.remove('fullscreen-hidden');
+                if(navTabs) navTabs.classList.remove('fullscreen-hidden');
+                if(banner) banner.classList.remove('fullscreen-hidden');
+                if(footer) footer.classList.remove('fullscreen-hidden');
+                if(topNav) topNav.style.display = 'flex';
+                if(bottomNav) bottomNav.style.display = 'flex';
+            }
+        }
+
+        // 회차별 소제목 포함 회차 목록 모달
         function openArchiveChapterListModal() {
             if (!activeArchiveReaderItem) return;
             const item = activeArchiveReaderItem;
@@ -1713,30 +1566,76 @@
             const container = document.getElementById('archiveChapterListContainer');
             
             let html = '';
-            for (let i = 1; i <= item.totalCh; i++) {
+            item.chapters.forEach(ch => {
                 html += `
-                    <div class="chapter-list-item" onclick="jumpArchiveChapterAndCloseList(${i})">
+                    <div class="chapter-list-item" onclick="jumpArchiveChapterAndCloseList(${ch.ch})">
                         <div>
-                            <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">제 ${i}화</div>
+                            <div style="font-size: 0.88rem; font-weight: 700; color: var(--primary-cyan);">제 ${ch.ch}화 : ${ch.title}</div>
                             <div style="font-size: 0.75rem; color: var(--text-sub);">완결 소장 회차 본문 감상하기</div>
                         </div>
                         <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.78rem;">📖 읽기</button>
                     </div>
                 `;
-            }
+            });
             container.innerHTML = html;
-
-            // 핵심 수정: 목록 모달을 띄울 때 본문 뷰어 모달의 display를 숨기지 않고,
-            // z-index를 조절하거나 모달 레이어 순서를 단일화하여 겹침 충돌을 원천 차단합니다.
             document.getElementById('archiveChapterReaderModal').style.display = 'none';
             openModal('archiveChapterListModal');
         }
 
-        // [수정완료] 목록에서 회차를 누르면 목록 모달을 닫고 곧바로 본문 뷰어 모달을 띄움
         function jumpArchiveChapterAndCloseList(chIdx) {
             closeModal('archiveChapterListModal');
             jumpArchiveChapter(chIdx);
-            openModal('archiveChapterReaderModal'); // 본문 뷰어로 부드럽게 복귀
+            openModal('archiveChapterReaderModal');
+        }
+
+        // 회차별 댓글 소통방 오픈 및 작성 함수
+        function openChapterCommentModal() {
+            if (!activeArchiveReaderItem) return;
+            const item = activeArchiveReaderItem;
+            const currentChObj = isArchiveViewAllMode ? item.chapters[0] : (item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0]);
+
+            document.getElementById('commentModalTitle').innerText = `💬 '${item.title}' - 제 ${currentChObj.ch}화 소통방`;
+            renderChapterComments(currentChObj);
+            openModal('chapterCommentModal');
+        }
+
+        function renderChapterComments(chObj) {
+            const container = document.getElementById('chapterCommentListContainer');
+            if (!chObj.comments || chObj.comments.length === 0) {
+                container.innerHTML = `<div style="font-size: 0.8rem; color: var(--text-sub); text-align: center; padding: 10px;">아직 등록된 댓글이 없습니다. 첫 소통의 주인공이 되어보세요!</div>`;
+                return;
+            }
+
+            let html = '';
+            chObj.comments.forEach(c => {
+                const isCreator = c.author.includes('ⓒ');
+                html += `
+                    <div class="comment-item">
+                        <div class="comment-author">
+                            <span style="${isCreator ? 'color:var(--success-green); font-weight:900;' : ''}">${c.author}</span>
+                        </div>
+                        <div style="color: #e2e8f0; margin-top:2px;">${c.text}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function submitChapterComment() {
+            const text = document.getElementById('inputCommentText').value.trim();
+            if (!text) {
+                alert('댓글 내용을 입력해주세요!');
+                return;
+            }
+
+            const item = activeArchiveReaderItem;
+            const currentChObj = isArchiveViewAllMode ? item.chapters[0] : (item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0]);
+
+            // 일반 독자 댓글 등록 (추후 로그인 유저 네임 연동)
+            currentChObj.comments.push({ author: 'Pioneer_Me', text: text });
+            document.getElementById('inputCommentText').value = '';
+            alert('🎉 댓글이 성공적으로 등록되었습니다!');
+            renderChapterComments(currentChObj);
         }
 
         // 리뷰 페이징 시스템 (페이지당 20개)
