@@ -247,11 +247,6 @@
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(56,189,248,0.25);
         }
-        .bookshelf-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
         .archive-book-shelf-card {
             background: linear-gradient(to bottom, rgba(13, 33, 66, 0.9), rgba(5, 15, 35, 0.95));
             border: 1px solid var(--border-glow);
@@ -336,7 +331,7 @@
             display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(2, 9, 22, 0.85); backdrop-filter: blur(10px); z-index: 350; align-items: center; justify-content: center; padding: 16px;
         }
-        .modal-overlay.z-top { z-index: 500; }
+        .modal-overlay.z-top { z-index: 600; }
 
         .modal-content {
             background: #0d2142; border: 1.5px solid var(--primary-cyan); border-radius: 20px;
@@ -653,7 +648,7 @@
                     <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
                         <option value="rating">별점 높은 순 (베스트셀러 우선)</option>
                         <option value="time">최신순 (시간순)</option>
-                        <option value="views">조회수 높은 순 (인기순)</option>
+                        <option value="views">구독 높은 순 (인기순)</option>
                         <option value="length">길이 단편순 (총 챕터 적은 순)</option>
                     </select>
                 </div>
@@ -768,8 +763,8 @@
         </div>
     </div>
 
-    <!-- 릴레이 이전까지 스토리 보기 모달 -->
-    <div class="modal-overlay" id="relayPrevChaptersModal">
+    <!-- 릴레이 이전까지 스토리 보기 모달 (z-top 최상단 보장) -->
+    <div class="modal-overlay z-top" id="relayPrevChaptersModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title" id="prevChaptersTitle">📖 이전까지 스토리 보기</div>
@@ -936,7 +931,9 @@
                 <button class="page-btn" id="toggleViewAllBtn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
             </div>
 
-            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 8px;" id="archiveChapterIndicator">제 1화</div>
+            <!-- 회차 제목 및 릴레이 전용 이번화 작가 표기 영역 -->
+            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 4px;" id="archiveChapterIndicator">제 1화</div>
+            <div style="font-size: 0.78rem; color: var(--success-green); font-weight: 700; margin-bottom: 8px; display: none;" id="archiveChapterAuthorIndicator">이번화 작가 : </div>
             
             <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 200px; font-size: 0.98rem;"></div>
 
@@ -1402,7 +1399,6 @@
             if (section === 'creator') renderCreatorListViewContent();
         }
 
-        // 스토리 릴레이 리스트뷰 / 카드뷰 통합 렌더링 (작가 명시 반영)
         function renderRelayListContent() {
             const container = document.getElementById('relay-card-container');
             const isBoardView = container.classList.contains('board-list-container');
@@ -1447,7 +1443,6 @@
             }
         }
 
-        // 오리지널 시리즈 카드뷰 (작가 명시 및 팔로우 버튼 부활)
         function renderCreatorCardView() {
             let html = '';
             creatorMockList.forEach(item => {
@@ -1521,7 +1516,7 @@
                         <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5;">"${bestItem.desc}"</p>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem;">
                             <span class="star-rating-box">★ ${bestRating} (${bestItem.ratingCount}개 리뷰)</span>
-                            <span style="color: var(--primary-cyan);">조회수 ${bestItem.views}회</span>
+                            <span style="color: var(--primary-cyan);">구독수 ${bestItem.views}회</span>
                         </div>
                         <button class="btn btn-primary" style="margin-top: 8px;" onclick="buyAndReadArchive('${bestItem.id}', '${bestItem.title}', ${bestPrice})">
                             📖 베스트셀러 작품 읽기 (${bestPrice} Test-Pi)
@@ -1593,7 +1588,7 @@
                                 <div class="star-rating-box">
                                     ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
                                 </div>
-                                <div>누적 소장/조회: <b>${item.views}</b>회</div>
+                                <div>구독수 : <b>${item.views}</b>회</div>
                             </div>
 
                             <div class="button-group">
@@ -1663,22 +1658,30 @@
             const bodyElem = document.getElementById('archiveReaderBody');
             bodyElem.style.fontSize = currentReaderFontSize + 'rem';
 
+            const authorIndicator = document.getElementById('archiveChapterAuthorIndicator');
+
+            if (item.type === 'relay') {
+                authorIndicator.style.display = 'block';
+            } else {
+                authorIndicator.style.display = 'none'; // 오리지널 시리즈는 이번화 작가 표기 제거
+            }
+
             if (isArchiveViewAllMode) {
                 document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
+                authorIndicator.style.display = 'none'; // 전체보기 시 개별 작가 표기 생략
                 let allContentHtml = '';
                 item.chapters.forEach(ch => {
-                    allContentHtml += `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">이번화 작가 : ${ch.author || item.creatorName}</div><b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
+                    const chAuthorText = (item.type === 'relay') ? `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">이번화 작가 : ${ch.author || item.creatorName}</div>` : '';
+                    allContentHtml += `${chAuthorText}<b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
                 });
                 bodyElem.innerHTML = allContentHtml;
             } else {
                 const currentChObj = item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0];
                 document.getElementById('archiveChapterIndicator').innerText = `제 ${currentChObj.ch}화 : ${currentChObj.title} (총 ${item.totalCh}화)`;
-                bodyElem.innerHTML = `
-                    <div style="font-size: 0.82rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px;">
-                        이번화 작가 : ${currentChObj.author || item.creatorName}
-                    </div>
-                    <b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}
-                `;
+                if (item.type === 'relay') {
+                    authorIndicator.innerText = `이번화 작가 : ${currentChObj.author || item.creatorName}`;
+                }
+                bodyElem.innerHTML = `<b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}`;
             }
         }
 
@@ -1726,11 +1729,12 @@
             
             let html = '';
             item.chapters.forEach(ch => {
+                const isRelay = item.type === 'relay';
                 html += `
                     <div class="chapter-list-item" onclick="jumpArchiveChapterAndCloseList(${ch.ch})">
                         <div>
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">제 ${ch.ch}화 : ${ch.title}</div>
-                            <div style="font-size: 0.78rem; color: var(--success-green); margin-top:2px;">작가 : ${ch.author || item.creatorName}</div>
+                            ${isRelay ? `<div style="font-size: 0.78rem; color: var(--success-green); margin-top:2px;">작가 : ${ch.author || item.creatorName}</div>` : ''}
                         </div>
                         <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.78rem;">📖 읽기</button>
                     </div>
@@ -2040,9 +2044,6 @@
             closeModal('creatorReadModal');
             document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
             document.getElementById('singleReaderBody').innerHTML = `
-                <div style="font-size: 0.82rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px;">
-                    이번화 작가 : DeepMage
-                </div>
                 [${title} 제 ${chNum}화 본문 내용]<br><br>빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...
             `;
             openModal('creatorSingleReaderModal');
