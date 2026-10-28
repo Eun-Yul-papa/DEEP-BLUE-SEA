@@ -1430,35 +1430,86 @@ function toggleViewMode(section) {
             document.getElementById('relay-card-container').innerHTML = html;
         }
 
-        function renderRelayListContent() {
-            const container = document.getElementById('relay-card-container');
-            const isBoard = container.classList.contains('board-list-container');
+        // 스토리 릴레이 뷰 렌더링 통합 함수 (토글 고장 해결)
+function renderRelayListContent() {
+    const container = document.getElementById('relay-card-container');
+    const isBoardView = container.classList.contains('board-list-container');
 
-            if (!isBoard) {
-                renderRelayCardView();
-                return;
-            }
-
-            let html = '<div class="board-list-container">';
-            relayMockList.forEach((item, idx) => {
-                const isVote = item.phase === 'vote';
-                html += `
-                    <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                        <div class="board-col-num">${idx+1}</div>
-                        <div class="board-col-title">${item.title}</div>
-                        <div class="board-col-meta">${item.format} | ${item.progress}</div>
-                        <div class="board-col-action">
-                            ${isVote
-                                ? `<button class="board-mini-btn" onclick="event.stopPropagation(); openReadVoteModal('${item.title}', '${item.id}', true)">투표</button>`
-                                : `<button class="board-mini-btn" onclick="event.stopPropagation(); handleJoinOrWrite('${item.id}', '${item.title}', '${encodeURIComponent(item.content)}', '🇰🇷', 6, false)">이어쓰기</button>`
-                            }
-                        </div>
+    if (isBoardView) {
+        // 📋 리스트뷰 (한 줄 게시판형)
+        let html = '<div class="board-list-container">';
+        relayMockList.forEach((item, idx) => {
+            const isVote = item.phase === 'vote';
+            html += `
+                <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                    <div class="board-col-num">${idx+1}</div>
+                    <div class="board-col-title">${item.title}</div>
+                    <div class="board-col-meta">${item.format} | ${item.progress}</div>
+                    <div class="board-col-action">
+                        <button class="board-mini-btn" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">상세보기</button>
                     </div>
-                `;
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        }
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    } else {
+        // 🗂️ 카드뷰 (기존 카드형)
+        let html = '';
+        relayMockList.forEach(item => {
+            const isVote = item.phase === 'vote';
+            const actionText = isVote ? '후보작 열람 & 투표하기 (무료)' : '이어쓰기 참여하기 (1.0 Test-Pi)';
+            html += `
+                <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                    <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
+                    <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
+                    <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
+                    <div class="timer-info">⏳ 마감: ${item.time}</div>
+                    <div class="button-group">
+                        <button class="btn ${isVote ? 'btn-outline' : 'btn-primary'}" style="flex: 1;" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                            ${actionText}
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+    }
+}
+
+// 뷰 토글 함수 내에서 릴레이 처리부 연동 확인
+function toggleViewMode(section) {
+    let containerId = 'relay-card-container';
+    let toggleBtnId = 'relayViewToggle';
+
+    if (section === 'creator') {
+        containerId = 'creator-card-container';
+        toggleBtnId = 'creatorViewToggle';
+    } else if (section === 'archive') {
+        containerId = 'archive-card-container';
+        toggleBtnId = 'archiveViewToggle';
+    }
+
+    const container = document.getElementById(containerId);
+    const toggleBtn = document.getElementById(toggleBtnId);
+
+    if (container.classList.contains('board-list-container')) {
+        container.classList.remove('board-list-container');
+        toggleBtn.innerText = '☰ 리스트뷰';
+    } else {
+        container.classList.add('board-list-container');
+        toggleBtn.innerText = '🗂️ 카드뷰';
+    }
+
+    // 각 섹션별 리렌더링 실행
+    if (section === 'archive') renderArchiveList();
+    if (section === 'relay') renderRelayListContent();
+    if (section === 'creator') {
+        if (container.classList.contains('board-list-container')) renderCreatorListViewContent();
+        else renderCreatorCardView();
+    }
+}
+
 
         function renderCreatorCardView() {
             document.getElementById('creator-card-container').innerHTML = `
