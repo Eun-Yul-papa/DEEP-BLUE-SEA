@@ -1538,40 +1538,24 @@ function toggleViewMode(section) {
             document.getElementById('creator-card-container').innerHTML = html;
         }
 
-        function renderArchiveList() {
+function renderArchiveList() {
     const country = document.getElementById('archiveCountrySelect').value;
     const category = document.getElementById('archiveCategorySelect').value;
     const sortBy = document.getElementById('archiveSortSelect').value;
     const container = document.getElementById('archive-card-container');
     const heroShowcase = document.getElementById('archiveHeroShowcase');
-    
-    // 💡 핵심 체크: 현재 컨테이너에 리스트뷰 클래스가 붙어있는지 확인!
     const isBoardView = container.classList.contains('board-list-container');
 
-    let filteredList = archiveDataList.filter(item => {
-        if (country !== 'all' && item.flag !== country) return false;
-        if (category === 'relay' && item.type !== 'relay') return false;
-        if (category === 'creator' && item.type !== 'creator') return false;
-        return true;
-    });
-
-    // 정렬 로직 (별점순 / 조회수순 등)
-    filteredList.sort((a, b) => {
+    // 1. [핵심 수정] 상단 'BESTSELLER DISPLAY' 쇼케이스는 필터와 무관하게 '전체 아카이브 중 별점 1위 작품'을 무조건 고정 출력!
+    let globalBestList = [...archiveDataList].sort((a, b) => {
         const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
         const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
-        if (sortBy === 'rating') {
-            if (ratingB !== ratingA) return ratingB - ratingA;
-            return b.views - a.views;
-        }
-        if (sortBy === 'time') return b.timestamp - a.timestamp;
-        if (sortBy === 'views') return b.views - a.views;
-        if (sortBy === 'length') return a.totalCh - b.totalCh;
-        return (ratingB - ratingA) || (b.views - a.views);
+        if (ratingB !== ratingA) return ratingB - ratingA;
+        return b.views - a.views;
     });
 
-    // 1. 상단 베스트셀러 진열작 쇼케이스 (항상 카드뷰 고정)
-    if (filteredList.length > 0) {
-        const bestItem = filteredList[0];
+    if (globalBestList.length > 0) {
+        const bestItem = globalBestList[0];
         const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
         const bestPrice = bestItem.isLong ? 1.0 : 0.5;
         heroShowcase.innerHTML = `
@@ -1596,10 +1580,30 @@ function toggleViewMode(section) {
         heroShowcase.style.display = 'none';
     }
 
-    // 2. 하단 목록 (리스트뷰 vs 카드뷰 분기 렌더링)
+    // 2. 하단 목록은 유저가 선택한 필터(국가, 카테고리, 정렬)를 정상 반영하여 필터링
+    let filteredList = archiveDataList.filter(item => {
+        if (country !== 'all' && item.flag !== country) return false;
+        if (category === 'relay' && item.type !== 'relay') return false;
+        if (category === 'creator' && item.type !== 'creator') return false;
+        return true;
+    });
+
+    filteredList.sort((a, b) => {
+        const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
+        const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
+        if (sortBy === 'rating') {
+            if (ratingB !== ratingA) return ratingB - ratingA;
+            return b.views - a.views;
+        }
+        if (sortBy === 'time') return b.timestamp - a.timestamp;
+        if (sortBy === 'views') return b.views - a.views;
+        if (sortBy === 'length') return a.totalCh - b.totalCh;
+        return (ratingB - ratingA) || (b.views - a.views);
+    });
+
+    // 3. 하단 목록 렌더링 (리스트뷰 vs 카드뷰 분기)
     let html = '';
     if (isBoardView) {
-        // 📋 리스트뷰 (한 줄 게시판 형태)
         html = '<div class="board-list-container">';
         filteredList.forEach((item, idx) => {
             const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
@@ -1614,7 +1618,6 @@ function toggleViewMode(section) {
         });
         html += '</div>';
     } else {
-        // 🗂️ 카드뷰 (기존 책장형 카드 형태)
         filteredList.forEach(item => {
             const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
             const price = item.isLong ? 1.0 : 0.5;
@@ -1652,6 +1655,7 @@ function toggleViewMode(section) {
 
     container.innerHTML = html;
 }
+
 
 
         function handleArchiveCardClick(id) {
