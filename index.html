@@ -127,7 +127,6 @@
         }
         .drawer-menu-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--primary-cyan); border-left-color: var(--primary-cyan); padding-left: 24px; }
 
-        /* 모달 내 아코디언 서브박스 스타일 */
         .modal-accordion-header {
             background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px;
             display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; transition: all 0.2s;
@@ -224,7 +223,7 @@
         .section-title-group { display: flex; align-items: center; gap: 10px; }
         .section-title { font-size: 1.15rem; font-weight: 800; color: var(--primary-cyan); letter-spacing: 0.5px; }
 
-        .sort-filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .sort-filter-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
         .sort-select {
             background: rgba(13, 33, 66, 0.95); border: 1px solid var(--border-glow); color: var(--text-bright); padding: 8px 12px; border-radius: 10px; font-size: 0.8rem; outline: none; cursor: pointer; transition: all 0.2s;
         }
@@ -627,7 +626,6 @@
             <div class="section-header">
                 <div class="section-title-group">
                     <div class="section-title">🏛️ 블루 아카이브 (Digital Library)</div>
-                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
                 </div>
             </div>
 
@@ -637,25 +635,31 @@
             <!-- 진열작 하단 경계선 -->
             <hr style="border: none; border-top: 1px solid var(--border-glow); margin: 16px 0 20px 0;">
 
+            <!-- 뷰 토글 버튼을 우측 정렬한 정렬/필터 바 -->
             <div class="sort-filter-bar">
-                <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
-                    <option value="all">🌍 전체 국가 작품</option>
-                    <option value="🇰🇷">🇰🇷 대한민국</option>
-                    <option value="🇺🇸">🇺🇸 미국/영어권</option>
-                    <option value="🇨🇳">🇨🇳 중국</option>
-                    <option value="🇯🇵">🇯🇵 일본</option>
-                </select>
-                <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
-                    <option value="all">전체 작품 보기</option>
-                    <option value="relay">릴레이 완결작</option>
-                    <option value="creator">오리지널 완결작</option>
-                </select>
-                <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
-                    <option value="rating">별점 높은 순 (베스트셀러 우선)</option>
-                    <option value="time">최신순 (시간순)</option>
-                    <option value="views">조회수 높은 순 (인기순)</option>
-                    <option value="length">길이 단편순 (총 챕터 적은 순)</option>
-                </select>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
+                        <option value="all">🌍 전체 국가 작품</option>
+                        <option value="🇰🇷">🇰🇷 대한민국</option>
+                        <option value="🇺🇸">🇺🇸 미국/영어권</option>
+                        <option value="🇨🇳">🇨🇳 중국</option>
+                        <option value="🇯🇵">🇯🇵 일본</option>
+                    </select>
+                    <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
+                        <option value="all">전체 작품 보기</option>
+                        <option value="relay">릴레이 완결작</option>
+                        <option value="creator">오리지널 완결작</option>
+                    </select>
+                    <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
+                        <option value="rating">별점 높은 순 (베스트셀러 우선)</option>
+                        <option value="time">최신순 (시간순)</option>
+                        <option value="views">조회수 높은 순 (인기순)</option>
+                        <option value="length">길이 단편순 (총 챕터 적은 순)</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
+                </div>
             </div>
 
             <div id="archive-card-container"></div>
@@ -691,7 +695,6 @@
         </div>
     </div>
 
-    <!-- 모달: 나의 구독 활동 (각 항목별 아코디언 확장/축소 적용) -->
     <div class="modal-overlay" id="subscriptionActivityModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -700,7 +703,6 @@
             </div>
             <div style="font-size: 0.88rem; color: var(--text-bright); line-height: 1.6; margin-bottom: 12px;">
                 
-                <!-- 1. 팔로잉 작가 -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('subWriterAccordion')">
                     <span>✨ 팔로잉 작가 (1명)</span>
                     <span id="subWriterArrow">▼</span>
@@ -712,7 +714,6 @@
                     </div>
                 </div>
 
-                <!-- 2. 투표에 참여중인 글 -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('subVoteAccordion')">
                     <span>🗳️ 투표에 참여중인 글 (1건)</span>
                     <span id="subVoteArrow">▼</span>
@@ -724,7 +725,6 @@
                     </div>
                 </div>
 
-                <!-- 3. 구독중인 오리지널 시리즈 -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('subCreatorAccordion')">
                     <span>📚 구독중인 오리지널 시리즈 (1개)</span>
                     <span id="subCreatorArrow">▼</span>
@@ -736,7 +736,6 @@
                     </div>
                 </div>
 
-                <!-- 4. 소장한 아카이브 도서 -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('subArchiveAccordion')">
                     <span>🏛️ 소장한 아카이브 도서 (1권)</span>
                     <span id="subArchiveArrow">▼</span>
@@ -769,11 +768,11 @@
         </div>
     </div>
 
-    <!-- 모달: 릴레이 이전 챕터 누적 연재분 읽기 -->
+    <!-- 릴레이 이전까지 스토리 보기 모달 -->
     <div class="modal-overlay" id="relayPrevChaptersModal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title" id="prevChaptersTitle">📖 이전 챕터 누적 연재분</div>
+                <div class="modal-title" id="prevChaptersTitle">📖 이전까지 스토리 보기</div>
                 <button class="close-btn" onclick="closeModal('relayPrevChaptersModal')">✕</button>
             </div>
             <div style="font-size: 0.8rem; color: var(--primary-cyan); margin-bottom: 12px; font-weight: 600;">
@@ -902,7 +901,7 @@
                 <button class="close-btn" onclick="closeModal('archiveChapterListModal')">✕</button>
             </div>
             <div id="archiveChapterListContainer"></div>
-            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('archiveChapterListModal')">✕</button>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('archiveChapterListModal')">닫기</button>
         </div>
     </div>
 
@@ -1029,7 +1028,7 @@
                 <select class="form-control" id="selectCreatorFormat">
                     <option value="소설">소설 (Novel)</option>
                     <option value="시나리오/대본">시나리오/대본 (Scenario)</option>
-                    <option value="에세이">エ세이 (Essay)</option>
+                    <option value="에세이">에세이 (Essay)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1091,7 +1090,7 @@
         </div>
     </div>
 
-    <!-- 스토리 릴레이 상세 모달 (단계별 맞춤 버튼 분리 적용) -->
+    <!-- 스토리 릴레이 상세 모달 -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1102,10 +1101,8 @@
                 <button class="close-btn" onclick="closeModal('integratedRelayModal')">✕</button>
             </div>
             <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 16px; line-height: 1.6;" id="integratedDesc">스토리 설명</p>
-            <div class="button-group" style="flex-direction: column;" id="integratedButtonContainer">
-                <!-- 동적 분기 버튼 (투표 단계 vs 이어쓰기 단계) -->
-            </div>
-            <button class="btn btn-outline" style="margin-top: 10px;" onclick="openPrevChaptersModal()">📖 이전 챕터 누적 연재분 읽기</button>
+            <div class="button-group" style="flex-direction: column;" id="integratedButtonContainer"></div>
+            <button class="btn btn-outline" style="margin-top: 10px;" onclick="openPrevChaptersModal()">📖 이전까지 스토리 보기</button>
             <button class="btn btn-outline" style="margin-top: 8px;" onclick="closeModal('integratedRelayModal')">닫기</button>
         </div>
     </div>
@@ -1180,14 +1177,14 @@
                 desc: '심해 10,000m 바닥에서 발견된 정체불명의 외계 구조물과 인류 최초의 교신 기록...',
                 creatorName: 'OceanMaster',
                 chapters: [
-                    { ch: 1, title: '심해의 문이 열리다', content: '1화 본문: 심해 10,000m 바닥에서 정체불명의 신호가 감지되었다...', comments: [{author: 'OceanMaster ⓒ', text: '첫 화 집필하며 많이 고민했습니다!'}] },
-                    { ch: 2, title: '고대 문자의 해독', content: '2화 본문: 고대 기계 공학의 흔적이 발견되기 시작했다...', comments: [] },
-                    { ch: 3, title: '미지의 존재와의 접촉', content: '3화 본문: 마침내 그들과의 교신이 성공했다...', comments: [] },
-                    { ch: 4, title: '소용돌이의 중심', content: '4화 본문: 바다가 요동치기 시작했다...', comments: [] },
-                    { ch: 5, title: '빛과 어둠의 경계', content: '5화 본문: 진실이 서서히 수면 위로 떠오른다...', comments: [] },
-                    { ch: 6, title: '최후의 선택', content: '6화 본문: 인류의 운명을 건 선택의 순간...', comments: [] },
-                    { ch: 7, title: '새로운 여명', content: '7화 본문: 어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
-                    { ch: 8, title: '평화로운 공존 (FIN)', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '명작이네요.'}] }
+                    { ch: 1, title: '심해의 문이 열리다', author: 'OceanMaster', content: '1화 본문: 심해 10,000m 바닥에서 정체불명의 신호가 감지되었다...', comments: [{author: 'OceanMaster ⓒ', text: '첫 화 집필하며 많이 고민했습니다!'}] },
+                    { ch: 2, title: '고대 문자의 해독', author: 'PiWriter_02', content: '2화 본문: 고대 기계 공학의 흔적이 발견되기 시작했다...', comments: [] },
+                    { ch: 3, title: '미지의 존재와의 접촉', author: 'DeepMage', content: '3화 본문: 마침내 그들과의 교신이 성공했다...', comments: [] },
+                    { ch: 4, title: '소용돌이의 중심', author: 'OceanMaster', content: '4화 본문: 바다가 요동치기 시작했다...', comments: [] },
+                    { ch: 5, title: '빛과 어둠의 경계', author: 'PiWriter_05', content: '5화 본문: 진실이 서서히 수면 위로 떠오른다...', comments: [] },
+                    { ch: 6, title: '최후의 선택', author: 'DeepMage', content: '6화 본문: 인류의 운명을 건 선택의 순간...', comments: [] },
+                    { ch: 7, title: '새로운 여명', author: 'OceanMaster', content: '7화 본문: 어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
+                    { ch: 8, title: '평화로운 공존 (FIN)', author: 'OceanMaster', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '명작이네요.'}] }
                 ],
                 reviews: [
                     { author: 'Pioneer_A', rating: 5, comment: '스토리 릴레이 소설인데도 완결성이 대단하네요!' },
@@ -1210,9 +1207,9 @@
                 desc: 'A fantasy epic unfolding in the blockchain world. Unstoppable momentum until the end!',
                 creatorName: 'DeepMage',
                 chapters: [
-                    { ch: 1, title: 'The Genesis Block', content: 'Chapter 1 content: In the beginning, there was Pi...', comments: [{author: 'DeepMage ⓒ', text: 'Welcome to my fantasy world!'}] },
-                    { ch: 2, title: 'Alchemy of Consensus', content: 'Chapter 2 content: Mining the magic...', comments: [] },
-                    { ch: 3, title: 'Mainnet Awakening (FIN)', content: 'Chapter 3 content: The final consensus is reached. FIN.', comments: [] }
+                    { ch: 1, title: 'The Genesis Block', author: 'DeepMage', content: 'Chapter 1 content: In the beginning, there was Pi...', comments: [{author: 'DeepMage ⓒ', text: 'Welcome to my fantasy world!'}] },
+                    { ch: 2, title: 'Alchemy of Consensus', author: 'DeepMage', content: 'Chapter 2 content: Mining the magic...', comments: [] },
+                    { ch: 3, title: 'Mainnet Awakening (FIN)', author: 'DeepMage', content: 'Chapter 3 content: The final consensus is reached. FIN.', comments: [] }
                 ],
                 reviews: [
                     { author: 'Web3Writer', rating: 4, comment: '1.0 Test-Pi is totally worth it!' }
@@ -1221,12 +1218,12 @@
         ];
 
         let relayMockList = [
-            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', prevChapters: '1~5화까지의 누적 연재분 내용이 여기에 표시됩니다...' },
-            { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', prevChapters: '1~2화까지의 누적 연재분 내용이 여기에 표시됩니다...' }
+            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', creatorName: 'PiMaster', prevChapters: '1~5화까지의 누적 연재분 내용이 여기에 표시됩니다...' },
+            { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', creatorName: 'AliceWriter', prevChapters: '1~2화까지의 누적 연재분 내용이 여기에 표시됩니다...' }
         ];
 
         let creatorMockList = [
-            { title: '심해 마법사의 공방', format: '장편', currentCh: 3, author: 'DeepMage' }
+            { title: '심해 마법사의 공방', format: '장편', currentCh: 3, author: 'DeepMage', desc: '빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기...' }
         ];
 
         let activeArchiveReaderItem = null;
@@ -1377,286 +1374,239 @@
             document.getElementById('creatorListViewContainer').style.display = 'none';
         }
 
-function toggleViewMode(section) {
-    let containerId = 'relay-card-container';
-    let toggleBtnId = 'relayViewToggle';
+        function toggleViewMode(section) {
+            let containerId = 'relay-card-container';
+            let toggleBtnId = 'relayViewToggle';
 
-    if (section === 'creator') {
-        containerId = 'creator-card-container';
-        toggleBtnId = 'creatorViewToggle';
-    } else if (section === 'archive') {
-        containerId = 'archive-card-container';
-        toggleBtnId = 'archiveViewToggle';
-    }
+            if (section === 'creator') {
+                containerId = 'creator-card-container';
+                toggleBtnId = 'creatorViewToggle';
+            } else if (section === 'archive') {
+                containerId = 'archive-card-container';
+                toggleBtnId = 'archiveViewToggle';
+            }
 
-    const container = document.getElementById(containerId);
-    const toggleBtn = document.getElementById(toggleBtnId);
+            const container = document.getElementById(containerId);
+            const toggleBtn = document.getElementById(toggleBtnId);
 
-    if (container.classList.contains('board-list-container')) {
-        container.classList.remove('board-list-container');
-        toggleBtn.innerText = '☰ 리스트뷰';
-        if (section === 'archive') renderArchiveList();
-        if (section === 'relay') renderRelayCardView();
-        if (section === 'creator') renderCreatorCardView();
-    } else {
-        container.classList.add('board-list-container');
-        toggleBtn.innerText = '🗂️ 카드뷰';
-        if (section === 'archive') renderArchiveList(); // 👈 여기서 바로 아카이브 리스트를 다시 그려줍니다!
-        if (section === 'relay') renderRelayListViewContent();
-        if (section === 'creator') renderCreatorListViewContent();
-    }
-}
+            if (container.classList.contains('board-list-container')) {
+                container.classList.remove('board-list-container');
+                toggleBtn.innerText = '☰ 리스트뷰';
+            } else {
+                container.classList.add('board-list-container');
+                toggleBtn.innerText = '🗂️ 카드뷰';
+            }
 
+            if (section === 'archive') renderArchiveList();
+            if (section === 'relay') renderRelayListContent();
+            if (section === 'creator') renderCreatorListViewContent();
+        }
 
-        function renderRelayCardView() {
-            let html = '';
-            relayMockList.forEach(item => {
-                const isVote = item.phase === 'vote';
-                html += `
-                    <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                        <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
-                        <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
-                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
-                        <div class="timer-info">⏳ 마감: ${item.time}</div>
-                        <div class="button-group">
-                            ${isVote 
-                                ? `<button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${item.title}', '${item.id}', true)">후보작 열람 & 투표하기 (무료)</button>`
-                                : `<button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${item.id}', '${item.title}', '${encodeURIComponent(item.content)}', '🇰🇷', 6, false)">이어쓰기 참여하기 (1.0 Test-Pi)</button>`
-                            }
+        // 스토리 릴레이 리스트뷰 / 카드뷰 통합 렌더링 (작가 명시 반영)
+        function renderRelayListContent() {
+            const container = document.getElementById('relay-card-container');
+            const isBoardView = container.classList.contains('board-list-container');
+
+            if (isBoardView) {
+                let html = '<div class="board-list-container">';
+                relayMockList.forEach((item, idx) => {
+                    html += `
+                        <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                            <div class="board-col-num">${idx+1}</div>
+                            <div class="board-col-title">${item.title}</div>
+                            <div class="board-col-meta">작가: ${item.creatorName} 외 2명 | ${item.progress}</div>
+                            <div class="board-col-action">
+                                <button class="board-mini-btn" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">상세보기</button>
+                            </div>
                         </div>
+                    `;
+                });
+                html += '</div>';
+                container.innerHTML = html;
+            } else {
+                let html = '';
+                relayMockList.forEach(item => {
+                    const isVote = item.phase === 'vote';
+                    const actionText = isVote ? '후보작 열람 & 투표하기 (무료)' : '이어쓰기 참여하기 (1.0 Test-Pi)';
+                    html += `
+                        <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                            <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
+                            <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
+                            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 8px;">작가 : ${item.creatorName} 외 2명</div>
+                            <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
+                            <div class="timer-info">⏳ 마감: ${item.time}</div>
+                            <div class="button-group">
+                                <button class="btn ${isVote ? 'btn-outline' : 'btn-primary'}" style="flex: 1;" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                                    ${actionText}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+        }
+
+        // 오리지널 시리즈 카드뷰 (작가 명시 및 팔로우 버튼 부활)
+        function renderCreatorCardView() {
+            let html = '';
+            creatorMockList.forEach(item => {
+                html += `
+                    <div class="card" onclick="openCreatorReadModal('${item.title}', 3)">
+                        <div class="tag-group"><span class="tag tag-creator">🟢 연재중</span></div>
+                        <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
+                        <div style="font-size: 0.82rem; color: var(--success-green); font-weight: 700; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center;">
+                            <span>작가 : ${item.author}</span>
+                            <button class="page-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--success-green); color:var(--success-green);" onclick="event.stopPropagation(); toggleFollow('${item.author}')">+ 팔로우</button>
+                        </div>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.desc}"</p>
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); openCreatorReadModal('${item.title}', 3)">작품 보기</button>
                     </div>
                 `;
             });
-            document.getElementById('relay-card-container').innerHTML = html;
-        }
-
-        // 스토리 릴레이 뷰 렌더링 통합 함수 (토글 고장 해결)
-function renderRelayListContent() {
-    const container = document.getElementById('relay-card-container');
-    const isBoardView = container.classList.contains('board-list-container');
-
-    if (isBoardView) {
-        // 📋 리스트뷰 (한 줄 게시판형)
-        let html = '<div class="board-list-container">';
-        relayMockList.forEach((item, idx) => {
-            const isVote = item.phase === 'vote';
-            html += `
-                <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                    <div class="board-col-num">${idx+1}</div>
-                    <div class="board-col-title">${item.title}</div>
-                    <div class="board-col-meta">${item.format} | ${item.progress}</div>
-                    <div class="board-col-action">
-                        <button class="board-mini-btn" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">상세보기</button>
-                    </div>
-                </div>
-            `;
-        });
-        html += '</div>';
-        container.innerHTML = html;
-    } else {
-        // 🗂️ 카드뷰 (기존 카드형)
-        let html = '';
-        relayMockList.forEach(item => {
-            const isVote = item.phase === 'vote';
-            const actionText = isVote ? '후보작 열람 & 투표하기 (무료)' : '이어쓰기 참여하기 (1.0 Test-Pi)';
-            html += `
-                <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                    <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
-                    <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
-                    <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
-                    <div class="timer-info">⏳ 마감: ${item.time}</div>
-                    <div class="button-group">
-                        <button class="btn ${isVote ? 'btn-outline' : 'btn-primary'}" style="flex: 1;" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                            ${actionText}
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-    }
-}
-
-// 뷰 토글 함수 내에서 릴레이 처리부 연동 확인
-function toggleViewMode(section) {
-    let containerId = 'relay-card-container';
-    let toggleBtnId = 'relayViewToggle';
-
-    if (section === 'creator') {
-        containerId = 'creator-card-container';
-        toggleBtnId = 'creatorViewToggle';
-    } else if (section === 'archive') {
-        containerId = 'archive-card-container';
-        toggleBtnId = 'archiveViewToggle';
-    }
-
-    const container = document.getElementById(containerId);
-    const toggleBtn = document.getElementById(toggleBtnId);
-
-    if (container.classList.contains('board-list-container')) {
-        container.classList.remove('board-list-container');
-        toggleBtn.innerText = '☰ 리스트뷰';
-    } else {
-        container.classList.add('board-list-container');
-        toggleBtn.innerText = '🗂️ 카드뷰';
-    }
-
-    // 각 섹션별 리렌더링 실행
-    if (section === 'archive') renderArchiveList();
-    if (section === 'relay') renderRelayListContent();
-    if (section === 'creator') {
-        if (container.classList.contains('board-list-container')) renderCreatorListViewContent();
-        else renderCreatorCardView();
-    }
-}
-
-
-        function renderCreatorCardView() {
-            document.getElementById('creator-card-container').innerHTML = `
-                <div class="card" onclick="openCreatorReadModal('심해 마법사의 공방', 3)">
-                    <div class="tag-group"><span class="tag tag-creator">🟢 연재중</span></div>
-                    <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>심해 마법사의 공방</h3></div>
-                    <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙..."</p>
-                    <button class="btn btn-primary" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">작품 보기</button>
-                </div>
-            `;
+            document.getElementById('creator-card-container').innerHTML = html;
         }
 
         function renderCreatorListViewContent() {
+            const container = document.getElementById('creator-card-container');
+            const isBoardView = container.classList.contains('board-list-container');
+
+            if (!isBoardView) {
+                renderCreatorCardView();
+                return;
+            }
+
             let html = '<div class="board-list-container">';
             creatorMockList.forEach((item, idx) => {
                 html += `
                     <div class="board-list-row" onclick="openCreatorReadModal('${item.title}', 3)">
                         <div class="board-col-num">${idx+1}</div>
                         <div class="board-col-title">${item.title}</div>
-                        <div class="board-col-meta">${item.format} | Ch.${item.currentCh} | ${item.author}</div>
+                        <div class="board-col-meta">작가: ${item.author} | Ch.${item.currentCh}</div>
                         <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); openCreatorReadModal('${item.title}', 3)">읽기</button></div>
                     </div>
                 `;
             });
             html += '</div>';
-            document.getElementById('creator-card-container').innerHTML = html;
+            container.innerHTML = html;
         }
 
-function renderArchiveList() {
-    const country = document.getElementById('archiveCountrySelect').value;
-    const category = document.getElementById('archiveCategorySelect').value;
-    const sortBy = document.getElementById('archiveSortSelect').value;
-    const container = document.getElementById('archive-card-container');
-    const heroShowcase = document.getElementById('archiveHeroShowcase');
-    const isBoardView = container.classList.contains('board-list-container');
+        function renderArchiveList() {
+            const country = document.getElementById('archiveCountrySelect').value;
+            const category = document.getElementById('archiveCategorySelect').value;
+            const sortBy = document.getElementById('archiveSortSelect').value;
+            const container = document.getElementById('archive-card-container');
+            const heroShowcase = document.getElementById('archiveHeroShowcase');
+            const isBoardView = container.classList.contains('board-list-container');
 
-    // 1. [핵심 수정] 상단 'BESTSELLER DISPLAY' 쇼케이스는 필터와 무관하게 '전체 아카이브 중 별점 1위 작품'을 무조건 고정 출력!
-    let globalBestList = [...archiveDataList].sort((a, b) => {
-        const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
-        const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
-        if (ratingB !== ratingA) return ratingB - ratingA;
-        return b.views - a.views;
-    });
+            let globalBestList = [...archiveDataList].sort((a, b) => {
+                const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
+                const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
+                if (ratingB !== ratingA) return ratingB - ratingA;
+                return b.views - a.views;
+            });
 
-    if (globalBestList.length > 0) {
-        const bestItem = globalBestList[0];
-        const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
-        const bestPrice = bestItem.isLong ? 1.0 : 0.5;
-        heroShowcase.innerHTML = `
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; gap: 6px; align-items: center;">
-                    <span class="tag" style="background:rgba(245,158,11,0.2); color:var(--gold-star); border:1px solid rgba(245,158,11,0.4);">⭐ BESTSELLER DISPLAY</span>
-                    <span class="tag tag-meta">${bestItem.flag} ${bestItem.genre}</span>
-                </div>
-                <h2 style="font-size: 1.25rem; font-weight: 900; color: #fff;">${bestItem.title}</h2>
-                <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5;">"${bestItem.desc}"</p>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem;">
-                    <span class="star-rating-box">★ ${bestRating} (${bestItem.ratingCount}개 리뷰)</span>
-                    <span style="color: var(--primary-cyan);">조회수 ${bestItem.views}회</span>
-                </div>
-                <button class="btn btn-primary" style="margin-top: 8px;" onclick="buyAndReadArchive('${bestItem.id}', '${bestItem.title}', ${bestPrice})">
-                    📖 베스트셀러 작품 읽기 (${bestPrice} Test-Pi)
-                </button>
-            </div>
-        `;
-        heroShowcase.style.display = 'block';
-    } else {
-        heroShowcase.style.display = 'none';
-    }
-
-    // 2. 하단 목록은 유저가 선택한 필터(국가, 카테고리, 정렬)를 정상 반영하여 필터링
-    let filteredList = archiveDataList.filter(item => {
-        if (country !== 'all' && item.flag !== country) return false;
-        if (category === 'relay' && item.type !== 'relay') return false;
-        if (category === 'creator' && item.type !== 'creator') return false;
-        return true;
-    });
-
-    filteredList.sort((a, b) => {
-        const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
-        const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
-        if (sortBy === 'rating') {
-            if (ratingB !== ratingA) return ratingB - ratingA;
-            return b.views - a.views;
-        }
-        if (sortBy === 'time') return b.timestamp - a.timestamp;
-        if (sortBy === 'views') return b.views - a.views;
-        if (sortBy === 'length') return a.totalCh - b.totalCh;
-        return (ratingB - ratingA) || (b.views - a.views);
-    });
-
-    // 3. 하단 목록 렌더링 (리스트뷰 vs 카드뷰 분기)
-    let html = '';
-    if (isBoardView) {
-        html = '<div class="board-list-container">';
-        filteredList.forEach((item, idx) => {
-            const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
-            html += `
-                <div class="board-list-row" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">
-                    <div class="board-col-num">${idx+1}</div>
-                    <div class="board-col-title">${item.title}</div>
-                    <div class="board-col-meta">${typeLabel} | 총 ${item.totalCh}화 | ${item.creatorName}</div>
-                    <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">읽기</button></div>
-                </div>
-            `;
-        });
-        html += '</div>';
-    } else {
-        filteredList.forEach(item => {
-            const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
-            const price = item.isLong ? 1.0 : 0.5;
-            const typeLabel = (item.type === 'relay') ? '스토리 릴레이 완결' : '오리지널 시리즈 완결';
-
-            html += `
-                <div class="archive-book-shelf-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
-                    <div class="tag-group">
-                        <span class="tag tag-archive">📚 도서관 소장품</span>
-                        <span class="tag tag-meta">${typeLabel}</span>
-                        <span class="tag tag-meta">${item.format} · ${item.genre}</span>
-                        <span class="tag tag-meta">${item.totalCh}화 완결</span>
-                    </div>
-                    <div class="title-with-flag">
-                        <span class="flag-badge">${item.flag}</span>
-                        <h3>${item.title}</h3>
-                    </div>
-                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">"${item.desc}"</p>
-
-                    <div class="stats-meta-row">
-                        <div class="star-rating-box">
-                            ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
+            if (globalBestList.length > 0) {
+                const bestItem = globalBestList[0];
+                const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
+                const bestPrice = bestItem.isLong ? 1.0 : 0.5;
+                heroShowcase.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <span class="tag" style="background:rgba(245,158,11,0.2); color:var(--gold-star); border:1px solid rgba(245,158,11,0.4);">⭐ BESTSELLER DISPLAY</span>
+                            <span class="tag tag-meta">${bestItem.flag} ${bestItem.genre}</span>
                         </div>
-                        <div>누적 소장/조회: <b>${item.views}</b>회</div>
+                        <h2 style="font-size: 1.25rem; font-weight: 900; color: #fff;">${bestItem.title}</h2>
+                        <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700;">작가 : ${bestItem.creatorName}</div>
+                        <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5;">"${bestItem.desc}"</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem;">
+                            <span class="star-rating-box">★ ${bestRating} (${bestItem.ratingCount}개 리뷰)</span>
+                            <span style="color: var(--primary-cyan);">조회수 ${bestItem.views}회</span>
+                        </div>
+                        <button class="btn btn-primary" style="margin-top: 8px;" onclick="buyAndReadArchive('${bestItem.id}', '${bestItem.title}', ${bestPrice})">
+                            📖 베스트셀러 작품 읽기 (${bestPrice} Test-Pi)
+                        </button>
                     </div>
+                `;
+                heroShowcase.style.display = 'block';
+            } else {
+                heroShowcase.style.display = 'none';
+            }
 
-                    <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">⭐ 별점 & 리뷰 보기</button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">📖 도서 읽기 (${price} Test-Pi)</button>
-                    </div>
-                </div>
-            `;
-        });
-    }
+            let filteredList = archiveDataList.filter(item => {
+                if (country !== 'all' && item.flag !== country) return false;
+                if (category === 'relay' && item.type !== 'relay') return false;
+                if (category === 'creator' && item.type !== 'creator') return false;
+                return true;
+            });
 
-    container.innerHTML = html;
-}
+            filteredList.sort((a, b) => {
+                const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
+                const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
+                if (sortBy === 'rating') {
+                    if (ratingB !== ratingA) return ratingB - ratingA;
+                    return b.views - a.views;
+                }
+                if (sortBy === 'time') return b.timestamp - a.timestamp;
+                if (sortBy === 'views') return b.views - a.views;
+                if (sortBy === 'length') return a.totalCh - b.totalCh;
+                return (ratingB - ratingA) || (b.views - a.views);
+            });
 
+            let html = '';
+            if (isBoardView) {
+                html = '<div class="board-list-container">';
+                filteredList.forEach((item, idx) => {
+                    const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
+                    html += `
+                        <div class="board-list-row" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">
+                            <div class="board-col-num">${idx+1}</div>
+                            <div class="board-col-title">${item.title}</div>
+                            <div class="board-col-meta">작가: ${item.creatorName} | ${typeLabel}</div>
+                            <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">읽기</button></div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            } else {
+                filteredList.forEach(item => {
+                    const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
+                    const price = item.isLong ? 1.0 : 0.5;
+                    const typeLabel = (item.type === 'relay') ? '스토리 릴레이 완결' : '오리지널 시리즈 완결';
+                    const authorDisplay = (item.type === 'relay') ? `${item.creatorName} 외 여러 작가` : item.creatorName;
 
+                    html += `
+                        <div class="archive-book-shelf-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
+                            <div class="tag-group">
+                                <span class="tag tag-archive">📚 도서관 소장품</span>
+                                <span class="tag tag-meta">${typeLabel}</span>
+                                <span class="tag tag-meta">${item.format} · ${item.genre}</span>
+                            </div>
+                            <div class="title-with-flag">
+                                <span class="flag-badge">${item.flag}</span>
+                                <h3>${item.title}</h3>
+                            </div>
+                            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 8px;">작가 : ${authorDisplay}</div>
+                            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">"${item.desc}"</p>
+
+                            <div class="stats-meta-row">
+                                <div class="star-rating-box">
+                                    ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
+                                </div>
+                                <div>누적 소장/조회: <b>${item.views}</b>회</div>
+                            </div>
+
+                            <div class="button-group">
+                                <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">⭐ 별점 & 리뷰 보기</button>
+                                <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">📖 도서 읽기 (${price} Test-Pi)</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            container.innerHTML = html;
+        }
 
         function handleArchiveCardClick(id) {
             const item = archiveDataList.find(a => a.id === id);
@@ -1717,13 +1667,18 @@ function renderArchiveList() {
                 document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
                 let allContentHtml = '';
                 item.chapters.forEach(ch => {
-                    allContentHtml += `<b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
+                    allContentHtml += `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">이번화 작가 : ${ch.author || item.creatorName}</div><b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
                 });
                 bodyElem.innerHTML = allContentHtml;
             } else {
                 const currentChObj = item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0];
                 document.getElementById('archiveChapterIndicator').innerText = `제 ${currentChObj.ch}화 : ${currentChObj.title} (총 ${item.totalCh}화)`;
-                bodyElem.innerHTML = `<b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}`;
+                bodyElem.innerHTML = `
+                    <div style="font-size: 0.82rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px;">
+                        이번화 작가 : ${currentChObj.author || item.creatorName}
+                    </div>
+                    <b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}
+                `;
             }
         }
 
@@ -1775,7 +1730,7 @@ function renderArchiveList() {
                     <div class="chapter-list-item" onclick="jumpArchiveChapterAndCloseList(${ch.ch})">
                         <div>
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">제 ${ch.ch}화 : ${ch.title}</div>
-                            <div style="font-size: 0.78rem; color: var(--text-sub);">소장 도서 본문 감상하기</div>
+                            <div style="font-size: 0.78rem; color: var(--success-green); margin-top:2px;">작가 : ${ch.author || item.creatorName}</div>
                         </div>
                         <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 12px; font-size: 0.78rem;">📖 읽기</button>
                     </div>
@@ -1935,7 +1890,6 @@ function renderArchiveList() {
             }
         }
 
-        // 릴레이 카드/목록 클릭 시 단계별(투표 vs 이어쓰기) 맞춤 버튼 노출
         let activeRelayItemData = null;
         function handleListCardClick(cardId, title, content, flag, chapterNum, isLong, phase = 'write') {
             activeRelayItemData = { cardId, title, content, flag, chapterNum, isLong, phase };
@@ -1959,9 +1913,8 @@ function renderArchiveList() {
 
         function openPrevChaptersModal() {
             if (!activeRelayItemData) return;
-            document.getElementById('prevChaptersTitle').innerText = `'${activeRelayItemData.title}' 이전 챕터 연재분`;
+            document.getElementById('prevChaptersTitle').innerText = `'${activeRelayItemData.title}' 이전까지 스토리 보기`;
             const mockPrevText = "제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...\n\n(이전 챕터들의 누적 연재분이 이곳에 순차적으로 제공됩니다)";
-            document.getElementById('prevChaptersBodyinnerText') = mockPrevText;
             document.getElementById('prevChaptersBody').innerText = mockPrevText;
             openModal('relayPrevChaptersModal');
         }
@@ -2059,7 +2012,8 @@ function renderArchiveList() {
                     <div class="chapter-list-item">
                         <div>
                             <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">제 ${i}화</div>
-                            <div style="font-size: 0.78rem; color: var(--text-sub);">${isFree ? '무료 공개 회차' : '유료 연재 회차 (0.1 Test-Pi)'}</div>
+                            <div style="font-size: 0.78rem; color: var(--success-green); margin-top:2px;">작가 : DeepMage</div>
+                            <div style="font-size: 0.75rem; color: var(--text-sub);">${isFree ? '무료 공개 회차' : '유료 연재 회차 (0.1 Test-Pi)'}</div>
                         </div>
                         <button class="btn ${isFree ? 'btn-outline' : 'btn-primary'}" style="width: auto; margin:0; padding: 6px 14px; font-size: 0.8rem;" onclick="readCreatorChapter('${title}', ${i}, ${isFree})">
                             ${isFree ? '📖 무료 읽기' : '💰 0.1 Test-Pi 열람'}
@@ -2085,7 +2039,12 @@ function renderArchiveList() {
             }
             closeModal('creatorReadModal');
             document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
-            document.getElementById('singleReaderBody').innerText = `[${title} 제 ${chNum}화 본문 내용]\n\n빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...`;
+            document.getElementById('singleReaderBody').innerHTML = `
+                <div style="font-size: 0.82rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px;">
+                    이번화 작가 : DeepMage
+                </div>
+                [${title} 제 ${chNum}화 본문 내용]<br><br>빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...
+            `;
             openModal('creatorSingleReaderModal');
         }
 
@@ -2134,14 +2093,12 @@ function renderArchiveList() {
         }
 
         function createNewRelayCard() {
-            const currentLangCode = document.getElementById('userLangSelect').value;
-            const autoFlag = flagMap[currentLangCode] || '🇰🇷';
             const title = document.getElementById('inputTitle').value || "무제 스토리";
             const subtitle = document.getElementById('inputSubtitle').value || "1화 소제목";
             const format = document.getElementById('selectFormat').value;
             const content = document.getElementById('storyContent').value;
 
-            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content });
+            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나' });
             closeModal('createModal');
             alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다!`);
             switchTab('relay');
@@ -2151,16 +2108,16 @@ function renderArchiveList() {
             const title = document.getElementById('inputCreatorTitle').value || "무제 작품";
             const subtitle = document.getElementById('inputCreatorSubtitle').value || "1화 소제목";
             const format = document.getElementById('selectCreatorFormat').value;
+            const desc = document.getElementById('creatorContent').value;
 
-            creatorMockList.unshift({ title: `${title} (${subtitle})`, format: format, currentCh: 1, author: '나' });
+            creatorMockList.unshift({ title: `${title} (${subtitle})`, format: format, currentCh: 1, author: '나', desc: desc });
             closeModal('createCreatorModal');
             alert(`🎉 '${title} - ${subtitle}' 오리지널 작품 연재가 시작되었습니다!`);
             switchTab('creator');
         }
 
-        // 초기 로딩 시 기본 탭 렌더링
         window.onload = function() {
-            renderRelayCardView();
+            renderRelayListContent();
         };
     </script>
 </body>
