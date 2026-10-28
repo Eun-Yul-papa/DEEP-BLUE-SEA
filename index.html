@@ -127,16 +127,20 @@
         }
         .drawer-menu-item:hover { background: rgba(56, 189, 248, 0.15); color: var(--primary-cyan); border-left-color: var(--primary-cyan); padding-left: 24px; }
 
-        /* 아코디언 드롭다운 서브메뉴 스타일 */
-        .drawer-accordion-content {
-            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(2, 9, 22, 0.4);
-            display: flex; flex-direction: column;
+        /* 모달 내 아코디언 서브박스 스타일 */
+        .modal-accordion-header {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px 14px; border-radius: 10px;
+            display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px; transition: all 0.2s;
         }
-        .drawer-accordion-content.active { max-height: 300px; }
-        .sub-activity-item {
-            padding: 10px 20px 10px 45px; font-size: 0.78rem; color: var(--text-sub); cursor: pointer; border-left: 2px solid transparent; transition: all 0.2s;
+        .modal-accordion-header:hover { border-color: var(--primary-cyan); background: rgba(56,189,248,0.1); }
+        .modal-accordion-body {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(2, 9, 22, 0.5); border-radius: 8px; margin-bottom: 12px; display: flex; flex-direction: column;
         }
-        .sub-activity-item:hover { color: var(--primary-cyan); background: rgba(56,189,248,0.08); border-left-color: var(--primary-cyan); }
+        .modal-accordion-body.active { max-height: 250px; padding: 6px 0; }
+        .modal-sub-item {
+            padding: 8px 16px; font-size: 0.8rem; color: var(--text-sub); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+        }
+        .modal-sub-item:hover { color: var(--primary-cyan); background: rgba(56,189,248,0.1); }
 
         .nav-tabs {
             display: flex; background: rgba(13, 33, 66, 0.6); border-bottom: 1px solid var(--border-glow); padding: 0 6px; justify-content: space-around;
@@ -234,7 +238,6 @@
             background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 18px; padding: 20px; margin-bottom: 18px; backdrop-filter: blur(10px); transition: all 0.25s; box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
 
-        /* 블루 아카이브 베스트셀러 진열작 쇼케이스 */
         .library-hero-showcase {
             background: linear-gradient(135deg, rgba(7, 21, 46, 0.95), rgba(13, 33, 66, 0.9));
             border: 1.5px solid var(--primary-cyan);
@@ -267,7 +270,6 @@
             box-shadow: 0 12px 30px rgba(56, 189, 248, 0.35);
         }
 
-        /* 📋 초고밀도 '한 줄 게시판형' 리스트뷰 스타일 (10~15개 한 화면 진열) */
         .board-list-container {
             display: flex;
             flex-direction: column;
@@ -435,19 +437,7 @@
         <ul class="drawer-menu-list">
             <li class="drawer-menu-item" onclick="openNavModal('aboutModal')"><span>🌊</span> Deep Blue Sea 소개</li>
             <li class="drawer-menu-item" onclick="openNavModal('creatorStudioModal')"><span>🎨</span> 크리에이터 스튜디오</li>
-            
-            <!-- 햄버거 메뉴 '나의 구독 활동' 아코디언 확장/축소 및 바로가기 링크 적용 -->
-            <li class="drawer-menu-item" onclick="toggleDrawerAccordion('subActivityAccordion')" style="justify-content: space-between;">
-                <div style="display:flex; align-items:center; gap:12px;"><span>📌</span> 나의 구독 활동</div>
-                <span id="subActivityArrow" style="font-size: 0.75rem; color: var(--primary-cyan);">▼</span>
-            </li>
-            <div class="drawer-accordion-content" id="subActivityAccordion">
-                <div class="sub-activity-item" onclick="navigateToActivity('writer', 'DeepMage')">✨ 팔로잉 작가 : DeepMage</div>
-                <div class="sub-activity-item" onclick="navigateToActivity('relay', 'card-test-ch6')">🗳️ 투표중인 글 : [테스트] 6화 완결 제안</div>
-                <div class="sub-activity-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">📚 구독 오리지널 : 심해 마법사의 공방</div>
-                <div class="sub-activity-item" onclick="navigateToActivity('archive', 'arc_01')">🏛️ 소장 아카이브 : 심해의 소용돌이 속에서</div>
-            </div>
-
+            <li class="drawer-menu-item" onclick="openNavModal('subscriptionActivityModal')"><span>📌</span> 나의 구독 활동</li>
             <li class="drawer-menu-item" onclick="openNavModal('noticeModal')"><span>📢</span> 공지사항</li>
             <li class="drawer-menu-item" onclick="openNavModal('contactModal')"><span>📧</span> Contact Us</li>
             <li class="drawer-menu-item" onclick="openNavModal('termsModal')"><span>📜</span> 서비스 이용약관</li>
@@ -588,27 +578,7 @@
                     </div>
                     <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트뷰</button>
                 </div>
-                <div id="relay-card-container">
-                    <div class="card" id="card-test-ch6" onclick="handleListCardClick('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
-                        <div class="tag-group">
-                            <span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span>
-                            <span class="tag tag-meta">소설</span>
-                            <span class="tag tag-meta">추리</span>
-                            <span class="tag tag-meta">단편 (5-10 Chs)</span>
-                        </div>
-                        <div class="title-with-flag">
-                            <span class="flag-badge">🇰🇷</span>
-                            <h3>[테스트] 6화 완결 제안 테스트용 소설</h3>
-                        </div>
-                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"</p>
-                        <div class="timer-info">⏳ 작성 마감까지: 04일 12시간 남음</div>
-                        <div class="prize-info" style="font-size: 0.88rem; color: var(--primary-cyan); margin-bottom: 12px;">💰 상금 풀: 3.0 Test-Pi</div>
-                        <div class="button-group">
-                            <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', true)">후보 열람 & 투표 (무료)</button>
-                            <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">이어쓰기 (Ch.6)</button>
-                        </div>
-                    </div>
-                </div>
+                <div id="relay-card-container"></div>
             </div>
         </div>
 
@@ -648,25 +618,7 @@
                     </div>
                     <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트뷰</button>
                 </div>
-                <div id="creator-card-container">
-                    <div class="card" id="card-creator-sample" onclick="handleCreatorListClick('심해 마법사의 공방', 3)">
-                        <div class="tag-group">
-                            <span class="tag tag-creator">🟢 연재중</span>
-                            <span class="tag tag-meta">소설</span>
-                            <span class="tag tag-meta">판타지</span>
-                            <span class="tag tag-meta">장편 (10+ Chs)</span>
-                        </div>
-                        <div class="title-with-flag">
-                            <span class="flag-badge">🇰🇷</span>
-                            <h3>심해 마법사의 공방</h3>
-                        </div>
-                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"빛이 닿지 않는 심해 바닥, 마법과 고대 기계 공학이 공존하는 신비로운 대륙에서의 생존기..."</p>
-                        <div class="prize-info" style="font-size: 0.88rem; color: var(--success-green); margin-bottom: 12px;">✍️ 작가: DeepMage <button class="page-btn" style="padding:2px 8px; font-size:0.72rem;" onclick="event.stopPropagation(); toggleFollow('DeepMage')">+ 팔로우</button> | 💰 누적 후원/매출: 2.4 Test-Pi</div>
-                        <div class="button-group">
-                            <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); openCreatorReadModal('심해 마법사의 공방', 3)">작품 보기 (1화 무료 / 2화부터 0.1 Test-Pi)</button>
-                        </div>
-                    </div>
-                </div>
+                <div id="creator-card-container"></div>
             </div>
         </div>
 
@@ -682,7 +634,7 @@
             <!-- 별점순 자동 베스트셀러 진열작 (⭐ BESTSELLER DISPLAY) -->
             <div class="library-hero-showcase" id="archiveHeroShowcase"></div>
 
-            <!-- 진열작 하단 구분선 -->
+            <!-- 진열작 하단 경계선 -->
             <hr style="border: none; border-top: 1px solid var(--border-glow); margin: 16px 0 20px 0;">
 
             <div class="sort-filter-bar">
@@ -706,7 +658,7 @@
                 </select>
             </div>
 
-            <div class="bookshelf-grid" id="archive-card-container"></div>
+            <div id="archive-card-container"></div>
         </div>
 
         <footer class="app-footer" id="mainFooter">
@@ -739,29 +691,63 @@
         </div>
     </div>
 
+    <!-- 모달: 나의 구독 활동 (각 항목별 아코디언 확장/축소 적용) -->
     <div class="modal-overlay" id="subscriptionActivityModal">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="modal-title">📌 나의 구독 활동 (Subscription Activity)</div>
                 <button class="close-btn" onclick="closeModal('subscriptionActivityModal')">✕</button>
             </div>
-            <div style="font-size: 0.88rem; color: var(--text-bright); line-height: 1.7; margin-bottom: 16px;">
-                <div style="margin-bottom: 14px;">
-                    <div style="color:var(--primary-cyan); font-weight:800; margin-bottom:4px;">✨ 팔로잉 작가 (1명)</div>
-                    <div style="font-size:0.82rem; color:var(--text-sub); background:rgba(255,255,255,0.05); padding:10px; border-radius:8px; cursor:pointer;" onclick="navigateToActivity('writer', 'DeepMage')">• DeepMage (새 회차 알림 활성화) ➔</div>
+            <div style="font-size: 0.88rem; color: var(--text-bright); line-height: 1.6; margin-bottom: 12px;">
+                
+                <!-- 1. 팔로잉 작가 -->
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('subWriterAccordion')">
+                    <span>✨ 팔로잉 작가 (1명)</span>
+                    <span id="subWriterArrow">▼</span>
                 </div>
-                <div style="margin-bottom: 14px;">
-                    <div style="color:var(--warning-orange); font-weight:800; margin-bottom:4px;">🗳️ 투표에 참여중인 글 (1건)</div>
-                    <div style="font-size:0.82rem; color:var(--text-sub); background:rgba(255,255,255,0.05); padding:10px; border-radius:8px; cursor:pointer;" onclick="navigateToActivity('relay', 'card-test-ch6')">• [테스트] 6화 완결 제안 (후보 A 투표 완료) ➔</div>
+                <div class="modal-accordion-body" id="subWriterAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('writer', 'DeepMage')">
+                        <span>• DeepMage (새 회차 알림 활성화)</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
                 </div>
-                <div style="margin-bottom: 14px;">
-                    <div style="color:var(--success-green); font-weight:800; margin-bottom:4px;">📚 구독중인 오리지널 시리즈 (1개)</div>
-                    <div style="font-size:0.82rem; color:var(--text-sub); background:rgba(255,255,255,0.05); padding:10px; border-radius:8px; cursor:pointer;" onclick="navigateToActivity('creator', '심해 마법사의 공방')">• 심해 마법사의 공방 (연재 알림 수신중) ➔</div>
+
+                <!-- 2. 투표에 참여중인 글 -->
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('subVoteAccordion')">
+                    <span>🗳️ 투표에 참여중인 글 (1건)</span>
+                    <span id="subVoteArrow">▼</span>
                 </div>
-                <div>
-                    <div style="color:#7dd3fc; font-weight:800; margin-bottom:4px;">🏛️ 소장한 아카이브 도서 (1권)</div>
-                    <div style="font-size:0.82rem; color:var(--text-sub); background:rgba(255,255,255,0.05); padding:10px; border-radius:8px; cursor:pointer;" onclick="navigateToActivity('archive', 'arc_01')">• 심해의 소용돌이 속에서 (완결 영구 소장 완료) ➔</div>
+                <div class="modal-accordion-body" id="subVoteAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('relay', 'card-test-ch6')">
+                        <span>• [테스트] 6화 완결 제안 (후보 A 투표)</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
                 </div>
+
+                <!-- 3. 구독중인 오리지널 시리즈 -->
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('subCreatorAccordion')">
+                    <span>📚 구독중인 오리지널 시리즈 (1개)</span>
+                    <span id="subCreatorArrow">▼</span>
+                </div>
+                <div class="modal-accordion-body" id="subCreatorAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">
+                        <span>• 심해 마법사의 공방 (알림 수신중)</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
+                </div>
+
+                <!-- 4. 소장한 아카이브 도서 -->
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('subArchiveAccordion')">
+                    <span>🏛️ 소장한 아카이브 도서 (1권)</span>
+                    <span id="subArchiveArrow">▼</span>
+                </div>
+                <div class="modal-accordion-body" id="subArchiveAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('archive', 'arc_01')">
+                        <span>• 심해의 소용돌이 속에서 (영구 소장)</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
+                </div>
+
             </div>
             <button class="btn btn-outline" onclick="closeModal('subscriptionActivityModal')">닫기</button>
         </div>
@@ -780,6 +766,21 @@
                 </div>
             </div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('alarmModal')">닫기</button>
+        </div>
+    </div>
+
+    <!-- 모달: 릴레이 이전 챕터 누적 연재분 읽기 -->
+    <div class="modal-overlay" id="relayPrevChaptersModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="prevChaptersTitle">📖 이전 챕터 누적 연재분</div>
+                <button class="close-btn" onclick="closeModal('relayPrevChaptersModal')">✕</button>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--primary-cyan); margin-bottom: 12px; font-weight: 600;">
+                현재 진행 중인 챕터 직전까지 채택되어 연재된 누적 본문입니다.
+            </div>
+            <div class="reader-body theme-dark" id="prevChaptersBody" style="min-height: 200px; max-height: 350px; overflow-y: auto;"></div>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('relayPrevChaptersModal')">닫기</button>
         </div>
     </div>
 
@@ -901,7 +902,7 @@
                 <button class="close-btn" onclick="closeModal('archiveChapterListModal')">✕</button>
             </div>
             <div id="archiveChapterListContainer"></div>
-            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('archiveChapterListModal')">닫기</button>
+            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('archiveChapterListModal')">✕</button>
         </div>
     </div>
 
@@ -1028,7 +1029,7 @@
                 <select class="form-control" id="selectCreatorFormat">
                     <option value="소설">소설 (Novel)</option>
                     <option value="시나리오/대본">시나리오/대본 (Scenario)</option>
-                    <option value="에세이">에세이 (Essay)</option>
+                    <option value="에세이">エ세이 (Essay)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -1090,6 +1091,7 @@
         </div>
     </div>
 
+    <!-- 스토리 릴레이 상세 모달 (단계별 맞춤 버튼 분리 적용) -->
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1100,11 +1102,11 @@
                 <button class="close-btn" onclick="closeModal('integratedRelayModal')">✕</button>
             </div>
             <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 16px; line-height: 1.6;" id="integratedDesc">스토리 설명</p>
-            <div class="button-group" style="flex-direction: column;">
-                <button class="btn btn-outline" id="btnIntegratedVote">후보작 열람 & 투표하기 (무료)</button>
-                <button class="btn btn-primary" id="btnIntegratedWrite">이어쓰기 참여하기 (1.0 Test-Pi 보증금)</button>
+            <div class="button-group" style="flex-direction: column;" id="integratedButtonContainer">
+                <!-- 동적 분기 버튼 (투표 단계 vs 이어쓰기 단계) -->
             </div>
-            <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('integratedRelayModal')">닫기</button>
+            <button class="btn btn-outline" style="margin-top: 10px;" onclick="openPrevChaptersModal()">📖 이전 챕터 누적 연재분 읽기</button>
+            <button class="btn btn-outline" style="margin-top: 8px;" onclick="closeModal('integratedRelayModal')">닫기</button>
         </div>
     </div>
 
@@ -1219,7 +1221,8 @@
         ];
 
         let relayMockList = [
-            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.' }
+            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', prevChapters: '1~5화까지의 누적 연재분 내용이 여기에 표시됩니다...' },
+            { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', prevChapters: '1~2화까지의 누적 연재분 내용이 여기에 표시됩니다...' }
         ];
 
         let creatorMockList = [
@@ -1266,9 +1269,10 @@
             openModal('alarmModal');
         }
 
-        function toggleDrawerAccordion(accordionId) {
+        function toggleModalAccordion(accordionId) {
             const content = document.getElementById(accordionId);
-            const arrow = document.getElementById('subActivityArrow');
+            const arrowId = accordionId.replace('Accordion', 'Arrow');
+            const arrow = document.getElementById(arrowId);
             if (content.classList.contains('active')) {
                 content.classList.remove('active');
                 arrow.innerText = '▼';
@@ -1279,7 +1283,7 @@
         }
 
         function navigateToActivity(section, targetId) {
-            closeDrawer();
+            closeModal('subscriptionActivityModal');
             if (section === 'archive') {
                 switchTab('archive');
                 buyAndReadArchive(targetId, '심해의 소용돌이 속에서', 0.5);
@@ -1354,7 +1358,7 @@
             document.getElementById('relayHubView').style.display = 'none';
             document.getElementById('relayListViewContainer').style.display = 'block';
             document.getElementById('relayListHeaderTitle').innerText = mode === 'write' ? '이어쓰기 참여 글 목록' : '투표 가능한 릴레이 후보 글목록';
-            renderRelayListViewContent();
+            renderRelayListContent();
         }
 
         function backToRelayHub() {
@@ -1398,40 +1402,61 @@
                 container.classList.add('board-list-container');
                 toggleBtn.innerText = '🗂️ 카드뷰';
                 if (section === 'archive') renderArchiveListView();
-                if (section === 'relay') renderRelayListViewContent();
+                if (section === 'relay') renderRelayListContent();
                 if (section === 'creator') renderCreatorListViewContent();
             }
         }
 
         function renderRelayCardView() {
-            document.getElementById('relay-card-container').innerHTML = `
-                <div class="card" id="card-test-ch6" onclick="handleListCardClick('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">
-                    <div class="tag-group"><span class="tag tag-relay">✍️ 작성 기간 (Ch. 6 진행중)</span></div>
-                    <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>[테스트] 6화 완결 제안 테스트용 소설</h3></div>
-                    <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"6화부터는 이어쓰기를 누르면 '스토리 완결 제안' 체크박스가 나타납니다!"</p>
-                    <div class="timer-info">⏳ 작성 마감까지: 04일 12시간 남음</div>
-                    <div class="button-group">
-                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('[테스트] 6화 완결 제안 테스트용 소설', 'card-test-ch6', true)">투표</button>
-                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('card-test-ch6', '[테스트] 6화 완결 제안 테스트용 소설', '6화 이어쓰기 테스트입니다.', '🇰🇷', 6, false)">이어쓰기</button>
+            let html = '';
+            relayMockList.forEach(item => {
+                const isVote = item.phase === 'vote';
+                html += `
+                    <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
+                        <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
+                        <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
+                        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
+                        <div class="timer-info">⏳ 마감: ${item.time}</div>
+                        <div class="button-group">
+                            ${isVote 
+                                ? `<button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReadVoteModal('${item.title}', '${item.id}', true)">후보작 열람 & 투표하기 (무료)</button>`
+                                : `<button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); handleJoinOrWrite('${item.id}', '${item.title}', '${encodeURIComponent(item.content)}', '🇰🇷', 6, false)">이어쓰기 참여하기 (1.0 Test-Pi)</button>`
+                            }
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            });
+            document.getElementById('relay-card-container').innerHTML = html;
         }
 
-        function renderRelayListViewContent() {
+        function renderRelayListContent() {
+            const container = document.getElementById('relay-card-container');
+            const isBoard = container.classList.contains('board-list-container');
+
+            if (!isBoard) {
+                renderRelayCardView();
+                return;
+            }
+
             let html = '<div class="board-list-container">';
             relayMockList.forEach((item, idx) => {
+                const isVote = item.phase === 'vote';
                 html += `
-                    <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false)">
+                    <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
                         <div class="board-col-num">${idx+1}</div>
                         <div class="board-col-title">${item.title}</div>
-                        <div class="board-col-meta">${item.format} | ${item.progress} | ${item.time}</div>
-                        <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false)">참여</button></div>
+                        <div class="board-col-meta">${item.format} | ${item.progress}</div>
+                        <div class="board-col-action">
+                            ${isVote
+                                ? `<button class="board-mini-btn" onclick="event.stopPropagation(); openReadVoteModal('${item.title}', '${item.id}', true)">투표</button>`
+                                : `<button class="board-mini-btn" onclick="event.stopPropagation(); handleJoinOrWrite('${item.id}', '${item.title}', '${encodeURIComponent(item.content)}', '🇰🇷', 6, false)">이어쓰기</button>`
+                            }
+                        </div>
                     </div>
                 `;
             });
             html += '</div>';
-            document.getElementById('relay-card-container').innerHTML = html;
+            container.innerHTML = html;
         }
 
         function renderCreatorCardView() {
@@ -1476,7 +1501,6 @@
                 return true;
             });
 
-            // 별점 높은 순 (베스트셀러 자동 1위 로직) : 별점 평균이 높고 동점이면 조회수가 높은 순
             filteredList.sort((a, b) => {
                 const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
                 const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
@@ -1490,7 +1514,6 @@
                 return (ratingB - ratingA) || (b.views - a.views);
             });
 
-            // 상단 금빛 ⭐ BESTSELLER DISPLAY 쇼케이스 (항상 카드뷰 형태로 고정)
             if (filteredList.length > 0) {
                 const bestItem = filteredList[0];
                 const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
@@ -1517,7 +1540,6 @@
                 heroShowcase.style.display = 'none';
             }
 
-            // 하단 아카이브 목록 (카드뷰 vs 리스트뷰 분기)
             let html = '';
             if (isBoardView) {
                 html = '<div class="board-list-container">';
@@ -1849,25 +1871,35 @@
             }
         }
 
-        function handleListCardClick(cardId, title, content, flag, chapterNum, isLong) {
+        // 릴레이 카드/목록 클릭 시 단계별(투표 vs 이어쓰기) 맞춤 버튼 노출
+        let activeRelayItemData = null;
+        function handleListCardClick(cardId, title, content, flag, chapterNum, isLong, phase = 'write') {
+            activeRelayItemData = { cardId, title, content, flag, chapterNum, isLong, phase };
             document.getElementById('integratedTitle').innerText = title;
             document.getElementById('integratedFlag').innerText = flag || '🇰🇷';
             document.getElementById('integratedDesc').innerText = `"${content}"`;
 
-            const btnVote = document.getElementById('btnIntegratedVote');
-            const btnWrite = document.getElementById('btnIntegratedWrite');
-
-            btnVote.onclick = function() {
-                closeModal('integratedRelayModal');
-                openReadVoteModal(title, cardId, true);
-            };
-
-            btnWrite.onclick = function() {
-                closeModal('integratedRelayModal');
-                handleJoinOrWrite(cardId, title, encodeURIComponent(content), flag, chapterNum, isLong);
-            };
+            const btnContainer = document.getElementById('integratedButtonContainer');
+            if (phase === 'vote') {
+                btnContainer.innerHTML = `
+                    <button class="btn btn-outline" style="border-color: var(--warning-orange); color: var(--warning-orange);" onclick="openReadVoteModal('${title}', '${cardId}', true)">🗳️ 후보작 열람 & 투표하기 (무료)</button>
+                `;
+            } else {
+                btnContainer.innerHTML = `
+                    <button class="btn btn-primary" onclick="handleJoinOrWrite('${cardId}', '${title}', '${encodeURIComponent(content)}', '${flag}', ${chapterNum}, ${isLong})">✍️ 이어쓰기 참여하기 (1.0 Test-Pi 보증금)</button>
+                `;
+            }
 
             openModal('integratedRelayModal');
+        }
+
+        function openPrevChaptersModal() {
+            if (!activeRelayItemData) return;
+            document.getElementById('prevChaptersTitle').innerText = `'${activeRelayItemData.title}' 이전 챕터 연재분`;
+            const mockPrevText = "제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...\n\n(이전 챕터들의 누적 연재분이 이곳에 순차적으로 제공됩니다)";
+            document.getElementById('prevChaptersBodyinnerText') = mockPrevText;
+            document.getElementById('prevChaptersBody').innerText = mockPrevText;
+            openModal('relayPrevChaptersModal');
         }
 
         function setUserLanguage(langCode) {
@@ -1933,6 +1965,7 @@
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function openReadVoteModal(title, cardId, isVotePhase) {
+            closeModal('integratedRelayModal');
             document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
             const container = document.getElementById('candidateListContainer');
             container.innerHTML = `
@@ -1998,6 +2031,7 @@
         }
 
         function handleJoinOrWrite(cardId, title, encodedContent, flag, chapterNum, isLong) {
+            closeModal('integratedRelayModal');
             const authKey = `joined_room_${cardId}`;
             const hasJoinedBefore = localStorage.getItem(authKey);
             const decodedContent = decodeURIComponent(encodedContent);
@@ -2043,7 +2077,7 @@
             const format = document.getElementById('selectFormat').value;
             const content = document.getElementById('storyContent').value;
 
-            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', time: '05일 00시간 남음', content: content });
+            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content });
             closeModal('createModal');
             alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다!`);
             switchTab('relay');
@@ -2059,6 +2093,11 @@
             alert(`🎉 '${title} - ${subtitle}' 오리지널 작품 연재가 시작되었습니다!`);
             switchTab('creator');
         }
+
+        // 초기 로딩 시 기본 탭 렌더링
+        window.onload = function() {
+            renderRelayCardView();
+        };
     </script>
 </body>
 </html>
