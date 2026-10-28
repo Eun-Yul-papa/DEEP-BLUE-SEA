@@ -1377,35 +1377,36 @@
             document.getElementById('creatorListViewContainer').style.display = 'none';
         }
 
-        function toggleViewMode(section) {
-            let containerId = 'relay-card-container';
-            let toggleBtnId = 'relayViewToggle';
+function toggleViewMode(section) {
+    let containerId = 'relay-card-container';
+    let toggleBtnId = 'relayViewToggle';
 
-            if (section === 'creator') {
-                containerId = 'creator-card-container';
-                toggleBtnId = 'creatorViewToggle';
-            } else if (section === 'archive') {
-                containerId = 'archive-card-container';
-                toggleBtnId = 'archiveViewToggle';
-            }
+    if (section === 'creator') {
+        containerId = 'creator-card-container';
+        toggleBtnId = 'creatorViewToggle';
+    } else if (section === 'archive') {
+        containerId = 'archive-card-container';
+        toggleBtnId = 'archiveViewToggle';
+    }
 
-            const container = document.getElementById(containerId);
-            const toggleBtn = document.getElementById(toggleBtnId);
+    const container = document.getElementById(containerId);
+    const toggleBtn = document.getElementById(toggleBtnId);
 
-            if (container.classList.contains('board-list-container')) {
-                container.classList.remove('board-list-container');
-                toggleBtn.innerText = '☰ 리스트뷰';
-                if (section === 'archive') renderArchiveList();
-                if (section === 'relay') renderRelayCardView();
-                if (section === 'creator') renderCreatorCardView();
-            } else {
-                container.classList.add('board-list-container');
-                toggleBtn.innerText = '🗂️ 카드뷰';
-                if (section === 'archive') renderArchiveListView();
-                if (section === 'relay') renderRelayListContent();
-                if (section === 'creator') renderCreatorListViewContent();
-            }
-        }
+    if (container.classList.contains('board-list-container')) {
+        container.classList.remove('board-list-container');
+        toggleBtn.innerText = '☰ 리스트뷰';
+        if (section === 'archive') renderArchiveList();
+        if (section === 'relay') renderRelayCardView();
+        if (section === 'creator') renderCreatorCardView();
+    } else {
+        container.classList.add('board-list-container');
+        toggleBtn.innerText = '🗂️ 카드뷰';
+        if (section === 'archive') renderArchiveList(); // 👈 여기서 바로 아카이브 리스트를 다시 그려줍니다!
+        if (section === 'relay') renderRelayListViewContent();
+        if (section === 'creator') renderCreatorListViewContent();
+    }
+}
+
 
         function renderRelayCardView() {
             let html = '';
@@ -1487,112 +1488,120 @@
         }
 
         function renderArchiveList() {
-            const country = document.getElementById('archiveCountrySelect').value;
-            const category = document.getElementById('archiveCategorySelect').value;
-            const sortBy = document.getElementById('archiveSortSelect').value;
-            const container = document.getElementById('archive-card-container');
-            const heroShowcase = document.getElementById('archiveHeroShowcase');
-            const isBoardView = container.classList.contains('board-list-container');
+    const country = document.getElementById('archiveCountrySelect').value;
+    const category = document.getElementById('archiveCategorySelect').value;
+    const sortBy = document.getElementById('archiveSortSelect').value;
+    const container = document.getElementById('archive-card-container');
+    const heroShowcase = document.getElementById('archiveHeroShowcase');
+    
+    // 💡 핵심 체크: 현재 컨테이너에 리스트뷰 클래스가 붙어있는지 확인!
+    const isBoardView = container.classList.contains('board-list-container');
 
-            let filteredList = archiveDataList.filter(item => {
-                if (country !== 'all' && item.flag !== country) return false;
-                if (category === 'relay' && item.type !== 'relay') return false;
-                if (category === 'creator' && item.type !== 'creator') return false;
-                return true;
-            });
+    let filteredList = archiveDataList.filter(item => {
+        if (country !== 'all' && item.flag !== country) return false;
+        if (category === 'relay' && item.type !== 'relay') return false;
+        if (category === 'creator' && item.type !== 'creator') return false;
+        return true;
+    });
 
-            filteredList.sort((a, b) => {
-                const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
-                const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
-                if (sortBy === 'rating') {
-                    if (ratingB !== ratingA) return ratingB - ratingA;
-                    return b.views - a.views;
-                }
-                if (sortBy === 'time') return b.timestamp - a.timestamp;
-                if (sortBy === 'views') return b.views - a.views;
-                if (sortBy === 'length') return a.totalCh - b.totalCh;
-                return (ratingB - ratingA) || (b.views - a.views);
-            });
-
-            if (filteredList.length > 0) {
-                const bestItem = filteredList[0];
-                const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
-                const bestPrice = bestItem.isLong ? 1.0 : 0.5;
-                heroShowcase.innerHTML = `
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div style="display: flex; gap: 6px; align-items: center;">
-                            <span class="tag" style="background:rgba(245,158,11,0.2); color:var(--gold-star); border:1px solid rgba(245,158,11,0.4);">⭐ BESTSELLER DISPLAY</span>
-                            <span class="tag tag-meta">${bestItem.flag} ${bestItem.genre}</span>
-                        </div>
-                        <h2 style="font-size: 1.25rem; font-weight: 900; color: #fff;">${bestItem.title}</h2>
-                        <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5;">"${bestItem.desc}"</p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem;">
-                            <span class="star-rating-box">★ ${bestRating} (${bestItem.ratingCount}개 리뷰)</span>
-                            <span style="color: var(--primary-cyan);">조회수 ${bestItem.views}회</span>
-                        </div>
-                        <button class="btn btn-primary" style="margin-top: 8px;" onclick="buyAndReadArchive('${bestItem.id}', '${bestItem.title}', ${bestPrice})">
-                            📖 베스트셀러 작품 읽기 (${bestPrice} Test-Pi)
-                        </button>
-                    </div>
-                `;
-                heroShowcase.style.display = 'block';
-            } else {
-                heroShowcase.style.display = 'none';
-            }
-
-            let html = '';
-            if (isBoardView) {
-                html = '<div class="board-list-container">';
-                filteredList.forEach((item, idx) => {
-                    const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
-                    html += `
-                        <div class="board-list-row" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">
-                            <div class="board-col-num">${idx+1}</div>
-                            <div class="board-col-title">${item.title}</div>
-                            <div class="board-col-meta">${typeLabel} | 총 ${item.totalCh}화 | ${item.creatorName}</div>
-                            <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">읽기</button></div>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            } else {
-                filteredList.forEach(item => {
-                    const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
-                    const price = item.isLong ? 1.0 : 0.5;
-                    const typeLabel = (item.type === 'relay') ? '스토리 릴레이 완결' : '오리지널 시리즈 완결';
-
-                    html += `
-                        <div class="archive-book-shelf-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
-                            <div class="tag-group">
-                                <span class="tag tag-archive">📚 도서관 소장품</span>
-                                <span class="tag tag-meta">${typeLabel}</span>
-                                <span class="tag tag-meta">${item.format} · ${item.genre}</span>
-                                <span class="tag tag-meta">${item.totalCh}화 완결</span>
-                            </div>
-                            <div class="title-with-flag">
-                                <span class="flag-badge">${item.flag}</span>
-                                <h3>${item.title}</h3>
-                            </div>
-                            <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">"${item.desc}"</p>
-
-                            <div class="stats-meta-row">
-                                <div class="star-rating-box">
-                                    ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
-                                </div>
-                                <div>누적 소장/조회: <b>${item.views}</b>회</div>
-                            </div>
-
-                            <div class="button-group">
-                                <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">⭐ 별점 & 리뷰 보기</button>
-                                <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">📖 도서 읽기 (${price} Test-Pi)</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            container.innerHTML = html;
+    // 정렬 로직 (별점순 / 조회수순 등)
+    filteredList.sort((a, b) => {
+        const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
+        const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
+        if (sortBy === 'rating') {
+            if (ratingB !== ratingA) return ratingB - ratingA;
+            return b.views - a.views;
         }
+        if (sortBy === 'time') return b.timestamp - a.timestamp;
+        if (sortBy === 'views') return b.views - a.views;
+        if (sortBy === 'length') return a.totalCh - b.totalCh;
+        return (ratingB - ratingA) || (b.views - a.views);
+    });
+
+    // 1. 상단 베스트셀러 진열작 쇼케이스 (항상 카드뷰 고정)
+    if (filteredList.length > 0) {
+        const bestItem = filteredList[0];
+        const bestRating = bestItem.ratingCount > 0 ? (bestItem.ratingSum / bestItem.ratingCount).toFixed(1) : '0.0';
+        const bestPrice = bestItem.isLong ? 1.0 : 0.5;
+        heroShowcase.innerHTML = `
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <span class="tag" style="background:rgba(245,158,11,0.2); color:var(--gold-star); border:1px solid rgba(245,158,11,0.4);">⭐ BESTSELLER DISPLAY</span>
+                    <span class="tag tag-meta">${bestItem.flag} ${bestItem.genre}</span>
+                </div>
+                <h2 style="font-size: 1.25rem; font-weight: 900; color: #fff;">${bestItem.title}</h2>
+                <p style="font-size: 0.85rem; color: var(--text-sub); line-height: 1.5;">"${bestItem.desc}"</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 0.8rem;">
+                    <span class="star-rating-box">★ ${bestRating} (${bestItem.ratingCount}개 리뷰)</span>
+                    <span style="color: var(--primary-cyan);">조회수 ${bestItem.views}회</span>
+                </div>
+                <button class="btn btn-primary" style="margin-top: 8px;" onclick="buyAndReadArchive('${bestItem.id}', '${bestItem.title}', ${bestPrice})">
+                    📖 베스트셀러 작품 읽기 (${bestPrice} Test-Pi)
+                </button>
+            </div>
+        `;
+        heroShowcase.style.display = 'block';
+    } else {
+        heroShowcase.style.display = 'none';
+    }
+
+    // 2. 하단 목록 (리스트뷰 vs 카드뷰 분기 렌더링)
+    let html = '';
+    if (isBoardView) {
+        // 📋 리스트뷰 (한 줄 게시판 형태)
+        html = '<div class="board-list-container">';
+        filteredList.forEach((item, idx) => {
+            const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
+            html += `
+                <div class="board-list-row" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">
+                    <div class="board-col-num">${idx+1}</div>
+                    <div class="board-col-title">${item.title}</div>
+                    <div class="board-col-meta">${typeLabel} | 총 ${item.totalCh}화 | ${item.creatorName}</div>
+                    <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">읽기</button></div>
+                </div>
+            `;
+        });
+        html += '</div>';
+    } else {
+        // 🗂️ 카드뷰 (기존 책장형 카드 형태)
+        filteredList.forEach(item => {
+            const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
+            const price = item.isLong ? 1.0 : 0.5;
+            const typeLabel = (item.type === 'relay') ? '스토리 릴레이 완결' : '오리지널 시리즈 완결';
+
+            html += `
+                <div class="archive-book-shelf-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
+                    <div class="tag-group">
+                        <span class="tag tag-archive">📚 도서관 소장품</span>
+                        <span class="tag tag-meta">${typeLabel}</span>
+                        <span class="tag tag-meta">${item.format} · ${item.genre}</span>
+                        <span class="tag tag-meta">${item.totalCh}화 완결</span>
+                    </div>
+                    <div class="title-with-flag">
+                        <span class="flag-badge">${item.flag}</span>
+                        <h3>${item.title}</h3>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px;">"${item.desc}"</p>
+
+                    <div class="stats-meta-row">
+                        <div class="star-rating-box">
+                            ★ ${avgRating} <span style="font-size: 0.72rem; color: var(--text-sub);">(${item.ratingCount}개 리뷰)</span>
+                        </div>
+                        <div>누적 소장/조회: <b>${item.views}</b>회</div>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-outline" style="flex: 1;" onclick="event.stopPropagation(); openReviewModal('${item.id}')">⭐ 별점 & 리뷰 보기</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${price})">📖 도서 읽기 (${price} Test-Pi)</button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    container.innerHTML = html;
+}
+
 
         function handleArchiveCardClick(id) {
             const item = archiveDataList.find(a => a.id === id);
