@@ -1314,31 +1314,30 @@
         };
 
 async function initPiAuth() {
-    alert("🔍 [디버깅] 1단계: 파이 로그인 함수 진입 성공!");
-    
     const scopes = ['username', 'payments'];
     
     function onIncompletePaymentFound(payment) {
-        console.log("미완료된 결제 내역:", payment);
+        console.log("미완료된 결제 내역이 발견되었습니다:", payment);
+        // TODO: 백엔드 구축 시 결제 검증 및 복구 로직 연결
     }
 
     try {
-        alert("🔍 [디버깅] 2단계: Pi.authenticate 호출 직전");
         const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        console.log(`[Pi Login Success] 환영합니다, ${auth.user.username}님!`);
         
-        alert(`🎉 [성공] 환영합니다, ${auth.user.username}님!`);
-        
+        // UI 유저네임 반영
         const drawerNameElem = document.getElementById('drawerUserName');
         if (drawerNameElem) {
             drawerNameElem.innerText = auth.user.username;
         }
         
+        alert(`🎉 파이 지갑 연동 성공!\n환영합니다, ${auth.user.username}님!`);
+        
     } catch (error) {
-        console.error("[Pi Login Failed] 인증 상세 에러:", error);
-        alert("❌ 파이 로그인 실패 에러 내용:\n" + JSON.stringify(error));
+        console.error("[Pi Login Failed] 인증 실패:", error);
+        alert("❌ 파이 지갑 로그인에 실패했습니다.\nSandbox 환경 또는 파이 브라우저 설정을 확인해 주세요.");
     }
 }
-
         function updateWalletDisplay() {
             document.getElementById('drawerTotalNet').innerText = currentBalance.toFixed(1);
             document.getElementById('drawerSpent').innerText = userSpentPi.toFixed(1);
