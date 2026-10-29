@@ -137,8 +137,9 @@
         }
         .modal-accordion-body.active { max-height: 250px; padding: 6px 0; overflow-y: auto; }
         .modal-sub-item {
-            padding: 8px 16px; font-size: 0.8rem; color: var(--text-sub); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 16px; font-size: 0.82rem; color: var(--text-sub); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.04);
         }
+        .modal-sub-item:last-child { border-bottom: none; }
         .modal-sub-item:hover { color: var(--primary-cyan); background: rgba(56,189,248,0.1); }
 
         .nav-tabs {
@@ -203,10 +204,6 @@
         }
         .landing-action-card:hover { border-color: var(--primary-cyan); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(56, 189, 248, 0.35); }
 
-        .card-rules-list { font-size: 0.8rem; color: var(--text-sub); line-height: 1.6; margin-bottom: 14px; }
-        .card-rules-list div { margin-bottom: 6px; }
-        .card-rules-list b { color: var(--text-bright); }
-
         .hub-container { display: flex; flex-direction: column; gap: 16px; }
         .hub-guide-card {
             background: rgba(13, 33, 66, 0.88); border: 1px solid var(--border-glow); border-radius: 18px; padding: 20px; backdrop-filter: blur(10px);
@@ -229,7 +226,7 @@
         }
         .sort-select:hover { border-color: var(--primary-cyan); }
         .view-toggle-btn {
-            background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan); color: var(--primary-cyan); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan); color: var(--primary-cyan); padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;
         }
         .view-toggle-btn:hover { background: rgba(56, 189, 248, 0.3); }
 
@@ -339,7 +336,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.8); animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* 4번 요청: 블루 아카이브 뷰어 모달 좌우 여백 대폭 확장 (인터넷 기사형) */
         .modal-content.archive-reader-wide {
             max-width: 96vw !important;
             width: 96vw !important;
@@ -572,13 +568,16 @@
                 </div>
             </div>
 
+            <!-- 3번 요청: 허브로 돌아가기 버튼 슬림한 한 줄 레이아웃 적용 -->
             <div id="relayListViewContainer" style="display: none;">
                 <div class="section-header">
-                    <div class="section-title-group">
-                        <button class="view-toggle-btn" onclick="backToRelayHub()">⬅ 허브로 돌아가기</button>
+                    <div class="section-title-group" style="width: 100%; justify-content: space-between;">
                         <div class="section-title" id="relayListHeaderTitle">스토리 릴레이 목록</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="view-toggle-btn" onclick="backToRelayHub()">⬅ 허브로</button>
+                            <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트뷰</button>
+                        </div>
                     </div>
-                    <button class="view-toggle-btn" id="relayViewToggle" onclick="toggleViewMode('relay')">☰ 리스트뷰</button>
                 </div>
                 <div id="relay-card-container"></div>
             </div>
@@ -614,11 +613,13 @@
 
             <div id="creatorListViewContainer" style="display: none;">
                 <div class="section-header">
-                    <div class="section-title-group">
-                        <button class="view-toggle-btn" onclick="backToCreatorHub()">⬅ 허브로 돌아가기</button>
+                    <div class="section-title-group" style="width: 100%; justify-content: space-between;">
                         <div class="section-title">오리지널 시리즈 전체 목록</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="view-toggle-btn" onclick="backToCreatorHub()">⬅ 허브로</button>
+                            <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트뷰</button>
+                        </div>
                     </div>
-                    <button class="view-toggle-btn" id="creatorViewToggle" onclick="toggleViewMode('creator')">☰ 리스트뷰</button>
                 </div>
                 <div id="creator-card-container"></div>
             </div>
@@ -658,11 +659,13 @@
 
             <div id="archiveListViewContainer" style="display: none;">
                 <div class="section-header">
-                    <div class="section-title-group">
-                        <button class="view-toggle-btn" onclick="backToArchiveHub()">⬅ 아카이브 허브로</button>
+                    <div class="section-title-group" style="width: 100%; justify-content: space-between;">
                         <div class="section-title" id="archiveListHeaderTitle">완결작 목록</div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="view-toggle-btn" onclick="backToArchiveHub()">⬅ 아카이브로</button>
+                            <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
+                        </div>
                     </div>
-                    <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
                 </div>
 
                 <div class="sort-filter-bar">
@@ -707,38 +710,22 @@
                     <button class="btn btn-primary" style="margin-top: 10px; padding: 8px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
                 </div>
                 
-                <!-- 3번 요청: 크리에이터 스튜디오 지분 현황 아코디언화 및 연동 -->
-                <div style="font-size: 0.9rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 8px;">📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</div>
-                
-                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioCreatorAccordion')">
-                    <span>🟢 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)</span>
-                    <span id="studioCreatorArrow">▼</span>
+                <!-- 1번 요청: 하나의 큰 아코디언 창 안에 참여했던 작품 목록이 싹 들어가도록 통합 -->
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioIntegratedAccordion')">
+                    <span>📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</span>
+                    <span id="studioIntegratedArrow">▼</span>
                 </div>
-                <div class="modal-accordion-body" id="studioCreatorAccordion">
+                <div class="modal-accordion-body" id="studioIntegratedAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">
-                        <span>• 연재 관리 및 회차 보기</span>
+                        <span>🟢 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)</span>
                         <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
-                </div>
-
-                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioArchiveAccordion')">
-                    <span>🏛️ 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)</span>
-                    <span id="studioArchiveArrow">▼</span>
-                </div>
-                <div class="modal-accordion-body" id="studioArchiveAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('archive', 'arc_01')">
-                        <span>• 완결작 아카이브 도서 열람</span>
+                        <span>🏛️ 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)</span>
                         <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
-                </div>
-
-                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioRelayAccordion')">
-                    <span>✍️ [테스트] 6화 완결 제안 (릴레이 이어쓰기 참여중)</span>
-                    <span id="studioRelayArrow">▼</span>
-                </div>
-                <div class="modal-accordion-body" id="studioRelayAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('relay', 'card-test-ch6')">
-                        <span>• 릴레이 진행 상황 확인</span>
+                        <span>✍️ [테스트] 6화 완결 제안 (릴레이 참여중)</span>
                         <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
@@ -958,7 +945,7 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (4번: archive-reader-wide 적용) -->
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
         <div class="modal-content archive-reader-wide" id="archiveReaderModalContent">
             <div class="modal-header" id="archiveReaderHeaderBar">
@@ -989,11 +976,9 @@
                 <button class="page-btn" id="toggleViewAllBtn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
             </div>
 
-            <!-- 2번 요청: 회차 제목 및 소제목 아래 '작가 : OOO' 통일 표기 -->
             <div style="font-size: 0.88rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 2px;" id="archiveChapterIndicator">제 1화</div>
             <div style="font-size: 0.8rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px; display: none;" id="archiveChapterAuthorIndicator">작가 : </div>
             
-            <!-- 2번 요청: '몇화 본문 :' 문구 제거 및 넓은 본문 영역 -->
             <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 250px; font-size: 1.02rem;"></div>
 
             <button class="btn btn-outline" style="border-color: var(--success-green); color: var(--success-green); margin-bottom: 10px;" onclick="openChapterCommentModal()">
@@ -1012,7 +997,7 @@
         </div>
     </div>
 
-    <!-- 모달: 릴레이 개설 (1번 요청: 개설 창 완결 제안 체크박스 삭제 완료) -->
+    <!-- 모달: 릴레이 개설 -->
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1116,7 +1101,7 @@
         </div>
     </div>
 
-    <!-- 모달: 이어쓰기 작업실 (1번 요청: 단편 6화+, 장편 11화+ 일 때만 완결 체크 활성화) -->
+    <!-- 모달: 이어쓰기 작업실 -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1135,7 +1120,6 @@
                 <input type="text" class="form-control" id="writerSubtitleInput" placeholder="회차 소제목을 입력하세요...">
             </div>
             
-            <!-- 1번 요청: 조건부 완결 제안 체크박스 영역 -->
             <div class="form-group" id="writerFinalCheckboxWrapper" style="display: none; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
                 <input type="checkbox" id="checkFinalChapterWrite" style="width: 18px; height: 18px; cursor: pointer;">
                 <label for="checkFinalChapterWrite" style="font-size: 0.82rem; color: var(--warning-orange); font-weight: 700; cursor: pointer;">🏁 이 챕터를 마지막 회차(완결)로 제안하기</label>
@@ -1281,7 +1265,7 @@
         ];
 
         let relayMockList = [
-            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', creatorName: 'PiMaster', lengthType: 'short', currentCh: 6, prevChapters: '제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...' },
+            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중(1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', creatorName: 'PiMaster', lengthType: 'short', currentCh: 6, prevChapters: '제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...' },
             { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', creatorName: 'AliceWriter', lengthType: 'short', currentCh: 3, prevChapters: '제 1화: 첫 번째 모험\n1화 본문 내용...' }
         ];
 
@@ -1415,7 +1399,6 @@
             }
         }
 
-        // 1번 요청: 허브에서 이어쓰기 / 투표하기 버튼을 누르면 해당 목록만 필터링해서 표시
         let currentRelayHubMode = 'write';
 
         function showRelayListView(mode) {
@@ -1486,7 +1469,7 @@
             if (section === 'creator') renderCreatorListViewContent();
         }
 
-        // 1번 요청: 릴레이 목록 렌더링 (이어쓰기 vs 투표하기 모드 완벽 분리 및 단편/장편 뱃지, 2줄 리스트뷰)
+        // 2번 요청: '진행 : ' 문구 제거 및 '글쓰기 진행중(1/5)' 형태 반영
         function renderRelayListContent() {
             const container = document.getElementById('relay-card-container');
             const isBoardView = container.classList.contains('board-list-container');
@@ -1510,7 +1493,7 @@
                                     <span class="tag tag-meta" style="font-size: 0.65rem; padding: 2px 6px;">${badgeText}</span>
                                 </div>
                                 <div style="font-size: 0.75rem; color: var(--text-sub); display: flex; gap: 10px;">
-                                    <span>진행: ${item.progress}</span>
+                                    <span>${item.progress}</span>
                                     <span style="color: var(--warning-orange);">⏳ ${item.time}</span>
                                 </div>
                             </div>
@@ -1749,7 +1732,6 @@
             openModal('archiveChapterReaderModal');
         }
 
-        // 2번 요청: 블루 아카이브 뷰어에서 '작가 : OOO' 통일 및 '몇화 본문 :' 문구 제거
         function updateArchiveReaderContent() {
             if (!activeArchiveReaderItem) return;
             const item = activeArchiveReaderItem;
@@ -2021,7 +2003,6 @@
             openModal('integratedRelayModal');
         }
 
-        // 1번 요청: '이전까지 스토리 보기' 누를 때 누적 본문 내 각 소제목 아래에 '작가 : OOO' 표기 추가
         function openPrevChaptersModal() {
             if (!activeRelayItemData) return;
             document.getElementById('prevChaptersTitle').innerText = `'${activeRelayItemData.title}' 이전까지 스토리 보기`;
@@ -2183,7 +2164,6 @@
             }
         }
 
-        // 1번 요청: 단편은 6화 이상, 장편은 11화 이상일 때만 이어쓰기 작업실에서 완결 제안 체크박스 노출
         function openWriterModal(title, content, flag, chapterNum = 6, isLong = false) {
             document.getElementById('writerFlag').innerText = flag || '🇰🇷';
             document.getElementById('writerTitle').innerText = title + ' - 이어쓰기 (Ch. ' + chapterNum + ')';
@@ -2192,7 +2172,7 @@
             document.getElementById('writerInputContent').value = "";
             
             const checkboxWrapper = document.getElementById('writerFinalCheckboxWrapper');
-            const isShort = true; // 예시 기본 단편
+            const isShort = true;
             const showFinalCheck = (isShort && chapterNum >= 6) || (!isShort && chapterNum >= 11);
             
             if (showFinalCheck) {
@@ -2221,7 +2201,7 @@
             const format = document.getElementById('selectFormat').value;
             const content = document.getElementById('storyContent').value;
 
-            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나', lengthType: 'short', currentCh: 1, prevChapters: '' });
+            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중(1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나', lengthType: 'short', currentCh: 1, prevChapters: '' });
             closeModal('createModal');
             alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다!`);
             switchTab('relay');
