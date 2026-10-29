@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Blue Sea - Web3 Storytelling DApp</title>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
         :root {
             --bg-deep: #020916;
@@ -48,6 +49,7 @@
         .goog-te-gadget { display: none !important; }
         #google_translate_element { display: none; }
 
+        
         header {
             background: rgba(2, 9, 22, 0.85);
             backdrop-filter: blur(12px);
@@ -433,6 +435,7 @@
                 <span class="user-welcome-text">환영합니다, <span id="drawerUserName">Pioneer</span>님!</span>
                 <button class="alarm-btn-drawer" onclick="openAlarmModal()">🔔 알림</button>
             </div>
+            <button class="btn btn-primary" style="margin-top: 8px; padding: 8px; font-size: 0.8rem;" onclick="initPiAuth()">🪙 파이 지갑 로그인 연동</button>
             <div class="user-balance-box">
                 <div>💰 총수익 : <b id="drawerTotalNet">100.0</b> Test-Pi</div>
                 <div style="font-size: 0.72rem; color: var(--text-sub); margin-top: 3px;">
@@ -2276,8 +2279,50 @@ function openReadVoteModal(title, cardId, isVotePhase) {
             switchTab('creator');
         }
 
+
+// 페이지가 로드될 때 실행되는 통합 영역
         window.onload = function() {
+            // 1. 파이 SDK 초기화 (오류 방지용 안전 장치 포함)
+            try {
+                if (typeof Pi !== 'undefined') {
+                    Pi.init({ version: "2.0", sandbox: true });
+                    console.log("Pi SDK initialized successfully.");
+                } else {
+                    console.log("Pi SDK loaded outside Pi Browser.");
+                }
+            } catch (error) {
+                console.error("Pi SDK initialization failed:", error);
+            }
+
+            // 2. 기존 릴레이 목록 렌더링 실행
             renderRelayListContent();
+        };
+
+        // 3. 파이 지갑 로그인 함수 (버튼 클릭 시 실행)
+        async function initPiAuth() {
+            const scopes = ['username', 'payments'];
+            
+            function onIncompletePaymentFound(payment) {
+                console.log("미완료된 결제 내역:", payment);
+            }
+
+            try {
+                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+                console.log(`[Pi Login Success] 환영합니다, ${auth.user.username}님!`);
+                
+                const drawerNameElem = document.getElementById('drawerUserName');
+                if (drawerNameElem) {
+                    drawerNameElem.innerText = auth.user.username;
+                }
+                
+                alert(`🎉 파이 지갑 연동 성공!\n환영합니다, ${auth.user.username}님!`);
+                
+            } catch (error) {
+                console.error("[Pi Login Failed] 인증 실패:", error);
+                alert("❌ 파이 지갑 로그인에 실패했습니다.\n반드시 파이 브라우저(Pi Browser) 내부에서 실행해 주세요!");
+            }
+        }            
+        renderRelayListContent();
         };
     </script>
 </body>
