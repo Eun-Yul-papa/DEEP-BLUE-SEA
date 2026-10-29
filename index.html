@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -49,7 +50,6 @@
         .goog-te-gadget { display: none !important; }
         #google_translate_element { display: none; }
 
-        
         header {
             background: rgba(2, 9, 22, 0.85);
             backdrop-filter: blur(12px);
@@ -436,7 +436,7 @@
                 <button class="alarm-btn-drawer" onclick="openAlarmModal()">🔔 알림</button>
             </div>
             <button class="btn btn-primary" style="margin-top: 8px; padding: 8px; font-size: 0.8rem;" onclick="initPiAuth()">🪙 파이 지갑 로그인 연동</button>
-            <div class="user-balance-box">
+            <div class="user-balance-box" style="margin-top: 8px;">
                 <div>💰 총수익 : <b id="drawerTotalNet">100.0</b> Test-Pi</div>
                 <div style="font-size: 0.72rem; color: var(--text-sub); margin-top: 3px;">
                     결제됨 : <span id="drawerSpent">0.0</span> / 보상됨 : <span id="drawerRewarded">0.0</span>
@@ -466,20 +466,20 @@
             </div>
             <div class="header-right-group">
                 <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
-    <option value="ko" selected>🇰🇷 한국어</option>
-    <option value="en">🇺🇸 English</option>
-    <option value="zh-CN">🇨🇳 中文</option>
-    <option value="ja">🇯🇵 日本語</option>
-    <option value="es">🇪🇸 Español</option>
-    <option value="vi">🇻🇳 Tiếng Việt</option>
-    <option value="id">🇮🇩 Indonesia</option>
-    <option value="hi">🇮🇳 हिन्दी</option>
-    <option value="tl">🇵🇭 Tagalog(필리핀)</option>
-    <option value="it">🇮🇹 Italiano</option>
-    <option value="fr">🇫🇷 Français</option>
-    <option value="de">🇩🇪 Deutsch</option>
-    <option value="nl">🇳🇱 Nederlands</option>
-</select>
+                    <option value="ko" selected>🇰🇷 한국어</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="zh-CN">🇨🇳 中文</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="vi">🇻🇳 Tiếng Việt</option>
+                    <option value="id">🇮🇩 Indonesia</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="tl">🇵🇭 Tagalog</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="nl">🇳🇱 Nederlands</option>
+                </select>
             </div>
         </div>
     </header>
@@ -576,7 +576,6 @@
                 </div>
             </div>
 
-            <!-- 3번 요청: 허브로 돌아가기 버튼 슬림한 한 줄 레이아웃 적용 -->
             <div id="relayListViewContainer" style="display: none;">
                 <div class="section-header">
                     <div class="section-title-group" style="width: 100%; justify-content: space-between;">
@@ -718,7 +717,6 @@
                     <button class="btn btn-primary" style="margin-top: 10px; padding: 8px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
                 </div>
                 
-               <!-- 1번 요청: 하나의 큰 아코디언 창 안에 참여했던 작품 목록이 싹 들어가도록 통합 ('이동 ➔' 제거 버전) -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('studioIntegratedAccordion')">
                     <span>📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</span>
                     <span id="studioIntegratedArrow">▼</span>
@@ -734,7 +732,6 @@
                         <span>✍️ [테스트] 6화 완결 제안 (릴레이 참여중)</span>
                     </div>
                 </div>
-
 
             </div>
             <button class="btn btn-outline" onclick="closeModal('creatorStudioModal')">닫기</button>
@@ -756,7 +753,6 @@
                 <div class="modal-accordion-body" id="subWriterAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('writer', 'DeepMage')">
                         <span>• DeepMage (새 회차 알림 활성화)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
 
@@ -767,7 +763,6 @@
                 <div class="modal-accordion-body" id="subVoteAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('relay', 'card-test-ch6')">
                         <span>• [테스트] 6화 완결 제안 (후보 A 투표)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
 
@@ -778,7 +773,6 @@
                 <div class="modal-accordion-body" id="subCreatorAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">
                         <span>• 심해 마법사의 공방 (알림 수신중)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
 
@@ -789,7 +783,6 @@
                 <div class="modal-accordion-body" id="subArchiveAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('archive', 'arc_01')">
                         <span>• 심해의 소용돌이 속에서 (영구 소장)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
 
@@ -814,23 +807,6 @@
         </div>
     </div>
 
-    <!-- 후보작 본문 열람 및 투표 모달 (신규 추가) -->
-<div class="modal-overlay z-top" id="candidateReaderModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <div class="modal-title" id="candidateReaderTitle">후보작 본문 읽기</div>
-            <button class="close-btn" onclick="closeModal('candidateReaderModal')">✕</button>
-        </div>
-        <button class="translate-btn" onclick="translateCurrentReaderContent()">
-            🌐 Translate to My Language (<span id="targetLangTextCandidate">English</span>)
-        </button>
-        <div class="reader-body theme-dark notranslate" id="candidateReaderBody" style="min-height: 200px; max-height: 350px; overflow-y: auto;"></div>
-        
-        <button class="btn btn-primary" id="btnVoteThisCandidate" style="margin-top: 10px;">🗳️ 이 글에 투표하기</button>
-        <button class="btn btn-outline" style="margin-top: 8px;" onclick="closeModal('candidateReaderModal'); openModal('readVoteModal');">목록으로 돌아가기</button>
-    </div>
-</div>
-    <!-- 릴레이 이전까지 스토리 보기 모달 -->
     <div class="modal-overlay z-top" id="relayPrevChaptersModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -842,6 +818,22 @@
             </div>
             <div class="reader-body theme-dark" id="prevChaptersBody" style="min-height: 200px; max-height: 350px; overflow-y: auto;"></div>
             <button class="btn btn-outline" style="margin-top: 14px;" onclick="closeModal('relayPrevChaptersModal')">닫기</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay z-top" id="candidateReaderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="candidateReaderTitle">후보작 본문 읽기</div>
+                <button class="close-btn" onclick="closeModal('candidateReaderModal')">✕</button>
+            </div>
+            <button class="translate-btn" onclick="translateCurrentReaderContent()">
+                🌐 Translate to My Language (<span id="targetLangTextCandidate">English</span>)
+            </button>
+            <div class="reader-body theme-dark notranslate" id="candidateReaderBody" style="min-height: 200px; max-height: 350px; overflow-y: auto;"></div>
+            
+            <button class="btn btn-primary" id="btnVoteThisCandidate" style="margin-top: 10px;">🗳️ 이 글에 투표하기</button>
+            <button class="btn btn-outline" style="margin-top: 8px;" onclick="closeModal('candidateReaderModal'); openModal('readVoteModal');">목록으로 돌아가기</button>
         </div>
     </div>
 
@@ -924,7 +916,6 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 별점 및 리뷰 창 -->
     <div class="modal-overlay" id="reviewModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -955,7 +946,6 @@
         </div>
     </div>
 
-    <!-- 완결작 회차 목록 모달 -->
     <div class="modal-overlay" id="archiveChapterListModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -967,7 +957,6 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
         <div class="modal-content archive-reader-wide" id="archiveReaderModalContent">
             <div class="modal-header" id="archiveReaderHeaderBar">
@@ -1300,15 +1289,53 @@
         let isArchiveViewAllMode = false;
         let currentReaderFontSize = 1.02;
 
-// 1. 언어 매핑 업데이트
-const flagMap = {
-    'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
-    'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳',
-    'tl': '🇵🇭', 'it': '🇮🇹', 'fr': '🇫🇷', 'de': '🇩🇪', 'nl': '🇳🇱'
-};
+        const flagMap = {
+            'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
+            'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳',
+            'tl': '🇵🇭', 'it': '🇮🇹', 'fr': '🇫🇷', 'de': '🇩🇪', 'nl': '🇳🇱'
+        };
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
+        }
+
+        window.onload = function() {
+            try {
+                if (typeof Pi !== 'undefined') {
+                    Pi.init({ version: "2.0", sandbox: false });
+                    console.log("SDKMessaging instantiated on Pi environment: production");
+                } else {
+                    console.log("Pi SDK loaded outside Pi Browser.");
+                }
+            } catch (error) {
+                console.error("Pi SDK initialization failed:", error);
+            }
+
+            renderRelayListContent();
+        };
+
+        async function initPiAuth() {
+            const scopes = ['username', 'payments'];
+            
+            function onIncompletePaymentFound(payment) {
+                console.log("미완료된 결제 내역이 발견되었습니다:", payment);
+            }
+
+            try {
+                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+                console.log(`[Pi Login Success] 환영합니다, ${auth.user.username}님!`);
+                
+                const drawerNameElem = document.getElementById('drawerUserName');
+                if (drawerNameElem) {
+                    drawerNameElem.innerText = auth.user.username;
+                }
+                
+                alert(`🎉 파이 지갑 연동 성공!\n환영합니다, ${auth.user.username}님!`);
+                
+            } catch (error) {
+                console.error("[Pi Login Failed] 인증 실패:", error);
+                alert("❌ 파이 지갑 로그인에 실패했습니다.\n반드시 파이 브라우저(Pi Browser) 앱 내부에서 접속해 주세요!");
+            }
         }
 
         function updateWalletDisplay() {
@@ -1493,7 +1520,6 @@ const flagMap = {
             if (section === 'creator') renderCreatorListViewContent();
         }
 
-        // 2번 요청: '진행 : ' 문구 제거 및 '글쓰기 진행중(1/5)' 형태 반영
         function renderRelayListContent() {
             const container = document.getElementById('relay-card-container');
             const isBoardView = container.classList.contains('board-list-container');
@@ -2036,17 +2062,18 @@ const flagMap = {
         }
 
         function setUserLanguage(langCode) {
-    selectedUserLang = langCode;
-    const langTextMap = {
-        'en': 'English', 'zh-CN': '中文', 'ja': '日本語',
-        'es': 'Español', 'vi': 'Tiếng Việt', 'id': 'Indonesia', 'hi': 'हिन्दी', 'ko': '한국어',
-        'tl': 'Tagalog', 'it': 'Italiano', 'fr': 'Français', 'de': 'Deutsch', 'nl': 'Nederlands'
-    };
-    const targetText = langTextMap[langCode] || 'English';
-    if (document.getElementById('targetLangText')) document.getElementById('targetLangText').innerText = targetText;
-    if (document.getElementById('targetLangText2')) document.getElementById('targetLangText2').innerText = targetText;
-    if (document.getElementById('targetLangTextCandidate')) document.getElementById('targetLangTextCandidate').innerText = targetText;
-}
+            selectedUserLang = langCode;
+            const langTextMap = {
+                'en': 'English', 'zh-CN': '中文', 'ja': '日本語',
+                'es': 'Español', 'vi': 'Tiếng Việt', 'id': 'Indonesia', 'hi': 'हिन्दी', 'ko': '한국어',
+                'tl': 'Tagalog', 'it': 'Italiano', 'fr': 'Français', 'de': 'Deutsch', 'nl': 'Nederlands'
+            };
+            const targetText = langTextMap[langCode] || 'English';
+            if (document.getElementById('targetLangText')) document.getElementById('targetLangText').innerText = targetText;
+            if (document.getElementById('targetLangText2')) document.getElementById('targetLangText2').innerText = targetText;
+            if (document.getElementById('targetLangTextCandidate')) document.getElementById('targetLangTextCandidate').innerText = targetText;
+        }
+
         function translateCurrentReaderContent() {
             if (selectedUserLang === 'ko') return;
             const googleSelect = document.querySelector('.goog-te-combo');
@@ -2098,61 +2125,61 @@ const flagMap = {
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-function openReadVoteModal(title, cardId, isVotePhase) {
-    closeModal('integratedRelayModal');
-    document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
-    const container = document.getElementById('candidateListContainer');
-    
-    // 예시 후보작 데이터 (실제 연동 시 서버 API 데이터가 들어갑니다)
-    const mockCandidates = [
-        {
-            id: 'cand_a',
-            name: '후보 A. 심해의 메아리 [완결제안]',
-            author: 'PiWriter_01',
-            votes: 12,
-            content: '심해 10,000m 밑에서 들려오는 메아리는 단순한 음파가 아니었다. 그것은 인류의 과거와 미래를 모두 담고 있는 고대의 디지털 신호였다. 대원들은 기계 장치를 작동시켜 신호를 해독하기 시작했다...'
-        },
-        {
-            id: 'cand_b',
-            name: '후보 B. 푸른 그림자의 기상',
-            author: 'OceanDreamer',
-            votes: 8,
-            content: '어둠 속에서 푸른 빛을 발하는 거대한 형태가 모습을 드러냈다. 수천 년 동안 잠들어 있던 심해의 수호자가 마침내 깨어난 것이다...'
-        }
-    ];
+        function openReadVoteModal(title, cardId, isVotePhase) {
+            closeModal('integratedRelayModal');
+            document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
+            const container = document.getElementById('candidateListContainer');
+            
+            const mockCandidates = [
+                {
+                    id: 'cand_a',
+                    name: '후보 A. 심해의 메아리 [완결제안]',
+                    author: 'PiWriter_01',
+                    votes: 12,
+                    content: '심해 10,000m 밑에서 들려오는 메아리는 단순한 음파가 아니었다. 그것은 인류의 과거와 미래를 모두 담고 있는 고대의 디지털 신호였다. 대원들은 기계 장치를 작동시켜 신호를 해독하기 시작했다...'
+                },
+                {
+                    id: 'cand_b',
+                    name: '후보 B. 푸른 그림자의 기상',
+                    author: 'OceanDreamer',
+                    votes: 8,
+                    content: '어둠 속에서 푸른 빛을 발하는 거대한 형태가 모습을 드러냈다. 수천 년 동안 잠들어 있던 심해의 수호자가 마침내 깨어난 것이다...'
+                }
+            ];
 
-    let html = '';
-    mockCandidates.forEach(cand => {
-        html += `
-            <div class="candidate-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">${cand.name}</div>
-                    <div style="font-size: 0.78rem; color: var(--text-sub);">작성자: ${cand.author} (득표수: ${cand.votes})</div>
-                </div>
-                <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 14px; font-size: 0.78rem;" onclick="openCandidateReader('${cand.name}', '${cand.author}', \`${cand.content}\`)">열람 & 투표</button>
-            </div>
-        `;
-    });
-    container.innerHTML = html;
-    openModal('readVoteModal');
-}
+            let html = '';
+            mockCandidates.forEach(cand => {
+                html += `
+                    <div class="candidate-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">${cand.name}</div>
+                            <div style="font-size: 0.78rem; color: var(--text-sub);">작성자: ${cand.author} (득표수: ${cand.votes})</div>
+                        </div>
+                        <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 14px; font-size: 0.78rem;" onclick="openCandidateReader('${cand.name}', '${cand.author}', \`${cand.content}\`)">열람 & 투표</button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+            openModal('readVoteModal');
+        }
 
         function openCandidateReader(candName, author, content) {
-    closeModal('readVoteModal');
-    document.getElementById('candidateReaderTitle').innerText = candName;
-    document.getElementById('candidateReaderBody').innerText = content;
-    
-    const voteBtn = document.getElementById('btnVoteThisCandidate');
-    voteBtn.onclick = function() {
-        confirmCandidateVote(candName);
-    };
+            closeModal('readVoteModal');
+            document.getElementById('candidateReaderTitle').innerText = candName;
+            document.getElementById('candidateReaderBody').innerText = content;
+            
+            const voteBtn = document.getElementById('btnVoteThisCandidate');
+            voteBtn.onclick = function() {
+                confirmCandidateVote(candName);
+            };
 
-    openModal('candidateReaderModal');
-}
-      function confirmCandidateVote(candName) {
-    alert(`🎉 '${candName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 채택된 우승 작가에게 100% 지급됩니다.`);
-    closeModal('candidateReaderModal');
-}
+            openModal('candidateReaderModal');
+        }
+
+        function confirmCandidateVote(candName) {
+            alert(`🎉 '${candName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 채택된 우승 작가에게 100% 지급됩니다.`);
+            closeModal('candidateReaderModal');
+        }
 
         function openCreatorReadModal(title, totalCh) {
             document.getElementById('creatorModalTitle').innerText = `'${title}' 회차 목록`;
@@ -2278,52 +2305,7 @@ function openReadVoteModal(title, cardId, isVotePhase) {
             alert(`🎉 '${title} - ${subtitle}' 오리지널 작품 연재가 시작되었습니다!`);
             switchTab('creator');
         }
-
-
-// 페이지가 로드될 때 실행되는 통합 영역
-        window.onload = function() {
-            // 1. 파이 SDK 초기화 (오류 방지용 안전 장치 포함)
-            try {
-                if (typeof Pi !== 'undefined') {
-                    Pi.init({ version: "2.0", sandbox: true });
-                    console.log("Pi SDK initialized successfully.");
-                } else {
-                    console.log("Pi SDK loaded outside Pi Browser.");
-                }
-            } catch (error) {
-                console.error("Pi SDK initialization failed:", error);
-            }
-
-            // 2. 기존 릴레이 목록 렌더링 실행
-            renderRelayListContent();
-        };
-
-        // 3. 파이 지갑 로그인 함수 (버튼 클릭 시 실행)
-        async function initPiAuth() {
-            const scopes = ['username', 'payments'];
-            
-            function onIncompletePaymentFound(payment) {
-                console.log("미완료된 결제 내역:", payment);
-            }
-
-            try {
-                const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-                console.log(`[Pi Login Success] 환영합니다, ${auth.user.username}님!`);
-                
-                const drawerNameElem = document.getElementById('drawerUserName');
-                if (drawerNameElem) {
-                    drawerNameElem.innerText = auth.user.username;
-                }
-                
-                alert(`🎉 파이 지갑 연동 성공!\n환영합니다, ${auth.user.username}님!`);
-                
-            } catch (error) {
-                console.error("[Pi Login Failed] 인증 실패:", error);
-                alert("❌ 파이 지갑 로그인에 실패했습니다.\n반드시 파이 브라우저(Pi Browser) 내부에서 실행해 주세요!");
-            }
-        }            
-        renderRelayListContent();
-        };
     </script>
 </body>
 </html>
+```
