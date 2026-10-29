@@ -135,7 +135,7 @@
         .modal-accordion-body {
             max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(2, 9, 22, 0.5); border-radius: 8px; margin-bottom: 12px; display: flex; flex-direction: column;
         }
-        .modal-accordion-body.active { max-height: 250px; padding: 6px 0; }
+        .modal-accordion-body.active { max-height: 250px; padding: 6px 0; overflow-y: auto; }
         .modal-sub-item {
             padding: 8px 16px; font-size: 0.8rem; color: var(--text-sub); cursor: pointer; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
         }
@@ -338,6 +338,15 @@
             width: 100%; max-width: 500px; padding: 22px; max-height: 85vh; overflow-y: auto;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8); animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* 4번 요청: 블루 아카이브 뷰어 모달 좌우 여백 대폭 확장 (인터넷 기사형) */
+        .modal-content.archive-reader-wide {
+            max-width: 96vw !important;
+            width: 96vw !important;
+            padding: 16px 10px !important;
+            border-radius: 14px;
+        }
+
         @keyframes modalPop {
             0% { transform: scale(0.95); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
@@ -362,7 +371,6 @@
         .byte-status { font-weight: 700; color: var(--danger-red); }
         .byte-status.valid { color: var(--success-green); }
 
-        /* 가독성 대폭 향상된 리딩창(뷰어) 스타일 */
         .reader-body {
             line-height: 1.95; 
             font-size: 1.02rem; 
@@ -502,7 +510,6 @@
             </div>
 
             <div class="landing-stack">
-                <!-- 스토리 릴레이 카드 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
                         <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">스토리 릴레이</div>
@@ -511,7 +518,6 @@
                     <div style="font-size: 0.85rem; font-weight: 700; color: var(--success-green); text-align: right;">스토리 릴레이 허브 입장 ➔</div>
                 </div>
 
-                <!-- 오리지널 시리즈 카드 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('creator')">
                     <div>
                         <div style="font-size: 1.15rem; font-weight: 800; color: var(--success-green); margin-bottom: 6px;">오리지널 시리즈</div>
@@ -520,7 +526,6 @@
                     <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">오리지널 시리즈 허브 입장 ➔</div>
                 </div>
 
-                <!-- 블루 아카이브 카드 신설 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
                         <div style="font-size: 1.15rem; font-weight: 800; color: #7dd3fc; margin-bottom: 6px;">블루 아카이브</div>
@@ -619,9 +624,8 @@
             </div>
         </div>
 
-        <!-- 블루 아카이브 허브 & 목록 섹션 신설 -->
+        <!-- 블루 아카이브 허브 & 목록 섹션 -->
         <div id="archive-section" style="display: none;">
-            <!-- 블루 아카이브 허브 뷰 -->
             <div id="archiveHubView" class="hub-container">
                 <div class="hub-guide-card">
                     <div style="font-size: 1.15rem; font-weight: 800; color: #7dd3fc; margin-bottom: 10px;">🏛️ 블루 아카이브 (Digital Library) 열람 안내</div>
@@ -633,10 +637,8 @@
                     </div>
                 </div>
 
-                <!-- 베스트셀러 디스플레이 (구독수 가장 많은 글 고정) -->
                 <div class="library-hero-showcase" id="archiveHeroShowcase" style="margin-bottom: 0;"></div>
 
-                <!-- 카드 허브 2개 -->
                 <div class="hub-action-btn-card" onclick="showArchiveFilteredList('relay')">
                     <div>
                         <div style="font-size: 0.98rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 2px;">📖 스토리 릴레이 완결작 보기</div>
@@ -654,7 +656,6 @@
                 </div>
             </div>
 
-            <!-- 블루 아카이브 목록 뷰 -->
             <div id="archiveListViewContainer" style="display: none;">
                 <div class="section-header">
                     <div class="section-title-group">
@@ -664,7 +665,6 @@
                     <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
                 </div>
 
-                <!-- 정렬/필터 바 (전체작품보기 옵션 삭제 및 구독 높은 순 반영) -->
                 <div class="sort-filter-bar">
                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                         <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
@@ -706,12 +706,43 @@
                     <div style="font-size: 0.78rem; color: var(--text-sub); margin-top: 4px;">수수료 최적화를 위해 모아둔 수익을 한 번에 출금하세요!</div>
                     <button class="btn btn-primary" style="margin-top: 10px; padding: 8px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
                 </div>
-                <div><b>📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</b></div>
-                <div style="margin-top: 8px; font-size: 0.82rem; color: var(--text-sub); line-height: 1.6;" id="studioMyWorksList">
-                    • 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)<br>
-                    • 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)<br>
-                    • [테스트] 6화 완결 제안 (릴레이 이어쓰기 참여중)
+                
+                <!-- 3번 요청: 크리에이터 스튜디오 지분 현황 아코디언화 및 연동 -->
+                <div style="font-size: 0.9rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 8px;">📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</div>
+                
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioCreatorAccordion')">
+                    <span>🟢 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)</span>
+                    <span id="studioCreatorArrow">▼</span>
                 </div>
+                <div class="modal-accordion-body" id="studioCreatorAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">
+                        <span>• 연재 관리 및 회차 보기</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
+                </div>
+
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioArchiveAccordion')">
+                    <span>🏛️ 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)</span>
+                    <span id="studioArchiveArrow">▼</span>
+                </div>
+                <div class="modal-accordion-body" id="studioArchiveAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('archive', 'arc_01')">
+                        <span>• 완결작 아카이브 도서 열람</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
+                </div>
+
+                <div class="modal-accordion-header" onclick="toggleModalAccordion('studioRelayAccordion')">
+                    <span>✍️ [테스트] 6화 완결 제안 (릴레이 이어쓰기 참여중)</span>
+                    <span id="studioRelayArrow">▼</span>
+                </div>
+                <div class="modal-accordion-body" id="studioRelayAccordion">
+                    <div class="modal-sub-item" onclick="navigateToActivity('relay', 'card-test-ch6')">
+                        <span>• 릴레이 진행 상황 확인</span>
+                        <span style="color:var(--primary-cyan)">이동 ➔</span>
+                    </div>
+                </div>
+
             </div>
             <button class="btn btn-outline" onclick="closeModal('creatorStudioModal')">닫기</button>
         </div>
@@ -790,7 +821,7 @@
         </div>
     </div>
 
-    <!-- 릴레이 이전까지 스토리 보기 모달 (z-top 최상단 보장) -->
+    <!-- 릴레이 이전까지 스토리 보기 모달 -->
     <div class="modal-overlay z-top" id="relayPrevChaptersModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -927,9 +958,9 @@
         </div>
     </div>
 
-    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 -->
+    <!-- 블루 아카이브 완결작 전용 챕터별 회차 뷰어 모달 (4번: archive-reader-wide 적용) -->
     <div class="modal-overlay" id="archiveChapterReaderModal">
-        <div class="modal-content" id="archiveReaderModalContent">
+        <div class="modal-content archive-reader-wide" id="archiveReaderModalContent">
             <div class="modal-header" id="archiveReaderHeaderBar">
                 <div class="modal-title" id="archiveReaderTitle">완결작 회차 보기</div>
                 <button class="close-btn" onclick="closeModal('archiveChapterReaderModal')">✕</button>
@@ -958,11 +989,12 @@
                 <button class="page-btn" id="toggleViewAllBtn" style="border-color: var(--primary-cyan); color: var(--primary-cyan);" onclick="toggleArchiveViewAll()">한번에 전체회차 다보기</button>
             </div>
 
-            <!-- 회차 제목 및 릴레이 전용 이번화 작가 표기 영역 -->
-            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 4px;" id="archiveChapterIndicator">제 1화</div>
-            <div style="font-size: 0.78rem; color: var(--success-green); font-weight: 700; margin-bottom: 8px; display: none;" id="archiveChapterAuthorIndicator">이번화 작가 : </div>
+            <!-- 2번 요청: 회차 제목 및 소제목 아래 '작가 : OOO' 통일 표기 -->
+            <div style="font-size: 0.88rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 2px;" id="archiveChapterIndicator">제 1화</div>
+            <div style="font-size: 0.8rem; color: var(--success-green); font-weight: 700; margin-bottom: 10px; display: none;" id="archiveChapterAuthorIndicator">작가 : </div>
             
-            <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 200px; font-size: 1.02rem;"></div>
+            <!-- 2번 요청: '몇화 본문 :' 문구 제거 및 넓은 본문 영역 -->
+            <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 250px; font-size: 1.02rem;"></div>
 
             <button class="btn btn-outline" style="border-color: var(--success-green); color: var(--success-green); margin-bottom: 10px;" onclick="openChapterCommentModal()">
                 💬 이 회차 댓글 소통방 입장하기
@@ -980,7 +1012,7 @@
         </div>
     </div>
 
-    <!-- 모달: 릴레이 개설 (단편/장편 및 마지막 회차 체크 포함) -->
+    <!-- 모달: 릴레이 개설 (1번 요청: 개설 창 완결 제안 체크박스 삭제 완료) -->
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1015,14 +1047,10 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Length (분량 구분)</label>
-                <select class="form-control" id="selectLength">
+                <select class="form-control" id="selectLength" onchange="updateWriterFinalCheckboxState()">
                     <option value="단편 (5-10 Chs)">단편 (5~10 Chapters)</option>
                     <option value="장편 (10+ Chs)">장편 (10+ Chapters)</option>
                 </select>
-            </div>
-            <div class="form-group" style="display: flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
-                <input type="checkbox" id="checkFinalChapterCreate" style="width: 18px; height: 18px; cursor: pointer;">
-                <label for="checkFinalChapterCreate" style="font-size: 0.82rem; color: var(--warning-orange); font-weight: 700; cursor: pointer;">🏁 이 챕터를 마지막 회차(완결)로 제안하기</label>
             </div>
             <div class="form-group" style="margin-top: 10px;">
                 <label class="form-label">Chapter 1 Content (첫 화 작성 본문)</label>
@@ -1088,7 +1116,7 @@
         </div>
     </div>
 
-    <!-- 모달: 이어쓰기 작업실 (단편/장편 및 마지막 회차 체크 포함) -->
+    <!-- 모달: 이어쓰기 작업실 (1번 요청: 단편 6화+, 장편 11화+ 일 때만 완결 체크 활성화) -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1106,10 +1134,13 @@
                 <label class="form-label">Chapter Subtitle (이번 회차 소제목)</label>
                 <input type="text" class="form-control" id="writerSubtitleInput" placeholder="회차 소제목을 입력하세요...">
             </div>
-            <div class="form-group" style="display: flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
+            
+            <!-- 1번 요청: 조건부 완결 제안 체크박스 영역 -->
+            <div class="form-group" id="writerFinalCheckboxWrapper" style="display: none; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
                 <input type="checkbox" id="checkFinalChapterWrite" style="width: 18px; height: 18px; cursor: pointer;">
                 <label for="checkFinalChapterWrite" style="font-size: 0.82rem; color: var(--warning-orange); font-weight: 700; cursor: pointer;">🏁 이 챕터를 마지막 회차(완결)로 제안하기</label>
             </div>
+
             <div class="form-group" style="margin-top: 10px;">
                 <label class="form-label" id="writerInputLabel">내 이어쓰기 작성</label>
                 <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요..."></textarea>
@@ -1209,14 +1240,14 @@
                 desc: '심해 10,000m 바닥에서 발견된 정체불명의 외계 구조물과 인류 최초의 교신 기록...',
                 creatorName: 'OceanMaster',
                 chapters: [
-                    { ch: 1, title: '심해의 문이 열리다', author: 'OceanMaster', content: '1화 본문: 심해 10,000m 바닥에서 정체불명의 신호가 감지되었다...', comments: [{author: 'OceanMaster ⓒ', text: '첫 화 집필하며 많이 고민했습니다!'}] },
-                    { ch: 2, title: '고대 문자의 해독', author: 'PiWriter_02', content: '2화 본문: 고대 기계 공학의 흔적이 발견되기 시작했다...', comments: [] },
-                    { ch: 3, title: '미지의 존재와의 접촉', author: 'DeepMage', content: '3화 본문: 마침내 그들과의 교신이 성공했다...', comments: [] },
-                    { ch: 4, title: '소용돌이의 중심', author: 'OceanMaster', content: '4화 본문: 바다가 요동치기 시작했다...', comments: [] },
-                    { ch: 5, title: '빛과 어둠의 경계', author: 'PiWriter_05', content: '5화 본문: 진실이 서서히 수면 위로 떠오른다...', comments: [] },
-                    { ch: 6, title: '최후의 선택', author: 'DeepMage', content: '6화 본문: 인류의 운명을 건 선택의 순간...', comments: [] },
-                    { ch: 7, title: '새로운 여명', author: 'OceanMaster', content: '7화 본문: 어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
-                    { ch: 8, title: '평화로운 공존 (FIN)', author: 'OceanMaster', content: '8화 본문: 인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '명작이네요.'}] }
+                    { ch: 1, title: '심해의 문이 열리다', author: 'OceanMaster', content: '심해 10,000m 바닥에서 정체불명의 신호가 감지되었다...', comments: [{author: 'OceanMaster ⓒ', text: '첫 화 집필하며 많이 고민했습니다!'}] },
+                    { ch: 2, title: '고대 문자의 해독', author: 'PiWriter_02', content: '고대 기계 공학의 흔적이 발견되기 시작했다...', comments: [] },
+                    { ch: 3, title: '미지의 존재와의 접촉', author: 'DeepMage', content: '마침내 그들과의 교신이 성공했다...', comments: [] },
+                    { ch: 4, title: '소용돌이의 중심', author: 'OceanMaster', content: '바다가 요동치기 시작했다...', comments: [] },
+                    { ch: 5, title: '빛과 어둠의 경계', author: 'PiWriter_05', content: '진실이 서서히 수면 위로 떠오른다...', comments: [] },
+                    { ch: 6, title: '최후의 선택', author: 'DeepMage', content: '인류의 운명을 건 선택의 순간...', comments: [] },
+                    { ch: 7, title: '새로운 여명', author: 'OceanMaster', content: '어둠이 걷히고 새로운 아침이 밝아온다...', comments: [] },
+                    { ch: 8, title: '평화로운 공존 (FIN)', author: 'OceanMaster', content: '인류와 심해의 평화로운 공존, 완결.', comments: [{author: 'Pioneer_A', text: '명작이네요.'}] }
                 ],
                 reviews: [
                     { author: 'Pioneer_A', rating: 5, comment: '스토리 릴레이 소설인데도 완결성이 대단하네요!' },
@@ -1239,9 +1270,9 @@
                 desc: 'A fantasy epic unfolding in the blockchain world. Unstoppable momentum until the end!',
                 creatorName: 'DeepMage',
                 chapters: [
-                    { ch: 1, title: 'The Genesis Block', author: 'DeepMage', content: 'Chapter 1 content: In the beginning, there was Pi...', comments: [{author: 'DeepMage ⓒ', text: 'Welcome to my fantasy world!'}] },
-                    { ch: 2, title: 'Alchemy of Consensus', author: 'DeepMage', content: 'Chapter 2 content: Mining the magic...', comments: [] },
-                    { ch: 3, title: 'Mainnet Awakening (FIN)', author: 'DeepMage', content: 'Chapter 3 content: The final consensus is reached. FIN.', comments: [] }
+                    { ch: 1, title: 'The Genesis Block', author: 'DeepMage', content: 'In the beginning, there was Pi...', comments: [{author: 'DeepMage ⓒ', text: 'Welcome to my fantasy world!'}] },
+                    { ch: 2, title: 'Alchemy of Consensus', author: 'DeepMage', content: 'Mining the magic...', comments: [] },
+                    { ch: 3, title: 'Mainnet Awakening (FIN)', author: 'DeepMage', content: 'The final consensus is reached. FIN.', comments: [] }
                 ],
                 reviews: [
                     { author: 'Web3Writer', rating: 4, comment: '1.0 Test-Pi is totally worth it!' }
@@ -1250,8 +1281,8 @@
         ];
 
         let relayMockList = [
-            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', creatorName: 'PiMaster', prevChapters: '1~5화까지의 누적 연재분 내용이 여기에 표시됩니다...' },
-            { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', creatorName: 'AliceWriter', prevChapters: '1~2화까지의 누적 연재분 내용이 여기에 표시됩니다...' }
+            { id: 'card-test-ch6', title: '[테스트] 6화 완결 제안 테스트용 소설', format: '단편', progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '04일 12시간 남음', content: '6화 이어쓰기 테스트입니다.', creatorName: 'PiMaster', lengthType: 'short', currentCh: 6, prevChapters: '제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...' },
+            { id: 'card-test-vote', title: '[테스트] 3화 후보 투표 진행중인 소설', format: '단편', progress: '투표 진행중', phase: 'vote', time: '02일 06시간 남음', content: '3화 투표 대상 후보작들이 올라와 있습니다.', creatorName: 'AliceWriter', lengthType: 'short', currentCh: 3, prevChapters: '제 1화: 첫 번째 모험\n1화 본문 내용...' }
         ];
 
         let creatorMockList = [
@@ -1313,6 +1344,7 @@
 
         function navigateToActivity(section, targetId) {
             closeModal('subscriptionActivityModal');
+            closeModal('creatorStudioModal');
             if (section === 'archive') {
                 switchTab('archive');
                 buyAndReadArchive(targetId, '심해의 소용돌이 속에서', 0.5);
@@ -1383,10 +1415,14 @@
             }
         }
 
+        // 1번 요청: 허브에서 이어쓰기 / 투표하기 버튼을 누르면 해당 목록만 필터링해서 표시
+        let currentRelayHubMode = 'write';
+
         function showRelayListView(mode) {
+            currentRelayHubMode = mode;
             document.getElementById('relayHubView').style.display = 'none';
             document.getElementById('relayListViewContainer').style.display = 'block';
-            document.getElementById('relayListHeaderTitle').innerText = mode === 'write' ? '이어쓰기 참여 글 목록' : '투표 가능한 릴레이 후보 글목록';
+            document.getElementById('relayListHeaderTitle').innerText = mode === 'write' ? '이어쓰기 참여 가능한 글 목록' : '투표 가능한 릴레이 후보 글목록';
             renderRelayListContent();
         }
 
@@ -1406,7 +1442,6 @@
             document.getElementById('creatorListViewContainer').style.display = 'none';
         }
 
-        // 블루 아카이브 허브 관리
         let currentArchiveFilterType = 'all';
 
         function showArchiveFilteredList(type) {
@@ -1451,19 +1486,35 @@
             if (section === 'creator') renderCreatorListViewContent();
         }
 
+        // 1번 요청: 릴레이 목록 렌더링 (이어쓰기 vs 투표하기 모드 완벽 분리 및 단편/장편 뱃지, 2줄 리스트뷰)
         function renderRelayListContent() {
             const container = document.getElementById('relay-card-container');
             const isBoardView = container.classList.contains('board-list-container');
 
+            let filteredRelayList = relayMockList.filter(item => {
+                if (currentRelayHubMode === 'write') return item.phase === 'write';
+                if (currentRelayHubMode === 'vote') return item.phase === 'vote';
+                return true;
+            });
+
             if (isBoardView) {
                 let html = '<div class="board-list-container">';
-                relayMockList.forEach((item, idx) => {
+                filteredRelayList.forEach((item, idx) => {
+                    const badgeText = item.format || '단편';
                     html += `
-                        <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                            <div class="board-col-num">${idx+1}</div>
-                            <div class="board-col-title">${item.title}</div>
-                            <div class="board-col-meta">작가: ${item.creatorName} 외 2명 | ${item.progress}</div>
-                            <div class="board-col-action">
+                        <div class="board-list-row" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')" style="align-items: flex-start; padding: 12px 14px;">
+                            <div class="board-col-num" style="padding-top: 2px;">${idx+1}</div>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div class="board-col-title" style="font-size: 0.85rem;">${item.title}</div>
+                                    <span class="tag tag-meta" style="font-size: 0.65rem; padding: 2px 6px;">${badgeText}</span>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-sub); display: flex; gap: 10px;">
+                                    <span>진행: ${item.progress}</span>
+                                    <span style="color: var(--warning-orange);">⏳ ${item.time}</span>
+                                </div>
+                            </div>
+                            <div class="board-col-action" style="padding-top: 4px;">
                                 <button class="board-mini-btn" onclick="event.stopPropagation(); handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">상세보기</button>
                             </div>
                         </div>
@@ -1473,14 +1524,17 @@
                 container.innerHTML = html;
             } else {
                 let html = '';
-                relayMockList.forEach(item => {
+                filteredRelayList.forEach(item => {
                     const isVote = item.phase === 'vote';
                     const actionText = isVote ? '후보작 열람 & 투표하기 (무료)' : '이어쓰기 참여하기 (1.0 Test-Pi)';
+                    const badgeText = item.format || '단편';
                     html += `
                         <div class="card" onclick="handleListCardClick('${item.id}', '${item.title}', '${item.content}', '🇰🇷', 6, false, '${item.phase}')">
-                            <div class="tag-group"><span class="tag tag-relay">✍️ ${item.progress}</span></div>
+                            <div class="tag-group" style="justify-content: space-between; align-items: center;">
+                                <span class="tag tag-relay">✍️ ${item.progress}</span>
+                                <span class="tag tag-meta">${badgeText}</span>
+                            </div>
                             <div class="title-with-flag"><span class="flag-badge">🇰🇷</span><h3>${item.title}</h3></div>
-                            <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 8px;">작가 : ${item.creatorName} 외 2명</div>
                             <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 12px;">"${item.content}"</p>
                             <div class="timer-info">⏳ 마감: ${item.time}</div>
                             <div class="button-group">
@@ -1588,13 +1642,12 @@
                 return true;
             });
 
-            // 정렬 로직 (별점순 동점 시 구독수 많은 순 정렬 반영)
             filteredList.sort((a, b) => {
                 const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
                 const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
                 if (sortBy === 'rating') {
                     if (ratingB !== ratingA) return ratingB - ratingA;
-                    return b.views - a.views; // 별점 동점 시 구독수(조회수) 우선
+                    return b.views - a.views;
                 }
                 if (sortBy === 'time') return b.timestamp - a.timestamp;
                 if (sortBy === 'views') return b.views - a.views;
@@ -1696,6 +1749,7 @@
             openModal('archiveChapterReaderModal');
         }
 
+        // 2번 요청: 블루 아카이브 뷰어에서 '작가 : OOO' 통일 및 '몇화 본문 :' 문구 제거
         function updateArchiveReaderContent() {
             if (!activeArchiveReaderItem) return;
             const item = activeArchiveReaderItem;
@@ -1723,7 +1777,7 @@
                 authorIndicator.style.display = 'none';
                 let allContentHtml = '';
                 item.chapters.forEach(ch => {
-                    const chAuthorText = (item.type === 'relay') ? `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">이번화 작가 : ${ch.author || item.creatorName}</div>` : '';
+                    const chAuthorText = (item.type === 'relay') ? `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">작가 : ${ch.author || item.creatorName}</div>` : '';
                     allContentHtml += `${chAuthorText}<b>[제 ${ch.ch}화: ${ch.title}]</b><br>${ch.content}<br><br>`;
                 });
                 bodyElem.innerHTML = allContentHtml;
@@ -1731,9 +1785,9 @@
                 const currentChObj = item.chapters[activeArchiveChapterIdx - 1] || item.chapters[0];
                 document.getElementById('archiveChapterIndicator').innerText = `제 ${currentChObj.ch}화 : ${currentChObj.title} (총 ${item.totalCh}화)`;
                 if (item.type === 'relay') {
-                    authorIndicator.innerText = `이번화 작가 : ${currentChObj.author || item.creatorName}`;
+                    authorIndicator.innerText = `작가 : ${currentChObj.author || item.creatorName}`;
                 }
-                bodyElem.innerHTML = `<b>[제 ${currentChObj.ch}화 : ${currentChObj.title}]</b><br>${currentChObj.content}`;
+                bodyElem.innerHTML = `${currentChObj.content}`;
             }
         }
 
@@ -1967,10 +2021,11 @@
             openModal('integratedRelayModal');
         }
 
+        // 1번 요청: '이전까지 스토리 보기' 누를 때 누적 본문 내 각 소제목 아래에 '작가 : OOO' 표기 추가
         function openPrevChaptersModal() {
             if (!activeRelayItemData) return;
             document.getElementById('prevChaptersTitle').innerText = `'${activeRelayItemData.title}' 이전까지 스토리 보기`;
-            const mockPrevText = "제 1화: 심해의 문이 열리다\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n2화 본문 내용...\n\n(이전 챕터들의 누적 연재분이 이곳에 순차적으로 제공됩니다)";
+            const mockPrevText = "제 1화: 심해의 문이 열리다\n작가 : OceanMaster\n1화 본문 내용...\n\n제 2화: 고대 문자의 해독\n작가 : PiWriter_02\n2화 본문 내용...\n\n(이전 챕터들의 누적 연재분이 이곳에 순차적으로 제공됩니다)";
             document.getElementById('prevChaptersBody').innerText = mockPrevText;
             openModal('relayPrevChaptersModal');
         }
@@ -2096,7 +2151,7 @@
             closeModal('creatorReadModal');
             document.getElementById('singleReaderTitle').innerText = `${title} - 제 ${chNum}화`;
             document.getElementById('singleReaderBody').innerHTML = `
-                [${title} 제 ${chNum}화 본문 내용]<br><br>빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...
+                빛이 닿지 않는 심해 바닥의 신비로운 마법 공방에서 새로운 실험이 시작되었다...
             `;
             openModal('creatorSingleReaderModal');
         }
@@ -2128,13 +2183,25 @@
             }
         }
 
-        function openWriterModal(title, content, flag, chapterNum = 2, isLong = false) {
+        // 1번 요청: 단편은 6화 이상, 장편은 11화 이상일 때만 이어쓰기 작업실에서 완결 제안 체크박스 노출
+        function openWriterModal(title, content, flag, chapterNum = 6, isLong = false) {
             document.getElementById('writerFlag').innerText = flag || '🇰🇷';
             document.getElementById('writerTitle').innerText = title + ' - 이어쓰기 (Ch. ' + chapterNum + ')';
             document.getElementById('writerBody').innerText = content;
             document.getElementById('writerSubtitleInput').value = "";
             document.getElementById('writerInputContent').value = "";
-            document.getElementById('checkFinalChapterWrite').checked = false;
+            
+            const checkboxWrapper = document.getElementById('writerFinalCheckboxWrapper');
+            const isShort = true; // 예시 기본 단편
+            const showFinalCheck = (isShort && chapterNum >= 6) || (!isShort && chapterNum >= 11);
+            
+            if (showFinalCheck) {
+                checkboxWrapper.style.display = 'flex';
+                document.getElementById('checkFinalChapterWrite').checked = false;
+            } else {
+                checkboxWrapper.style.display = 'none';
+            }
+
             document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
             document.getElementById('btn-submit-write').disabled = true;
             openModal('writerModal');
@@ -2142,7 +2209,8 @@
 
         function submitWriterContent() {
             const subtitle = document.getElementById('writerSubtitleInput').value.trim() || "무제 소제목";
-            const isFinal = document.getElementById('checkFinalChapterWrite').checked;
+            const isFinalElem = document.getElementById('checkFinalChapterWrite');
+            const isFinal = isFinalElem && isFinalElem.checked;
             alert(`🎉 '${subtitle}' 회차 원고가 성공적으로 제출되었습니다! ${isFinal ? '(🏁 마지막 완결 제안 포함)' : ''}`);
             closeModal('writerModal');
         }
@@ -2152,11 +2220,10 @@
             const subtitle = document.getElementById('inputSubtitle').value || "1화 소제목";
             const format = document.getElementById('selectFormat').value;
             const content = document.getElementById('storyContent').value;
-            const isFinal = document.getElementById('checkFinalChapterCreate').checked;
 
-            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나' });
+            relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나', lengthType: 'short', currentCh: 1, prevChapters: '' });
             closeModal('createModal');
-            alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다! ${isFinal ? '(🏁 완결 제안 포함)' : ''}`);
+            alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다!`);
             switchTab('relay');
         }
 
