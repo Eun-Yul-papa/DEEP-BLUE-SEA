@@ -463,15 +463,20 @@
             </div>
             <div class="header-right-group">
                 <select class="lang-select" id="userLangSelect" onchange="setUserLanguage(this.value)">
-                    <option value="ko" selected>🇰🇷 한국어</option>
-                    <option value="en">🇺🇸 English</option>
-                    <option value="zh-CN">🇨🇳 中文</option>
-                    <option value="ja">🇯🇵 日本語</option>
-                    <option value="es">🇪🇸 Español</option>
-                    <option value="vi">🇻🇳 Tiếng Việt</option>
-                    <option value="id">🇮🇩 Indonesia</option>
-                    <option value="hi">🇮🇳 हिन्दी</option>
-                </select>
+    <option value="ko" selected>🇰🇷 한국어</option>
+    <option value="en">🇺🇸 English</option>
+    <option value="zh-CN">🇨🇳 中文</option>
+    <option value="ja">🇯🇵 日本語</option>
+    <option value="es">🇪🇸 Español</option>
+    <option value="vi">🇻🇳 Tiếng Việt</option>
+    <option value="id">🇮🇩 Indonesia</option>
+    <option value="hi">🇮🇳 हिन्दी</option>
+    <option value="tl">🇵🇭 Tagalog(필리핀)</option>
+    <option value="it">🇮🇹 Italiano</option>
+    <option value="fr">🇫🇷 Français</option>
+    <option value="de">🇩🇪 Deutsch</option>
+    <option value="nl">🇳🇱 Nederlands</option>
+</select>
             </div>
         </div>
     </header>
@@ -806,6 +811,22 @@
         </div>
     </div>
 
+    <!-- 후보작 본문 열람 및 투표 모달 (신규 추가) -->
+<div class="modal-overlay z-top" id="candidateReaderModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="modal-title" id="candidateReaderTitle">후보작 본문 읽기</div>
+            <button class="close-btn" onclick="closeModal('candidateReaderModal')">✕</button>
+        </div>
+        <button class="translate-btn" onclick="translateCurrentReaderContent()">
+            🌐 Translate to My Language (<span id="targetLangTextCandidate">English</span>)
+        </button>
+        <div class="reader-body theme-dark notranslate" id="candidateReaderBody" style="min-height: 200px; max-height: 350px; overflow-y: auto;"></div>
+        
+        <button class="btn btn-primary" id="btnVoteThisCandidate" style="margin-top: 10px;">🗳️ 이 글에 투표하기</button>
+        <button class="btn btn-outline" style="margin-top: 8px;" onclick="closeModal('candidateReaderModal'); openModal('readVoteModal');">목록으로 돌아가기</button>
+    </div>
+</div>
     <!-- 릴레이 이전까지 스토리 보기 모달 -->
     <div class="modal-overlay z-top" id="relayPrevChaptersModal">
         <div class="modal-content">
@@ -1276,10 +1297,12 @@
         let isArchiveViewAllMode = false;
         let currentReaderFontSize = 1.02;
 
-        const flagMap = {
-            'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
-            'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳'
-        };
+// 1. 언어 매핑 업데이트
+const flagMap = {
+    'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
+    'es': '🇪🇸', 'vi': '🇻🇳', 'id': '🇮🇩', 'hi': '🇮🇳',
+    'tl': '🇵🇭', 'it': '🇮🇹', 'fr': '🇫🇷', 'de': '🇩🇪', 'nl': '🇳🇱'
+};
 
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({ pageLanguage: 'auto', autoDisplay: false }, 'google_translate_element');
@@ -2010,16 +2033,17 @@
         }
 
         function setUserLanguage(langCode) {
-            selectedUserLang = langCode;
-            const langTextMap = {
-                'en': 'English', 'zh-CN': '中文', 'ja': '日本語',
-                'es': 'Español', 'vi': 'Tiếng Việt', 'id': 'Indonesia', 'hi': 'हिन्दी', 'ko': '한국어'
-            };
-            const targetText = langTextMap[langCode] || 'English';
-            document.getElementById('targetLangText').innerText = targetText;
-            document.getElementById('targetLangText2').innerText = targetText;
-        }
-
+    selectedUserLang = langCode;
+    const langTextMap = {
+        'en': 'English', 'zh-CN': '中文', 'ja': '日本語',
+        'es': 'Español', 'vi': 'Tiếng Việt', 'id': 'Indonesia', 'hi': 'हिन्दी', 'ko': '한국어',
+        'tl': 'Tagalog', 'it': 'Italiano', 'fr': 'Français', 'de': 'Deutsch', 'nl': 'Nederlands'
+    };
+    const targetText = langTextMap[langCode] || 'English';
+    if (document.getElementById('targetLangText')) document.getElementById('targetLangText').innerText = targetText;
+    if (document.getElementById('targetLangText2')) document.getElementById('targetLangText2').innerText = targetText;
+    if (document.getElementById('targetLangTextCandidate')) document.getElementById('targetLangTextCandidate').innerText = targetText;
+}
         function translateCurrentReaderContent() {
             if (selectedUserLang === 'ko') return;
             const googleSelect = document.querySelector('.goog-te-combo');
@@ -2071,26 +2095,61 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        function openReadVoteModal(title, cardId, isVotePhase) {
-            closeModal('integratedRelayModal');
-            document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
-            const container = document.getElementById('candidateListContainer');
-            container.innerHTML = `
-                <div class="candidate-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">후보 A. 심해의 메아리 [완결제안]</div>
-                        <div style="font-size: 0.78rem; color: var(--text-sub);">작성자: PiWriter_01 (득표수: 12)</div>
-                    </div>
-                    <button class="btn btn-outline" style="width: auto; margin:0; padding: 6px 14px; font-size: 0.78rem;" onclick="handleVoteFinish('${title}', '후보 A')">투표하기</button>
-                </div>
-            `;
-            openModal('readVoteModal');
+function openReadVoteModal(title, cardId, isVotePhase) {
+    closeModal('integratedRelayModal');
+    document.getElementById('voteModalTitle').innerText = `'${title}' 후보작 목록`;
+    const container = document.getElementById('candidateListContainer');
+    
+    // 예시 후보작 데이터 (실제 연동 시 서버 API 데이터가 들어갑니다)
+    const mockCandidates = [
+        {
+            id: 'cand_a',
+            name: '후보 A. 심해의 메아리 [완결제안]',
+            author: 'PiWriter_01',
+            votes: 12,
+            content: '심해 10,000m 밑에서 들려오는 메아리는 단순한 음파가 아니었다. 그것은 인류의 과거와 미래를 모두 담고 있는 고대의 디지털 신호였다. 대원들은 기계 장치를 작동시켜 신호를 해독하기 시작했다...'
+        },
+        {
+            id: 'cand_b',
+            name: '후보 B. 푸른 그림자의 기상',
+            author: 'OceanDreamer',
+            votes: 8,
+            content: '어둠 속에서 푸른 빛을 발하는 거대한 형태가 모습을 드러냈다. 수천 년 동안 잠들어 있던 심해의 수호자가 마침내 깨어난 것이다...'
         }
+    ];
 
-        function handleVoteFinish(title, candidateName) {
-            alert(`🎉 '${candidateName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 채택된 우승 작가에게 100% 지급됩니다.`);
-            closeModal('readVoteModal');
-        }
+    let html = '';
+    mockCandidates.forEach(cand => {
+        html += `
+            <div class="candidate-item" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 14px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 0.9rem; font-weight: 700; color: var(--primary-cyan);">${cand.name}</div>
+                    <div style="font-size: 0.78rem; color: var(--text-sub);">작성자: ${cand.author} (득표수: ${cand.votes})</div>
+                </div>
+                <button class="btn btn-primary" style="width: auto; margin:0; padding: 6px 14px; font-size: 0.78rem;" onclick="openCandidateReader('${cand.name}', '${cand.author}', \`${cand.content}\`)">열람 & 투표</button>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+    openModal('readVoteModal');
+}
+
+        function openCandidateReader(candName, author, content) {
+    closeModal('readVoteModal');
+    document.getElementById('candidateReaderTitle').innerText = candName;
+    document.getElementById('candidateReaderBody').innerText = content;
+    
+    const voteBtn = document.getElementById('btnVoteThisCandidate');
+    voteBtn.onclick = function() {
+        confirmCandidateVote(candName);
+    };
+
+    openModal('candidateReaderModal');
+}
+      function confirmCandidateVote(candName) {
+    alert(`🎉 '${candName}'에 성공적으로 투표하셨습니다!\n\n💡 스토리 릴레이 완결 시 상금 풀은 채택된 우승 작가에게 100% 지급됩니다.`);
+    closeModal('candidateReaderModal');
+}
 
         function openCreatorReadModal(title, totalCh) {
             document.getElementById('creatorModalTitle').innerText = `'${title}' 회차 목록`;
