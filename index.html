@@ -362,12 +362,21 @@
         .byte-status { font-weight: 700; color: var(--danger-red); }
         .byte-status.valid { color: var(--success-green); }
 
+        /* 가독성 대폭 향상된 리딩창(뷰어) 스타일 */
         .reader-body {
-            line-height: 1.8; font-size: 0.98rem; white-space: pre-line;
-            margin: 16px 0; padding: 16px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); transition: background 0.3s, color 0.3s;
+            line-height: 1.95; 
+            font-size: 1.02rem; 
+            letter-spacing: 0.2px;
+            white-space: pre-line;
+            margin: 18px 0; 
+            padding: 20px; 
+            border-radius: 14px; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            transition: background 0.3s, color 0.3s;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.2);
         }
-        .reader-body.theme-dark { background: rgba(2, 9, 22, 0.8); color: #e2e8f0; }
-        .reader-body.theme-light { background: #f8fafc; color: #1e293b; border-color: #cbd5e1; }
+        .reader-body.theme-dark { background: rgba(3, 12, 28, 0.92); color: #e2e8f0; }
+        .reader-body.theme-light { background: #fdfdfd; color: #0f172a; border-color: #cbd5e1; }
 
         .translate-btn {
             background: rgba(56, 189, 248, 0.15); border: 1px solid var(--primary-cyan); color: var(--primary-cyan);
@@ -493,37 +502,31 @@
             </div>
 
             <div class="landing-stack">
+                <!-- 스토리 릴레이 카드 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('relay')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">스토리 릴레이</div>
-                        <div style="font-size: 0.82rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px;">📌 집단지성으로 함께 이야기를 만들어가는 릴레이 창작 공간</div>
-                        <div class="card-rules-list">
-                            <div>• <b>참여 방법 및 가이드 보기</b> ➔ 릴레이 개설 및 이어쓰기 안내</div>
-                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 6px;">스토리 릴레이</div>
+                        <div style="font-size: 0.92rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px; line-height: 1.5;">📌 집단지성으로 함께 이야기를 만들어가는<br>릴레이 창작 공간</div>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--success-green); text-align: right;">릴레이 허브 입장 ➔</div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--success-green); text-align: right;">스토리 릴레이 허브 입장 ➔</div>
                 </div>
 
+                <!-- 오리지널 시리즈 카드 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('creator')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: var(--success-green); margin-bottom: 6px;">오리지널 시리즈</div>
-                        <div style="font-size: 0.82rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px;">📌 크리에이터가 독자적으로 연재하는 오리지널 작품 공간</div>
-                        <div class="card-rules-list">
-                            <div>• <b>연재 가이드 및 작품 보기</b> ➔ 1화 무료 / 회차별 연재 안내</div>
-                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: var(--success-green); margin-bottom: 6px;">오리지널 시리즈</div>
+                        <div style="font-size: 0.92rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px; line-height: 1.5;">📌 크리에이터가 독자적으로 연재하는<br>오리지널 작품 공간</div>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">오리지널 허브 입장 ➔</div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">오리지널 시리즈 허브 입장 ➔</div>
                 </div>
 
+                <!-- 블루 아카이브 카드 신설 (문구 및 폰트 1사이즈 업) -->
                 <div class="landing-action-card" onclick="switchTab('archive')">
                     <div>
-                        <div style="font-size: 1.1rem; font-weight: 800; color: #7dd3fc; margin-bottom: 6px;">블루 아카이브</div>
-                        <div style="font-size: 0.82rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px;">📌 완결된 명작들을 소장하고 평가하는 탈중앙화 디지털 도서관</div>
-                        <div class="card-rules-list" style="margin-bottom:0;">
-                            <div>• <b>💎 지분 수익 분배 안내</b>: 완결작 소장 결제 금액의 <b>95%는 참여 작가진에게 지분율에 따라 자동 분배</b>되며, 5%는 플랫폼에 기여됩니다.</div>
-                        </div>
+                        <div style="font-size: 1.15rem; font-weight: 800; color: #7dd3fc; margin-bottom: 6px;">블루 아카이브</div>
+                        <div style="font-size: 0.92rem; color: var(--text-bright); font-weight: 600; margin-bottom: 10px; line-height: 1.5;">📌 완결된 명작들을 소장하고 평가하는<br>탈중앙화 디지털 도서관</div>
                     </div>
-                    <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary-cyan); text-align: right; margin-top: 10px;">도서관 입장 ➔</div>
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary-cyan); text-align: right;">블루 아카이브 허브 입장 ➔</div>
                 </div>
             </div>
         </div>
@@ -616,48 +619,72 @@
             </div>
         </div>
 
-        <!-- 블루 아카이브 섹션 -->
+        <!-- 블루 아카이브 허브 & 목록 섹션 신설 -->
         <div id="archive-section" style="display: none;">
-            <div class="section-header">
-                <div class="section-title-group">
-                    <div class="section-title">🏛️ 블루 아카이브 (Digital Library)</div>
+            <!-- 블루 아카이브 허브 뷰 -->
+            <div id="archiveHubView" class="hub-container">
+                <div class="hub-guide-card">
+                    <div style="font-size: 1.15rem; font-weight: 800; color: #7dd3fc; margin-bottom: 10px;">🏛️ 블루 아카이브 (Digital Library) 열람 안내</div>
+                    <div style="font-size: 0.88rem; color: var(--text-bright); line-height: 1.7;">
+                        릴레이와 오리지널에서 완결된 작품은 자동으로 아카이브에 진열됩니다.<br>
+                        • <b>분량 구분</b>: 단편 (5~10화) / 장편 (11화 이상)<br>
+                        • <b>구독료</b>: 단편 0.5 / 장편 1.0 Test-Pi<br>
+                        • 💎 <b>지분 수익 분배 안내</b>: 완결작 결제 금액의 95%는 참여 작가 혹은 작가진에게 지분율에 따라 자동 분배되며, 5%는 플랫폼에 기여됩니다.
+                    </div>
+                </div>
+
+                <!-- 베스트셀러 디스플레이 (구독수 가장 많은 글 고정) -->
+                <div class="library-hero-showcase" id="archiveHeroShowcase" style="margin-bottom: 0;"></div>
+
+                <!-- 카드 허브 2개 -->
+                <div class="hub-action-btn-card" onclick="showArchiveFilteredList('relay')">
+                    <div>
+                        <div style="font-size: 0.98rem; font-weight: 800; color: var(--primary-cyan); margin-bottom: 2px;">📖 스토리 릴레이 완결작 보기</div>
+                        <div style="font-size: 0.78rem; color: var(--text-sub);">집단지성으로 완성된 릴레이 명작들을 모아봅니다.</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--primary-cyan);">목록 보기 ➔</div>
+                </div>
+
+                <div class="hub-action-btn-card" onclick="showArchiveFilteredList('creator')">
+                    <div>
+                        <div style="font-size: 0.98rem; font-weight: 800; color: var(--success-green); margin-bottom: 2px;">📚 오리지널 시리즈 완결작 보기</div>
+                        <div style="font-size: 0.78rem; color: var(--text-sub);">작가들의 독창적인 완결 오리지널 명작들을 모아봅니다.</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--success-green);">목록 보기 ➔</div>
                 </div>
             </div>
 
-            <!-- 별점순 자동 베스트셀러 진열작 (⭐ BESTSELLER DISPLAY) -->
-            <div class="library-hero-showcase" id="archiveHeroShowcase"></div>
-
-            <!-- 진열작 하단 경계선 -->
-            <hr style="border: none; border-top: 1px solid var(--border-glow); margin: 16px 0 20px 0;">
-
-            <!-- 뷰 토글 버튼을 우측 정렬한 정렬/필터 바 -->
-            <div class="sort-filter-bar">
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
-                        <option value="all">🌍 전체 국가 작품</option>
-                        <option value="🇰🇷">🇰🇷 대한민국</option>
-                        <option value="🇺🇸">🇺🇸 미국/영어권</option>
-                        <option value="🇨🇳">🇨🇳 중국</option>
-                        <option value="🇯🇵">🇯🇵 일본</option>
-                    </select>
-                    <select class="sort-select" id="archiveCategorySelect" onchange="renderArchiveList()">
-                        <option value="all">전체 작품 보기</option>
-                        <option value="relay">릴레이 완결작</option>
-                        <option value="creator">오리지널 완결작</option>
-                    </select>
-                    <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
-                        <option value="rating">별점 높은 순 (베스트셀러 우선)</option>
-                        <option value="time">최신순 (시간순)</option>
-                        <option value="views">구독 높은 순 (인기순)</option>
-                        <option value="length">길이 단편순 (총 챕터 적은 순)</option>
-                    </select>
-                </div>
-                <div>
+            <!-- 블루 아카이브 목록 뷰 -->
+            <div id="archiveListViewContainer" style="display: none;">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <button class="view-toggle-btn" onclick="backToArchiveHub()">⬅ 아카이브 허브로</button>
+                        <div class="section-title" id="archiveListHeaderTitle">완결작 목록</div>
+                    </div>
                     <button class="view-toggle-btn" id="archiveViewToggle" onclick="toggleViewMode('archive')">☰ 리스트뷰</button>
                 </div>
-            </div>
 
-            <div id="archive-card-container"></div>
+                <!-- 정렬/필터 바 (전체작품보기 옵션 삭제 및 구독 높은 순 반영) -->
+                <div class="sort-filter-bar">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <select class="sort-select" id="archiveCountrySelect" onchange="renderArchiveList()">
+                            <option value="all">🌍 전체 국가 작품</option>
+                            <option value="🇰🇷">🇰🇷 대한민국</option>
+                            <option value="🇺🇸">🇺🇸 미국/영어권</option>
+                            <option value="🇨🇳">🇨🇳 중국</option>
+                            <option value="🇯🇵">🇯🇵 일본</option>
+                        </select>
+                        <select class="sort-select" id="archiveSortSelect" onchange="renderArchiveList()">
+                            <option value="rating">별점 높은 순</option>
+                            <option value="time">최신순 (시간순)</option>
+                            <option value="views">구독 높은 순 (인기순)</option>
+                            <option value="length">길이 단편순 (총 챕터 적은 순)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="archive-card-container"></div>
+            </div>
         </div>
 
         <footer class="app-footer" id="mainFooter">
@@ -935,7 +962,7 @@
             <div style="font-size: 0.82rem; color: var(--primary-cyan); font-weight: 700; margin-bottom: 4px;" id="archiveChapterIndicator">제 1화</div>
             <div style="font-size: 0.78rem; color: var(--success-green); font-weight: 700; margin-bottom: 8px; display: none;" id="archiveChapterAuthorIndicator">이번화 작가 : </div>
             
-            <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 200px; font-size: 0.98rem;"></div>
+            <div class="reader-body theme-dark notranslate" id="archiveReaderBody" style="min-height: 200px; font-size: 1.02rem;"></div>
 
             <button class="btn btn-outline" style="border-color: var(--success-green); color: var(--success-green); margin-bottom: 10px;" onclick="openChapterCommentModal()">
                 💬 이 회차 댓글 소통방 입장하기
@@ -953,7 +980,7 @@
         </div>
     </div>
 
-    <!-- 모달: 릴레이 개설 -->
+    <!-- 모달: 릴레이 개설 (단편/장편 및 마지막 회차 체크 포함) -->
     <div class="modal-overlay" id="createModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -993,7 +1020,11 @@
                     <option value="장편 (10+ Chs)">장편 (10+ Chapters)</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
+                <input type="checkbox" id="checkFinalChapterCreate" style="width: 18px; height: 18px; cursor: pointer;">
+                <label for="checkFinalChapterCreate" style="font-size: 0.82rem; color: var(--warning-orange); font-weight: 700; cursor: pointer;">🏁 이 챕터를 마지막 회차(완결)로 제안하기</label>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
                 <label class="form-label">Chapter 1 Content (첫 화 작성 본문)</label>
                 <textarea class="form-control" id="storyContent" oninput="handleByteCheckRelay(this, 'byte-status-count', 'btn-submit-relay')" placeholder="첫 번째 이야기를 작성하세요..."></textarea>
                 <div class="byte-counter-info">
@@ -1057,7 +1088,7 @@
         </div>
     </div>
 
-    <!-- 모달: 이어쓰기 작업실 -->
+    <!-- 모달: 이어쓰기 작업실 (단편/장편 및 마지막 회차 체크 포함) -->
     <div class="modal-overlay" id="writerModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1075,7 +1106,11 @@
                 <label class="form-label">Chapter Subtitle (이번 회차 소제목)</label>
                 <input type="text" class="form-control" id="writerSubtitleInput" placeholder="회차 소제목을 입력하세요...">
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display: flex; align-items: center; gap: 8px; background: rgba(56,189,248,0.08); padding: 10px; border-radius: 10px;">
+                <input type="checkbox" id="checkFinalChapterWrite" style="width: 18px; height: 18px; cursor: pointer;">
+                <label for="checkFinalChapterWrite" style="font-size: 0.82rem; color: var(--warning-orange); font-weight: 700; cursor: pointer;">🏁 이 챕터를 마지막 회차(완결)로 제안하기</label>
+            </div>
+            <div class="form-group" style="margin-top: 10px;">
                 <label class="form-label" id="writerInputLabel">내 이어쓰기 작성</label>
                 <textarea class="form-control" id="writerInputContent" oninput="handleByteCheckRelay(this, 'writer-byte-count', 'btn-submit-write')" placeholder="이어질 이야기를 작성하세요..."></textarea>
                 <div class="byte-counter-info">
@@ -1226,7 +1261,7 @@
         let activeArchiveReaderItem = null;
         let activeArchiveChapterIdx = 1;
         let isArchiveViewAllMode = false;
-        let currentReaderFontSize = 0.98;
+        let currentReaderFontSize = 1.02;
 
         const flagMap = {
             'ko': '🇰🇷', 'en': '🇺🇸', 'zh-CN': '🇨🇳', 'ja': '🇯🇵',
@@ -1344,7 +1379,7 @@
                 creatorSec.style.display = 'none';
                 archiveSec.style.display = 'block';
                 tabArchive.classList.add('active');
-                renderArchiveList();
+                backToArchiveHub();
             }
         }
 
@@ -1369,6 +1404,23 @@
         function backToCreatorHub() {
             document.getElementById('creatorHubView').style.display = 'flex';
             document.getElementById('creatorListViewContainer').style.display = 'none';
+        }
+
+        // 블루 아카이브 허브 관리
+        let currentArchiveFilterType = 'all';
+
+        function showArchiveFilteredList(type) {
+            currentArchiveFilterType = type;
+            document.getElementById('archiveHubView').style.display = 'none';
+            document.getElementById('archiveListViewContainer').style.display = 'block';
+            document.getElementById('archiveListHeaderTitle').innerText = (type === 'relay') ? '스토리 릴레이 완결작 목록' : '오리지널 시리즈 완결작 목록';
+            renderArchiveList();
+        }
+
+        function backToArchiveHub() {
+            document.getElementById('archiveHubView').style.display = 'flex';
+            document.getElementById('archiveListViewContainer').style.display = 'none';
+            renderArchiveHubHero();
         }
 
         function toggleViewMode(section) {
@@ -1486,14 +1538,8 @@
             container.innerHTML = html;
         }
 
-        function renderArchiveList() {
-            const country = document.getElementById('archiveCountrySelect').value;
-            const category = document.getElementById('archiveCategorySelect').value;
-            const sortBy = document.getElementById('archiveSortSelect').value;
-            const container = document.getElementById('archive-card-container');
+        function renderArchiveHubHero() {
             const heroShowcase = document.getElementById('archiveHeroShowcase');
-            const isBoardView = container.classList.contains('board-list-container');
-
             let globalBestList = [...archiveDataList].sort((a, b) => {
                 const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
                 const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
@@ -1527,20 +1573,28 @@
             } else {
                 heroShowcase.style.display = 'none';
             }
+        }
+
+        function renderArchiveList() {
+            const country = document.getElementById('archiveCountrySelect').value;
+            const sortBy = document.getElementById('archiveSortSelect').value;
+            const container = document.getElementById('archive-card-container');
+            const isBoardView = container.classList.contains('board-list-container');
 
             let filteredList = archiveDataList.filter(item => {
                 if (country !== 'all' && item.flag !== country) return false;
-                if (category === 'relay' && item.type !== 'relay') return false;
-                if (category === 'creator' && item.type !== 'creator') return false;
+                if (currentArchiveFilterType === 'relay' && item.type !== 'relay') return false;
+                if (currentArchiveFilterType === 'creator' && item.type !== 'creator') return false;
                 return true;
             });
 
+            // 정렬 로직 (별점순 동점 시 구독수 많은 순 정렬 반영)
             filteredList.sort((a, b) => {
                 const ratingA = a.ratingCount > 0 ? (a.ratingSum / a.ratingCount) : 0;
                 const ratingB = b.ratingCount > 0 ? (b.ratingSum / b.ratingCount) : 0;
                 if (sortBy === 'rating') {
                     if (ratingB !== ratingA) return ratingB - ratingA;
-                    return b.views - a.views;
+                    return b.views - a.views; // 별점 동점 시 구독수(조회수) 우선
                 }
                 if (sortBy === 'time') return b.timestamp - a.timestamp;
                 if (sortBy === 'views') return b.views - a.views;
@@ -1552,12 +1606,11 @@
             if (isBoardView) {
                 html = '<div class="board-list-container">';
                 filteredList.forEach((item, idx) => {
-                    const typeLabel = (item.type === 'relay') ? '릴레이' : '오리지널';
                     html += `
                         <div class="board-list-row" onclick="buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">
                             <div class="board-col-num">${idx+1}</div>
                             <div class="board-col-title">${item.title}</div>
-                            <div class="board-col-meta">작가: ${item.creatorName} | ${typeLabel}</div>
+                            <div class="board-col-meta">작가: ${item.creatorName} | 총 ${item.totalCh}화</div>
                             <div class="board-col-action"><button class="board-mini-btn" onclick="event.stopPropagation(); buyAndReadArchive('${item.id}', '${item.title}', ${item.isLong ? 1.0 : 0.5})">읽기</button></div>
                         </div>
                     `;
@@ -1567,14 +1620,13 @@
                 filteredList.forEach(item => {
                     const avgRating = item.ratingCount > 0 ? (item.ratingSum / item.ratingCount).toFixed(1) : '0.0';
                     const price = item.isLong ? 1.0 : 0.5;
-                    const typeLabel = (item.type === 'relay') ? '스토리 릴레이 완결' : '오리지널 시리즈 완결';
                     const authorDisplay = (item.type === 'relay') ? `${item.creatorName} 외 여러 작가` : item.creatorName;
 
                     html += `
                         <div class="archive-book-shelf-card" id="${item.id}" onclick="handleArchiveCardClick('${item.id}')">
                             <div class="tag-group">
                                 <span class="tag tag-archive">📚 도서관 소장품</span>
-                                <span class="tag tag-meta">${typeLabel}</span>
+                                <span class="tag tag-meta">총 ${item.totalCh}화</span>
                                 <span class="tag tag-meta">${item.format} · ${item.genre}</span>
                             </div>
                             <div class="title-with-flag">
@@ -1663,12 +1715,12 @@
             if (item.type === 'relay') {
                 authorIndicator.style.display = 'block';
             } else {
-                authorIndicator.style.display = 'none'; // 오리지널 시리즈는 이번화 작가 표기 제거
+                authorIndicator.style.display = 'none';
             }
 
             if (isArchiveViewAllMode) {
                 document.getElementById('archiveChapterIndicator').innerText = `전체 회차 연속 보기 (총 ${item.totalCh}화)`;
-                authorIndicator.style.display = 'none'; // 전체보기 시 개별 작가 표기 생략
+                authorIndicator.style.display = 'none';
                 let allContentHtml = '';
                 item.chapters.forEach(ch => {
                     const chAuthorText = (item.type === 'relay') ? `<div style="font-size:0.8rem; color:var(--success-green); font-weight:700; margin-bottom:4px;">이번화 작가 : ${ch.author || item.creatorName}</div>` : '';
@@ -1716,8 +1768,8 @@
 
         function adjustFontSize(step) {
             currentReaderFontSize += (step * 0.1);
-            if (currentReaderFontSize < 0.75) currentReaderFontSize = 0.75;
-            if (currentReaderFontSize > 1.4) currentReaderFontSize = 1.4;
+            if (currentReaderFontSize < 0.8) currentReaderFontSize = 0.8;
+            if (currentReaderFontSize > 1.5) currentReaderFontSize = 1.5;
             document.getElementById('archiveReaderBody').style.fontSize = currentReaderFontSize + 'rem';
         }
 
@@ -1890,7 +1942,7 @@
                 currentReviewPage = 1;
                 alert('🎉 리뷰가 성공적으로 등록되었습니다!');
                 renderReviewPageList();
-                renderArchiveList();
+                renderArchiveHubHero();
             }
         }
 
@@ -2082,6 +2134,7 @@
             document.getElementById('writerBody').innerText = content;
             document.getElementById('writerSubtitleInput').value = "";
             document.getElementById('writerInputContent').value = "";
+            document.getElementById('checkFinalChapterWrite').checked = false;
             document.getElementById('writer-byte-count').innerText = "0 / 6000 Bytes";
             document.getElementById('btn-submit-write').disabled = true;
             openModal('writerModal');
@@ -2089,7 +2142,8 @@
 
         function submitWriterContent() {
             const subtitle = document.getElementById('writerSubtitleInput').value.trim() || "무제 소제목";
-            alert(`🎉 '${subtitle}' 회차 원고가 성공적으로 제출되었습니다!`);
+            const isFinal = document.getElementById('checkFinalChapterWrite').checked;
+            alert(`🎉 '${subtitle}' 회차 원고가 성공적으로 제출되었습니다! ${isFinal ? '(🏁 마지막 완결 제안 포함)' : ''}`);
             closeModal('writerModal');
         }
 
@@ -2098,10 +2152,11 @@
             const subtitle = document.getElementById('inputSubtitle').value || "1화 소제목";
             const format = document.getElementById('selectFormat').value;
             const content = document.getElementById('storyContent').value;
+            const isFinal = document.getElementById('checkFinalChapterCreate').checked;
 
             relayMockList.unshift({ id: 'card_' + Date.now(), title: `${title} (${subtitle})`, format: format, progress: '글쓰기 진행중 (1/5)', phase: 'write', time: '05일 00시간 남음', content: content, creatorName: '나' });
             closeModal('createModal');
-            alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다!`);
+            alert(`🎉 '${title} - ${subtitle}' 스토리 릴레이가 무료로 개설되었습니다! ${isFinal ? '(🏁 완결 제안 포함)' : ''}`);
             switchTab('relay');
         }
 
