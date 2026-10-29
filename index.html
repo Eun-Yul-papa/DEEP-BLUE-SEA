@@ -1301,7 +1301,7 @@
         window.onload = function() {
             try {
                 if (typeof Pi !== 'undefined') {
-                    Pi.init({ version: "2.0", sandbox: false });
+                    Pi.init({ version: "2.0", sandbox: true });
                     console.log("SDKMessaging instantiated on Pi environment: production");
                 } else {
                     console.log("Pi SDK loaded outside Pi Browser.");
