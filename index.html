@@ -710,7 +710,7 @@
                     <button class="btn btn-primary" style="margin-top: 10px; padding: 8px;" onclick="claimCreatorEarnings()">지갑으로 수익 출금하기 (Claim)</button>
                 </div>
                 
-                <!-- 1번 요청: 하나의 큰 아코디언 창 안에 참여했던 작품 목록이 싹 들어가도록 통합 -->
+               <!-- 1번 요청: 하나의 큰 아코디언 창 안에 참여했던 작품 목록이 싹 들어가도록 통합 ('이동 ➔' 제거 버전) -->
                 <div class="modal-accordion-header" onclick="toggleModalAccordion('studioIntegratedAccordion')">
                     <span>📚 내가 참여한 릴레이 및 오리지널 연재 이력 (지분 현황)</span>
                     <span id="studioIntegratedArrow">▼</span>
@@ -718,17 +718,15 @@
                 <div class="modal-accordion-body" id="studioIntegratedAccordion">
                     <div class="modal-sub-item" onclick="navigateToActivity('creator', '심해 마법사의 공방')">
                         <span>🟢 심해 마법사의 공방 (오리지널 연재중 - 지분 95%)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                     <div class="modal-sub-item" onclick="navigateToActivity('archive', 'arc_01')">
                         <span>🏛️ 심해의 소용돌이 속에서 (릴레이 완결 - 지분 25%)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                     <div class="modal-sub-item" onclick="navigateToActivity('relay', 'card-test-ch6')">
                         <span>✍️ [테스트] 6화 완결 제안 (릴레이 참여중)</span>
-                        <span style="color:var(--primary-cyan)">이동 ➔</span>
                     </div>
                 </div>
+
 
             </div>
             <button class="btn btn-outline" onclick="closeModal('creatorStudioModal')">닫기</button>
