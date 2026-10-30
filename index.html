@@ -2305,6 +2305,16 @@ async function initPiAuth() {
             alert(`🎉 '${title} - ${subtitle}' 오리지널 작품 연재가 시작되었습니다!`);
             switchTab('creator');
         }
+
+function reportContent(contentId, type) {
+    const reason = prompt("🚨 신고 사유를 입력하거나 선택해 주세요:\n1. 음란/불건전\n2. 비방/욕설\n3. 선동/도배\n4. 기타");
+    
+    if (reason) {
+        alert("신고가 정상적으로 접수되었습니다.\n검토 후 조치될 예정입니다.");
+        console.log(`[Reported] Type: ${type}, ID: ${contentId}, Reason: ${reason}`);
+    }
+}
+
     </script>
 </body>
 </html>
