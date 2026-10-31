@@ -29,7 +29,7 @@
             word-break: keep-all;
         }
 
-        body {
+        body {    
             background-color: var(--bg-deep);
             color: var(--text-bright);
             padding-bottom: 110px;
@@ -412,6 +412,30 @@
             display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s;
         }
         .chapter-list-item:hover { border-color: var(--primary-cyan); background: rgba(56, 189, 248, 0.12); transform: translateX(2px); }
+
+        /* 🌍 [기능 3] 국가별 정렬 필터 드롭다운 스타일 */
+        .filter-bar { margin: 15px 0; }
+        .filter-bar select { width: 100%; padding: 10px; border-radius: 8px; background: #1e293b; color: #fff; border: 1px solid #334155; font-size: 1rem; }
+        
+        .card { background: #1e293b; border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid #334155; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .badge { background: #3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; }
+        .btn-group { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        button { cursor: pointer; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; }
+        .btn-vote { background: #10b981; color: #fff; }
+        
+        /* 🚨 [기능 4] 신고 버튼 스타일 */
+        .btn-report { background: transparent; color: #ef4444; font-size: 0.85rem; }
+        
+        /* 모달 스타일 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; }
+        .modal-content { background: #1e293b; padding: 20px; border-radius: 12px; width: 90%; max-width: 500px; border: 1px solid #334155; }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 10px; margin-bottom: 10px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        .modal-buttons { display: flex; justify-content: space-between; }
+        
+        /* 💾 [기능 1] 임시저장 버튼 스타일 */
+        .btn-draft { background: #3b82f6; color: #fff; }
+        .btn-close { background: #64748b; color: #fff; }
     </style>
 </head>
 
@@ -1143,11 +1167,43 @@
                     <span class="byte-status" id="writer-byte-count">0 / 6000 Bytes</span>
                 </div>
             </div>
+            <div id="relayWriteModal" class="modal">
+        <div class="modal-content">
+            <h3>스토리 이어쓰기</h3>
+            <input type="text" id="storyTitleInput" placeholder="제목을 입력하세요">
+            <textarea id="storyContentInput" placeholder="본문을 작성하세요..." rows="6"></textarea>
+            
+            <div class="modal-buttons">
+                <!-- 💾 [기능 1] 임시저장 버튼 -->
+                <button type="button" class="btn-draft" onclick="saveDraftStory('relay_sample_01')">💾 임시저장</button>
+                <button type="button" class="btn-close" onclick="closeRelayWriteModal()">닫기</button>
+            </div>
+        </div>
+    </div>
             <button class="btn btn-primary" id="btn-submit-write" disabled onclick="submitWriterContent()">이어쓰기 제출하기</button>
         </div>
     </div>
 
     <!-- 스토리 릴레이 상세 모달 -->
+    <<!-- 🌍 [기능 3] 국가별 정렬 필터 드롭다운 (스토리 릴레이 목록 상단 배치) -->
+        <div class="filter-bar">
+            <select id="nationFilterSelect" onchange="filterRelayListByNation()">
+                <option value="ALL">🌍 전체 국가 (All Nations)</option>
+                <option value="KR">🇰🇷 대한민국</option>
+                <option value="US">🇺🇸 미국/영어권</option>
+                <option value="CN">🇨🇳 중국</option>
+                <option value="JP">🇯🇵 일본</option>
+            </select>
+        </div>
+
+        <!-- 📖 실시간 스토리 릴레이 섹션 -->
+        <section id="relaySection">
+            <h2>📖 실시간 스토리 릴레이</h2>
+            <div id="relayListContainer">
+                <!-- 자바스크립트로 동적 로딩되는 카드 영역 -->
+            </div>
+        </section>
+    </div>
     <div class="modal-overlay" id="integratedRelayModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2306,11 +2362,127 @@ async function initPiAuth() {
             switchTab('creator');
         }
 
+// ==========================================
+// 🚀 2. 집필 및 투표 기간 설정 (집필 5일, 투표 3일)
+// ==========================================
+const WRITE_PERIOD_DAYS = 5;  
+const VOTE_PERIOD_DAYS = 3;   
+
+
+// ==========================================
+// 🌍 3. 국가별 필터링을 위한 샘플 데이터 및 함수
+// ==========================================
+let allRelayData = [
+    { id: "relay_sample_01", title: "깊은 바다의 비밀 1회차", nation: "KR", author: "wnalsdud88" },
+    { id: "relay_sample_02", title: "The Deep Sea Mystery 1st", nation: "US", author: "pi_pioneer" }
+];
+
+// 페이지 로드 시 기본 릴레이 목록 렌더링
+window.onload = function() {
+    renderRelayList(allRelayData);
+};
+
+function renderRelayList(dataList) {
+    const container = document.getElementById('relayListContainer');
+    if (!container) return;
+    
+    container.innerHTML = "";
+    
+    if (dataList.length === 0) {
+        container.innerHTML = `<p style="text-align:center; color:#94a3b8;">해당 국가의 릴레이가 없습니다.</p>`;
+        return;
+    }
+
+    dataList.forEach(item => {
+        container.innerHTML += `
+            <div class="card">
+                <div class="card-header">
+                    <span class="badge">[${item.nation}]</span>
+                    <span style="font-size: 0.85rem; color: #94a3b8;">작성자: ${item.author}</span>
+                </div>
+                <h3>${item.title}</h3>
+                <p style="font-size: 0.9rem; color: #cbd5e1;">집필 기간: ${WRITE_PERIOD_DAYS}일 | 투표 기간: ${VOTE_PERIOD_DAYS}일</p>
+                
+                <div class="btn-group">
+                    <button class="btn-vote" onclick="openDraftWriter('${item.id}')">✍️ 이어쓰기 / 이어서 작성</button>
+                    <!-- 🚨 4. 신고하기 버튼 -->
+                    <button class="btn-report" onclick="reportContent('${item.id}', 'STORY')">🚨 신고</button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function filterRelayListByNation() {
+    const selectedNation = document.getElementById('nationFilterSelect').value;
+    
+    const filteredList = (selectedNation === 'ALL') 
+        ? allRelayData 
+        : allRelayData.filter(item => item.nation === selectedNation);
+        
+    renderRelayList(filteredList);
+}
+
+
+// ==========================================
+// 💾 1. 이어쓰기 임시저장 및 보증금 면제 안내 로직
+// ==========================================
+
+// 크리에이터 스튜디오 등에서 카드를 눌러 작성 창을 열 때 (임시저장 불러오기 포함)
+function openDraftWriter(relayId) {
+    const modal = document.getElementById('relayWriteModal');
+    if (modal) modal.style.display = 'flex';
+    
+    // 로컬 스토리지에 저장된 임시저장 원고 확인
+    const draftJson = localStorage.getItem(`relay_draft_${relayId}`);
+    
+    if (draftJson) {
+        const draft = JSON.parse(draftJson);
+        document.getElementById('storyTitleInput').value = draft.title || '';
+        document.getElementById('storyContentInput').value = draft.content || '';
+        
+        // 보증금 면제 안내 알림
+        alert("💾 임시저장된 원고를 불러왔습니다.\n이미 참가 보증금(1.0 Test-Pi) 지불이 완료된 건으로, 추가 결제 없이 이어 쓰실 수 있습니다.");
+    } else {
+        // 임시저장이 없을 때의 신규 작성 진입 알림
+        console.log("새로운 이어쓰기 세션 시작 (보증금 1.0 Test-Pi 결제 대상)");
+    }
+}
+
+// 작성 중 '임시저장' 버튼을 눌렀을 때
+function saveDraftStory(relayId) {
+    const title = document.getElementById('storyTitleInput').value;
+    const content = document.getElementById('storyContentInput').value;
+    
+    if (!title && !content) {
+        alert("저장할 내용이 없습니다.");
+        return;
+    }
+
+    const draftData = {
+        title: title,
+        content: content,
+        savedAt: new Date().toISOString()
+    };
+    
+    localStorage.setItem(`relay_draft_${relayId}`, JSON.stringify(draftData));
+    alert("💾 원고가 임시저장되었습니다.\n마감 시간 전까지 언제든 다시 들어와 작성하실 수 있으며, 추가 Test-Pi 결제는 발생하지 않습니다.");
+}
+
+function closeRelayWriteModal() {
+    const modal = document.getElementById('relayWriteModal');
+    if (modal) modal.style.display = 'none';
+}
+
+
+// ==========================================
+// 🚨 4. 음란물·비방·선동 신고 프로세스 로직
+// ==========================================
 function reportContent(contentId, type) {
-    const reason = prompt("🚨 신고 사유를 입력하거나 선택해 주세요:\n1. 음란/불건전\n2. 비방/욕설\n3. 선동/도배\n4. 기타");
+    const reason = prompt("🚨 신고 사유를 선택하거나 입력해 주세요:\n1. 음란/불건전\n2. 비방/욕설\n3. 선동/도배\n4. 기타");
     
     if (reason) {
-        alert("신고가 정상적으로 접수되었습니다.\n검토 후 조치될 예정입니다.");
+        alert("신고가 정상적으로 접수되었습니다.\n관리자 검토 후 자동 블라인드 처리될 예정입니다.");
         console.log(`[Reported] Type: ${type}, ID: ${contentId}, Reason: ${reason}`);
     }
 }
